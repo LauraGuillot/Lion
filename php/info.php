@@ -95,7 +95,7 @@
 
                         <div class="col one-third">       
                             <h2> Adresse </h2>      
-                            <p> (Cf plan ci-dessous) </p>
+                            <p> (Voir plan ci-dessous) </p>
                         </div>
 
                         <div class="col two-thirds">
