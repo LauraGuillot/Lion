@@ -50,17 +50,19 @@
     $trainheure = $_POST['trainheure'];
     if (empty($fClub) or empty($fDistrict)) {
         header('Location: inscriptionnew3.php');
-    } else {
-        // Retourner sur la page d'accueil
-        // Afficher les onglets monCompte et panier
-        //Mettre les informations dans la base de données
-    }
-}
+    } 
+    else {
+        
+$bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', 'lion');
+echo "ca marche mec ! ";
+$req = $bdd->prepare('INSERT INTO Person (Person_Lastname, Person_Firstname) VALUES (:nom,:prenom)');
+$req->execute(array(
+	'nom'=>"$nom",
+	'prenom'=>"$prenom"));
+	
 
+echo "ca marche vraiment";
 
+        }}       
+        
 ?>
-
-
-
-
-
