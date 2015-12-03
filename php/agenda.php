@@ -3,7 +3,8 @@
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
 <!--[if (gte IE 8)|!(IE)]><!--><html lang="fr"> <!--<![endif]-->
     <head>
-
+        
+//Com
 
         <!--- Basic Page Needs
         ================================================== -->
