@@ -85,7 +85,7 @@
             <div class="col g-7"style="top: 80px">
 
                 <!-- form -->
-                <form name="contactForm" id="contactForm" method="post" action="validationInscription2.php">
+                <form name="contactForm" id="contactForm" method="post" action="verif.php">
                     <fieldset>
                         <div class="row section-head">
 
@@ -194,11 +194,7 @@
                             </div>
 
 
-
-                            <button class="submit">Valider</button>
-                            <span id="image-loader">
-                                <img src="images/loader.gif" alt="" />
-                            </span>
+						<input type="submit" name="v2" value="Valider">
                         </div>
 
                     </fieldset>

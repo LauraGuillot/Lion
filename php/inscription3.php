@@ -86,7 +86,7 @@
             <div class="col g-7"style="top: 80px">
 
                 <!-- form -->
-                <form name="contactForm" id="contactForm" method="post" action="validationInscription3.php" style = "width : 1000px">
+                <form name="contactForm" id="contactForm" method="post" action="verif.php" style = "width : 1000px">
                     <fieldset>
 
                         <div class="row section-head">
@@ -141,10 +141,7 @@
                             <input name="trainheure" type="time" id="trainHeure" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0"/>
                         </div>
 
-                        <button class="submit">Valider</button>
-                        <span id="image-loader">
-                            <img src="images/loader.gif" alt="" />
-                        </span>
+                        <input type="submit" name="v3" value="Valider">
                         </div>
 
                     </fieldset>

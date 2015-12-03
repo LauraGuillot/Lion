@@ -78,6 +78,7 @@
 
 
 
+
         <div class="row">
 
             <div class="col g-7" style="top: 80px">
@@ -89,12 +90,13 @@
                 </div>
 
                 <!-- form -->
-                <form name="contactForm" id="contactForm" method="post" action="verif.php" >
+                <form name="contactForm" id="contactForm" method="post"  action="verif.php">
                     <fieldset >
 
                         <div>
                             <label for="contactEmail">Adresse email <span class="required">*</span></label>
                             <input name="email" type="mail" id="mail" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
+                            
                         </div>
 
                         <div>
@@ -110,10 +112,7 @@
 
 
                         <div>
-                            <button class="submit">Valider</button>
-                            <span id="image-loader">
-                                <img src="images/loader.gif" alt="" />
-                            </span>
+                           <input type="submit" name="v1" value="Valider">
                         </div>
 
                     </fieldset>
@@ -150,7 +149,7 @@
 
 
                         <div>
-                            <button class="submit">Valider</button>
+                            <button name="v1" id="v1" class="submit">Valider</button>
                             <span id="image-loader">
                                 <img src="images/loader.gif" alt="" />
                             </span>
