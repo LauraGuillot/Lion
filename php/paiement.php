@@ -86,38 +86,38 @@
                         <INPUT width=450px type="radio" name="typePaiement" value="2"> Chèque
                     </FORM>
                 </div>
-              
 
-     <br></br>
+
+                <br></br>
                 <input type="submit" name="valid" value="Valider">
 
             </fieldset>
         </form>   
-  </center>
+    </center>
 
-        <br></br>
-        <!-- Section End-->
+    <br></br>
+    <!-- Section End-->
 
 
-        <!-- footer
-        ================================================== -->
-        <?php include("footer.php"); ?>
-        <!-- Footer End-->
+    <!-- footer
+    ================================================== -->
+    <?php include("footer.php"); ?>
+    <!-- Footer End-->
 
-        <!-- Java Script
-        ================================================== -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/jquery-1.10.2.min.js"><\/script>')</script>
-        <script type="text/javascript" src="js/jquery-migrate-1.2.1.min.js"></script>
+    <!-- Java Script
+    ================================================== -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.10.2.min.js"><\/script>')</script>
+    <script type="text/javascript" src="js/jquery-migrate-1.2.1.min.js"></script>
 
-        <script src="js/scrollspy.js"></script>
-        <script src="js/jquery.flexslider.js"></script>
-        <script src="js/jquery.reveal.js"></script>
-        <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
-        <script src="js/gmaps.js"></script>
-        <script src="js/init.js"></script>
-        <script src="js/smoothscrolling.js"></script>
+    <script src="js/scrollspy.js"></script>
+    <script src="js/jquery.flexslider.js"></script>
+    <script src="js/jquery.reveal.js"></script>
+    <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
+    <script src="js/gmaps.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/smoothscrolling.js"></script>
 
-    </body>
+</body>
 
 </html>
