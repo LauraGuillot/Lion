@@ -41,7 +41,11 @@ $req1->execute(array(
 	'prenomAcc'=>"$prenomAcc"));
 	
 		
-$req2 = $bdd->prepare('INSERT INTO Follower (Person_ID) VALUES(SELECT Person_ID FROM Person WHERE Person_Lastname = $nomAcc AND Person_Firstname =$prenomAcc)');
+$req2 = $bdd->prepare('INSERT INTO Follower (Person_ID) SELECT Person_ID FROM Person WHERE (Person_Lastname = :nomAcc AND Person_Firstname = :PrenomAcc)');
+$req2->execute(array(
+	'nomAcc'=>"$nomAcc",
+	'prenomAcc'=>"$prenomAcc"));
+
 include "home.php";
 
 	}
