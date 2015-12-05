@@ -54,12 +54,12 @@
                         <a class="mobile-btn" href="#" title="Hide navigation">Hide navigation</a>
 
                         <ul id="nav" class="nav">
-                            <li class="active"><a href="home.php">Home</a></li>
+                            <li ><a href="home.php">Home</a></li>
                             <li><a href="agenda.php">Agenda</a></li>
                             <li><a href="info.php">Informations pratiques</a></li>
                             <li><a href="contact.php">Contact</a></li>
-                            <li align="right"><a href="panier.php" style="font-weight:bold; align :right"><FONT size="4pt"> Panier</FONT></a></li>
-                            <li align="right"><a href="panier.php" style="font-weight:bold; align :right"><FONT size="4pt"> Mon compte</FONT></a></li>
+                            <li class="active"><a href="panier.php" style="font-weight:bold; align :right"><FONT size="4pt"> Panier</FONT></a></li>
+                            <li ><a href="moncompte.php" style="font-weight:bold; align :right"><FONT size="4pt"> Mon compte</FONT></a></li>
                         </ul>
                     </nav>
                 </div>
