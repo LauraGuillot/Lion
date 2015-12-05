@@ -37,37 +37,8 @@
 
         <!-- Header
         ================================================== -->
-        <header class="mobile">
-
-            <div class="row">
-
-                <div class="col full">
-
-                    <div class="logo">
-                        <a href="#" style="top : 4px"><img alt="" src="images/logo.png" style="height:  50px; width: 55px; top: 4px"></a>
-                    </div>
-
-                    <nav id="nav-wrap">
-
-                        <a class="mobile-btn" href="#nav-wrap" title="Show navigation">Show navigation</a>
-                        <a class="mobile-btn" href="#" title="Hide navigation">Hide navigation</a>
-
-                        <ul id="nav" class="nav">
-                            <input type="button" name="inscrption" value="Connexion/Inscription" onclick="self.location.href = 'inscription.php'" style="width:200px;height: 50px;padding:0" style="background-color:#3cb371" style="color:white; font-weight:bold"onclick>
-                            <li><a href="home.php">Home</a></li>
-                            <li><a href="agenda.php">Agenda</a></li>
-                            <li><a href="info.php">Informations pratiques</a></li>
-                            <li><a href="contact.php">Contact</a></li>
-
-                        </ul>
-
-                    </nav>
-
-                </div>
-
-            </div>
-
-        </header> <!-- Header End -->
+       <?php include("header1.php"); ?>
+        <!-- Header End -->
 
 
 
