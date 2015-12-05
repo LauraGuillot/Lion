@@ -14,12 +14,9 @@ function afficheFooter() {
 
                 <div class="col g-5 pull-right">
                     <ul class="social-links">
-                        <li><a href="#"><i class="icon-facebook"></i></a></li>
-                        <li><a href="#"><i class="icon-twitter"></i></a></li>
-                        <li><a href="#"><i class="icon-google-plus-sign"></i></a></li>
-                        <li><a href="#"><i class="icon-linkedin"></i></a></li>
-                        <li><a href="#"><i class="icon-skype"></i></a></li>
-                        <li><a href="#"><i class="icon-rss-sign"></i></a></li>
+                        <li><a href="https://www.facebook.com/LionsClubsdeFrance"><i class="icon-facebook"></i></a></li>
+                        <li><a href="https://twitter.com/LionsFRANCE"><i class="icon-twitter"></i></a></li>                   
+                        <li><a href="https://www.linkedin.com/company/lions-clubs-de-france"><i class="icon-linkedin"></i></a></li>
                     </ul>
                 </div>
             </div>
