@@ -150,7 +150,7 @@ function afficheAgenda() {
     
     afficheRepas($bdd);
     afficheExcursions($bdd);
-   echo'<html> </div></html>';
+   echo'</html> </div></html>';
 }
 
 afficheAgenda();
