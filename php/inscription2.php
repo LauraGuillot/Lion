@@ -194,7 +194,10 @@
                             </div>
 
 
-						<input type="submit" name="v2" value="Valider">
+                            <input type="submit" name="v2" value="Valider">
+                            <br></br>
+                            <br></br>
+
                         </div>
 
                     </fieldset>
@@ -212,10 +215,8 @@
 
         <!-- footer
         ================================================== -->
-        <br></br>
-        <br></br>
-        <br></br>
-            <?php include("footer.php"); ?>
+
+        <?php include("footer.php"); ?>
         <!-- Footer End-->
 
         <!-- Java Script

@@ -200,10 +200,9 @@
 
 
 
-                            <button class="submit">Valider</button>
-                            <span id="image-loader">
-                                <img src="images/loader.gif" alt="" />
-                            </span>
+                            <input type="submit" name="v2" value="Valider">
+                            <br></br>
+                            <br></br>
                         </div>
 
                     </fieldset>
