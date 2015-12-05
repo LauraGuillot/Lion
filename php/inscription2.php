@@ -212,33 +212,11 @@
 
         <!-- footer
         ================================================== -->
-        <footer>
-
-            <div class="row">
-
-                <div class="col g-7">
-                    <br><br>
-                    <ul class="copyright">
-                        <li>&copy; 2014 Kreative</li>
-                        <li>Design by <a href="http://www.styleshout.com/" title="Styleshout">Styleshout</a></li>               
-                    </ul>
-                </div>
-
-                <div class="col g-5 pull-right">
-                    <br><br>
-                    <ul class="social-links">
-                        <li><a href="#"><i class="icon-facebook"></i></a></li>
-                        <li><a href="#"><i class="icon-twitter"></i></a></li>
-                        <li><a href="#"><i class="icon-google-plus-sign"></i></a></li>
-                        <li><a href="#"><i class="icon-linkedin"></i></a></li>
-                        <li><a href="#"><i class="icon-skype"></i></a></li>
-                        <li><a href="#"><i class="icon-rss-sign"></i></a></li>
-                    </ul>
-                </div>
-
-            </div>
-
-        </footer> <!-- Footer End-->
+        <br></br>
+        <br></br>
+        <br></br>
+            <?php include("footer.php"); ?>
+        <!-- Footer End-->
 
         <!-- Java Script
         ================================================== -->
