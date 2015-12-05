@@ -50,10 +50,9 @@
 
             </div>
         </div>
-        
-        //Afficher le panier
-        
         <!-- Section End-->
+        
+        
 
 
         <!-- footer
