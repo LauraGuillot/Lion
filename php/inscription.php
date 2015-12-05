@@ -61,7 +61,7 @@
                 </div>
 
                 <!-- form -->
-                <form name="contactForm" id="contactForm" method="post"  action="verif.php">
+                <form name="contactForm" id="contactForm" method="post"  action="verif1.php">
                     <fieldset >
 
                         <div>

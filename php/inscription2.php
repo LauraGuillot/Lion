@@ -57,7 +57,7 @@
             <div class="col g-7"style="top: 80px">
 
                 <!-- form -->
-                <form name="contactForm" id="contactForm" method="post" action="verif.php">
+                <form name="contactForm" id="contactForm" method="post" action="verif2.php">
                     <fieldset>
                         <div class="row section-head">
 
