@@ -72,12 +72,7 @@
 
         <!-- Planning Section
           ================================================== -->
- <div class="row section-head">
-        <div class="col full">
-            <span><h2 style = "color :#11ABB0; margin : 65px; text-align : center">Agenda des conférences et des activités</h2><span>
-        </div>
- </div>
-        
+       
    <?php include("affichageAgenda1.php"); ?>
         
                     <!-- Section End -->
