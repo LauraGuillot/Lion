@@ -72,75 +72,25 @@
 
         <!-- Planning Section
           ================================================== -->
-        <div class="row section-head">
-            <div class="col full">
-                <span><h2 style = "color :#11ABB0; margin : 65px; text-align : center">Agenda des conférences et des activités</h2><span>
-                        </div>
+ <div class="row section-head">
+        <div class="col full">
+            <span><h2 style = "color :#11ABB0; margin : 65px; text-align : center">Agenda des conférences et des activités</h2><span>
+        </div>
+ </div>
+        
+   <?php include("affichageAgenda1.php"); ?>
+        
+                    <!-- Section End -->
 
-                        <div>
-                            <center><TABLE id="tableau" cols="3" style="border:1px solid black">
-                                    <CAPTION> <h2>Repas<br></br></h2> </CAPTION>
-
-                                    <TR class="row" >
-                                        <TH class ="col" height=60 width=20% style="border:1px solid black;">Date</TH>
-                                        <TH class ="col" height=60 width=30% style="border:1px solid black;">Intitulé </TH>
-                                        <th class ="col" height=60 width=20% style="border:1px solid black">Tarif privilège <br>(jusqu'au 31/30)  </th>
-                                        <th class ="col" height=60 width=20% style="border:1px solid black">Tarif plein <br>(à compter du 01/04)  </th>
-                                        <th class ="col" height=60 width=10% style="border:1px solid black"> <FONT size="2.5pt">Ajouter au panier </FONT></th>
-                                    </TR>
-                                    <TR >
-                                        <Td class ="col" rowspan="2" width=20% style="border:1px solid black; text-align : center;"> <FONT style="color : #F0FFFF"><b>Vendredi 23/05</b></FONT></Td>
-                                        <Td class ="col" width=30% style="border:1px solid black; text-align : center;"> <FONT style="color : #F0FFFF">Déjeuner de travail</FONT></Td>
-                                        <Td class ="col" width=20% style="border:1px solid black; text-align : center"> <FONT style="color : #F0FFFF">40 €</FONT> </Td>
-                                        <Td class ="col" width=20% style="border:1px solid black;text-align : center"><FONT style="color : #F0FFFF"> 48 €</FONT></Td>
-                                        <Td class ="col" width=10% style="border:1px solid black;text-align : center"><FONT style="color : #70F861"> <b>+ </b></FONT></Td>
-                                    </TR>
-
-                                    <TR style="color: #525252;">
-                                        <Td class ="col" width=20% style="border:1px solid black; text-align : center;"><b>Vendredi 23/05</b></Td>
-                                        <Td class ="col" width=30% style="border:1px solid black; text-align : center;"> Soirée</Td>
-                                        <Td class ="col" width=20% style="border:1px solid black; text-align : center"> 70 € </Td>
-                                        <Td class ="col" width=20% style="border:1px solid black;text-align : center"> 84 €</Td>
-                                        <Td class ="col" width=10% style="border:1px solid black;text-align : center"><FONT style="color : #FF5E4D"> complet </FONT></Td>
-                                    </TR>
-                                </TABLE></center>
-                        </div>
-                        <br></br>
-                        <div>
-                            <center><TABLE id="tableau" cols="3" style="border:1px solid black">
-                                    <CAPTION> <h2>Excursions<br></br></h2> </CAPTION>
-                                    <TR class="row" >
-
-                                        <TH class ="col" height=60 width=20% style="border:1px solid black;">Date</TH>
-                                        <TH class ="col" height=60 width=30% style="border:1px solid black; ">Intitulé </TH>
-                                        <th class ="col" height=60 width=20% style="border:1px solid black">Tarif privilège <br>(jusqu'au 31/30)  </th>
-                                        <th class ="col" height=60 width=20% style="border:1px solid black">Tarif plein <br>(à compter du 01/04)  </th>
-                                        <th class ="col" height=60 width=10% style="border:1px solid black"> <FONT size="2.5pt">Ajouter au panier </FONT></th>
-                                    </TR>
-                                    <TR class="row">
-                                        <Td class ="col" rowspan=2 width=20% style="border:1px solid black; text-align : center;"> <FONT style="color : #F0FFFF"><b>Vendredi 23/05</b></FONT></Td>
-                                        <Td class ="col" width=30% style="border:1px solid black; text-align : center;"> <FONT style="color : #F0FFFF">Mont Saint Michel</FONT></Td>
-                                        <Td class ="col" width=20% style="border:1px solid black; text-align : center"> <FONT style="color : #F0FFFF">100 €</FONT> </Td>
-                                        <Td class ="col" width=20% style="border:1px solid black;text-align : center"> <FONT style="color : #F0FFFF">115 €</FONT></Td>
-                                        <Td class ="col" width=10% style="border:1px solid black;text-align : center"><FONT style="color : #70F861"> <b>+ </b></FONT></Td>
-                                    </TR>
-                                </TABLE></center>
-                        </div>
-
-
-                        </div>
-
-                        <!-- Section End -->
-
-                        <!-- footer
-                        ================================================== -->
-                        <?php include("footer.php"); ?>
-                        <!-- Footer End-->
+                    <!-- footer
+                    ================================================== -->
+                    <?php include("footer.php"); ?>
+                    <!-- Footer End-->
 
 
 
 
 
-                        </body>
+                    </body>
 
-                        </html>
+                    </html>
