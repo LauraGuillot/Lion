@@ -1,6 +1,6 @@
 <?php
 
-	$email = $_POST['email'];
+    $email = $_POST['email'];
     $mdp = $_POST['mdp'];
     $mdp2 = $_POST['cmdp'];
 
