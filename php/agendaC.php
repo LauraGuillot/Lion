@@ -44,7 +44,7 @@
         <!-- Planning Section
           ================================================== -->
        
-   <?php include("affichageAgenda1.php"); ?>
+   <?php include("affichageAgenda2.php"); ?>
         
                     <!-- Section End -->
 
