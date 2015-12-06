@@ -26,6 +26,23 @@ $traindate = $_POST['traindate'];
 $trainheure = $_POST['trainheure'];
 
 
+
+//Générer une chaine de caractère unique et aléatoire
+
+function random($car) {
+$string = "";
+$chaine = "abcdefghijklmnpqrstuvwxy";
+srand((double)microtime()*1000000);
+for($i=0; $i<$car; $i++) {
+$string .= $chaine[rand()%strlen($chaine)];
+}
+return $string;
+}
+
+// APPEL
+// Génère une chaine de longueur 20
+$chaine = random(20);
+
     
 
 if (empty($fClub) or empty($fDistrict)) {
@@ -85,15 +102,16 @@ if (empty($fClub) or empty($fDistrict)) {
         $date = $row["DATE_FORMAT(NOW(),'%c-%d-%Y %h:%i %p')"]; 
         echo "$date";
         
-    $req9 = $bdd->prepare('INSERT INTO Connexion (Last_Connexion) VALUE (:Last_Connexion)');
+    $req9 = $bdd->prepare('INSERT INTO Connexion (Connexion_ID,Last_Connexion) VALUE (:chaine,:Last_Connexion)');
     $req9->execute(array(
+    	'chaine' =>"$chaine$date",
         'Last_Connexion' => "$date",)); 
         
     $req10 = $bdd->prepare("SELECT Connexion_ID FROM Connexion WHERE (Last_Connexion = '$date')", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $req10->execute(array());
         $row = $req10 -> fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
         $connexion = $row["Connexion_ID"];    
-        
+        echo "$connexion";
         
     $req11 = $bdd->prepare('INSERT INTO Member (Member_Title, Member_Satus, District_ID, Club_ID, Member_Num, Member_Additional_Adress, Member_Postal_Code, Member_Street, Member_City, Member_Phone, Member_Mobile, Member_Email, Member_Position_Club, Member_Position_District, Member_By_Train, Member_Date_Train, Connexion_ID,Person_ID, Follower_ID, Member_Password ) VALUES (:civilite,:status,:districtID,:clubID,:num,:supad,:cp,:rue,:ville,:phone,:mobile,:email,:pclub,:pdistrict,:btrain,:htrain,:connexion,:personID2,:personID,:mdp)');
     $req11->execute(array(
