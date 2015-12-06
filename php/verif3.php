@@ -1,6 +1,5 @@
 <?php
 
-<<<<<<< Updated upstream
 $email = $_POST['email'];
 $mdp = $_POST['mdp'];
 $mdp2 = $_POST['mdp2'];
@@ -24,30 +23,6 @@ $nomAcc = $_POST['nomAcc'];
 $train = $_POST['train'];
 $traindate = $_POST['traindate'];
 $trainheure = $_POST['trainheure'];
-=======
-	$email = $_POST['email'];
-    $mdp = $_POST['mdp'];
-    $mdp2 = $_POST['cmdp'];
-	$civilite = $_POST['civilite'];
-    $nom = $_POST['nom'];
-    $prenom = $_POST['prenom'];
-    $titre = $_POST['titre'];
-    $district = $_POST['district'];
-    $club = $_POST['club'];
-    $rue = $_POST['rue'];
-    $num = $_POST['num'];
-    $cp = $_POST['cp'];
-    $ville = $_POST['ville'];
-    $pays = $_POST['pays'];
-    $tel = $_POST['tel'];
-    $portable = $_POST['portable'];
-    $fClub = $_POST['fClub'];
-    $fDistrict = $_POST['fDistrict'];
-    $prenomAcc = $_POST['prenomAcc'];
-    $nomAcc = $_POST['nomAcc'];
-    $train = $_POST['train'];
-    $traindate = $_POST['traindate'];
-    $trainheure = $_POST['trainheure'];
     
 
 if (empty($fClub) or empty($fDistrict)) {
