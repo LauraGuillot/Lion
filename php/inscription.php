@@ -67,7 +67,7 @@
                         <div>
                             <label for="contactEmail">Adresse email <span class="required">*</span></label>
                             <input name="email" type="mail" id="mail" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
-                            
+
                         </div>
 
                         <div>
@@ -83,7 +83,7 @@
 
 
                         <div>
-                           <input type="submit" name="v1" value="Valider">
+                            <input type="submit" name="v1" value="Valider">
                         </div>
 
                     </fieldset>
@@ -105,25 +105,23 @@
                 </div>
 
                 <!-- form -->
-                <form name="contactForm" id="contactForm" method="post" action="" >
+                <form name="contactForm" id="contactForm" method="post" action="verifConnexion.php" >
                     <fieldset >
 
                         <div>
-                            <label for="contactEmail">Adresse e-mail <span class="required">*</span></label>
-                            <input name="contactEmail" type="mail" id="mail" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
+                            <label for="mail">Adresse e-mail <span class="required">*</span></label>
+                            <input name="mail" type="mail" id="mail" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
                         </div>
 
                         <div>
-                            <label for="contactSubject">Mot de passe<span class="required">*</span></label>
-                            <input name="contactSubject" type="password" id="mdp" size="35" value="" />
+                            <label for="mdp">Mot de passe<span class="required">*</span></label>
+                            <input name="mdp" type="password" id="mdp" size="35" value="" />
                         </div>
 
 
                         <div>
                             <button name="v1" id="v1" class="submit">Valider</button>
-                            <span id="image-loader">
-                                <img src="images/loader.gif" alt="" />
-                            </span>
+
                         </div>
 
                     </fieldset>
@@ -147,7 +145,7 @@
     <!-- footer
     ================================================== -->
     <br>
-        <?php include("footer.php"); ?>
+    <?php include("footer.php"); ?>
     <!-- Footer End-->
 
     <!-- Java Script
