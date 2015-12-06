@@ -99,26 +99,27 @@
                         
                         <div>
                             <FORM>
-                                <SELECT name="district" >
-                                    <OPTION> Choisissez votre district
-                                    <OPTION> CENTRE
-                                    <OPTION> CENTRE - EST
-                                    <OPTION> CENTRE - OUEST
-                                    <OPTION> CENTRE - SUD
-                                    <OPTION> COTE D'AZUR
-                                    <OPTION> CORSE
-                                    <OPTION> EST
-                                    <OPTION> ILE DE FRANCE - EST
-                                    <OPTION> ILE DE FRANCE - OUEST
-                                    <OPTION> ILE DE FRANCE - PARIS
-                                    <OPTION> NORD
-                                    <OPTION> NORMANDIE
-                                    <OPTION> OUEST
-                                    <OPTION> SUD
-                                    <OPTION> SUD-EST
-                                    <OPTION> SUD-OUEST
-                                    <OPTION> AUTRE
+                                <SELECT name="district">
+                                    <OPTION> Choisissez votre district </OPTION>
+                                    <OPTION value ="CENTRE"> CENTRE </OPTION>
+                                    <OPTION value ="CENTRE-EST"> CENTRE - EST  </OPTION>
+                                    <OPTION value ="CENTRE-OUEST"> CENTRE - OUEST  </OPTION>
+                                    <OPTION value ="CENTRE-SUD"> CENTRE - SUD  </OPTION>
+                                    <OPTION value ="COTE-AZUR"> COTE D'AZUR  </OPTION>
+                                    <OPTION value ="CORSE"> CORSE  </OPTION>
+                                    <OPTION value ="EST"> EST  </OPTION>
+                                    <OPTION value ="ILE-DE-FRANCE"> ILE DE FRANCE - EST  </OPTION>
+                                    <OPTION value ="ILE-DE-FRANCE-OUEST"> ILE DE FRANCE - OUEST  </OPTION>
+                                    <OPTION value ="ILE-DE-FRANCE-PARIS"> ILE DE FRANCE - PARIS  </OPTION>
+                                    <OPTION value="NORD"> NORD </OPTION> 
+                                    <OPTION value ="NORMANDIE"> NORMANDIE  </OPTION>
+                                    <OPTION value ="OUEST"> OUEST  </OPTION>
+                                    <OPTION value ="SUD"> SUD  </OPTION>
+                                    <OPTION value ="SUD-EST"> SUD-EST  </OPTION>
+                                    <OPTION value="SUD-OUEST"> SUD-OUEST  </OPTION>
+                                    <OPTION value="AUTRE"> AUTRE  </OPTION>
                                 </SELECT>
+             
                             </FORM>
                         </div>
 

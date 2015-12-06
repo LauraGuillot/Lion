@@ -25,6 +25,33 @@ $train = $_POST['train'];
 $traindate = $_POST['traindate'];
 $trainheure = $_POST['trainheure'];
 
+   // L'élément "district" existe bien
+    echo "$district" ;
+
+
+if ($train ==1){
+$train = "true";}
+
+else{
+$train = "false";}
+
+if ($civilite ==0){
+$civilite = "Mlle";
+}
+
+if ($civilite ==1){
+$civilite = "Mme";
+}
+
+if ($civilite ==3){
+$civilite = "M";
+}
+
+if ($titre ==1){
+$titre = "true";}
+
+else{
+$titre = "false";}
 
 
 //Générer une chaine de caractère unique et aléatoire
@@ -76,7 +103,7 @@ if (empty($fClub) or empty($fDistrict)) {
         $row = $req4 -> fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
         $clubID = $row["Club_ID"]; 
         
-    $req5 = $bdd->prepare("SELECT District_ID FROM District WHERE (Club_Name = '$district')", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $req5 = $bdd->prepare("SELECT District_ID FROM District WHERE (District_Name = '$district')", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $req5->execute(array());
         $row = $req5 -> fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
         $districtID = $row["District_ID"]; 
@@ -100,7 +127,7 @@ if (empty($fClub) or empty($fDistrict)) {
     $req8->execute(array());
         $row = $req8 -> fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
         $date = $row["DATE_FORMAT(NOW(),'%c-%d-%Y %h:%i %p')"]; 
-        echo "$date";
+        
         
     $req9 = $bdd->prepare('INSERT INTO Connexion (Connexion_ID,Last_Connexion) VALUE (:chaine,:Last_Connexion)');
     $req9->execute(array(
@@ -111,12 +138,12 @@ if (empty($fClub) or empty($fDistrict)) {
     $req10->execute(array());
         $row = $req10 -> fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
         $connexion = $row["Connexion_ID"];    
-        echo "$connexion";
+      
         
     $req11 = $bdd->prepare('INSERT INTO Member (Member_Title, Member_Satus, District_ID, Club_ID, Member_Num, Member_Additional_Adress, Member_Postal_Code, Member_Street, Member_City, Member_Phone, Member_Mobile, Member_Email, Member_Position_Club, Member_Position_District, Member_By_Train, Member_Date_Train, Connexion_ID,Person_ID, Follower_ID, Member_Password ) VALUES (:civilite,:status,:districtID,:clubID,:num,:supad,:cp,:rue,:ville,:phone,:mobile,:email,:pclub,:pdistrict,:btrain,:htrain,:connexion,:personID2,:personID,:mdp)');
     $req11->execute(array(
         'civilite' => "$civilite",
-        'status' => "$stauts",
+        'status' => "$status",
         'districtID' => "$districtID",
         'clubID' => "$clubID",
         'num' => "$num",
@@ -132,20 +159,42 @@ if (empty($fClub) or empty($fDistrict)) {
         'btrain' => "$train",
         'htrain' => "$traindate",
         'connexion' => "$connexion",
-        'civilite' => "$civilite",
+        
         'personID2' => "$personID2",
         'personID' => "$personID",
-        'mdp' => "$mdp",));      
+        'mdp' => "$mdp",));
         
-        
+   
+     /*   
+        echo "$civilite\n";
+        echo "$status\n";
+        echo "$districtID\n";
+        echo "$clubID\n";
+        echo "$num\n";
+        echo "$supad\n";
+        echo "$cp\n";
+        echo "$rue\n";
+        echo "$ville\n";
+        echo "$tel\n";
+        echo "$portable\n";
+        echo "$email\n";
+        echo "$fClub\n";
+        echo "$fDistrict\n";
+        echo "$train\n";
+        echo "$traindate\n";
+        echo "$connexion\n";
+      
+        echo "$personID2\n";
+        echo "$personID\n";
+        echo "$mdp\n";
             
-        
+       */ 
          
         
 
         
         
 
-    //include ("homeC.php");
+    // include ("homeC.php");
 }
 ?>
