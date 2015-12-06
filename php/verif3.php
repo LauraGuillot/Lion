@@ -41,14 +41,12 @@ if (empty($fClub) or empty($fDistrict)) {
 
 
     $req2 = $bdd->prepare("SELECT Person_ID FROM Person WHERE (Person_Lastname = '$nomAcc' AND Person_Firstname = '$prenomAcc')", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $req2->execute(array(/*
-        'nomAcc' => $nomAcc,
-        'prenomAcc' => $prenomAcc*/));
+    $req2->execute(array());
         $row = $req2 -> fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
         $personID = $row["Person_ID"];
 
 
-    $req3 = $bdd->prepare(' INSERT INTO Follower (Person_ID) VALUE (:id)');
+    $req3 = $bdd->prepare('INSERT INTO Follower (Person_ID) VALUE (:id)');
     $req3->execute(array(
         'id' => "$personID",));
 

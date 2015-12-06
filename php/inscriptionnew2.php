@@ -57,7 +57,7 @@
             <div class="col g-7"style="top: 80px">
 
                 <!-- form -->
-                <form name="contactForm" id="contactForm" method="post" action="validationInscription2.php">
+                <form name="contactForm" id="contactForm" method="post" action="verif2.php">
                     <fieldset>
                         <div>
                             <h7 style="color : #FF0000;"> ERREUR - VEUILLEZ REMPLIR TOUS LES CHAMPS OBLIGATOIRES</h7>
