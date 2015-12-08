@@ -4,6 +4,7 @@
 <!--[if (gte IE 8)|!(IE)]><!--><html lang="fr"> <!--<![endif]-->
     <head>
 
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 
         <!--- Basic Page Needs
         ================================================== -->
@@ -98,8 +99,8 @@
                         </div>
                         
                         <div>
-                            <FORM>
-                                <SELECT name="district">
+                            <FORM  method="post">
+                                <SELECT id="district" name="district">
                                     <OPTION> Choisissez votre district </OPTION>
                                     <OPTION value ="CENTRE"> CENTRE </OPTION>
                                     <OPTION value ="CENTRE-EST"> CENTRE - EST  </OPTION>
@@ -119,13 +120,24 @@
                                     <OPTION value="SUD-OUEST"> SUD-OUEST  </OPTION>
                                     <OPTION value="AUTRE"> AUTRE  </OPTION>
                                 </SELECT>
-             
+             <input type="hidden" name="district2" value=".$_POST['district']">
                             </FORM>
                         </div>
 
                         <div>
                             <label for="contactSubject">Club<span class="required">*</span></label>
-                            <input name="club" type="text" id="club" size="35" value="" />
+                            <div>
+                            
+                            <FORM>
+                            <script src="script.js"></script>
+                            <input name="club" type="text" id="club" size="35"/>
+                            
+                            
+                            	
+                            </FORM>
+                            </div>
+                            	
+                            
                         </div>
                         
                         <div class="row section-head">

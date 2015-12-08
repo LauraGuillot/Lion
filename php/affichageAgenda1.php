@@ -139,7 +139,7 @@ function afficheActiviteComplete($nom, $date, $prix1, $prix2) {
 function afficheAgenda() {
 
     /* Conexion à la base de données */
-    $bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', '');
+    $bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', 'lion');
 
     /* Affichage des activités */
     echo'<html> <div class="row section-head">
