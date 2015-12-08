@@ -26,8 +26,7 @@ function testConnexion($bdd, $mail, $mdp) {
                 $id = $ligne["Person_ID"];
                 $stmt2 = $bdd->prepare("UPDATE Connexion SET Last_Connexion = NOW() WHERE Connexion_ID =(SELECT Connexion_ID FROM Member WHERE (Person_ID = $id))");
                 $stmt2->execute();
-
-                include'homeC.php';
+                include 'homeC.php';
             }
         }
    
