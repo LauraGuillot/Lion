@@ -12,6 +12,7 @@ $district2 = $_POST['district2'];
 $club = $_POST['club'];
 $rue = $_POST['rue'];
 $num = $_POST['num'];
+$cadr= $_POST['cadr'];
 $cp = $_POST['cp'];
 $ville = $_POST['ville'];
 $pays = $_POST['pays'];

@@ -149,6 +149,11 @@
                             <input name="rue" type="text" id="rue" size="35" value="" />
                         </div>
 
+						<div>
+                            <label for="contactSubject">Complément d'adresse</label>
+                            <input name="cadr" type="text" id="cadr" size="5" value="" />
+                        </div>
+
                         <div>
                             <label for="contactSubject">N°<span class="required">*</span></label>
                             <input name="num" type="text" id="num" size="35" value="" />
