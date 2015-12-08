@@ -7,8 +7,8 @@ function afficheFooter() {
             <div class="row">
                 <div class="col g-7">
                     <ul class="copyright">
-                        <li>&copy; 2015 Kreative</li>
-                        <li>Design by <a href="http://www.styleshout.com/" title="Styleshout">Styleshout</a></li>               
+                        <li>&copy; 2016 Lions Clubs</li>
+                        <li>Design by <a href="http://www.ec-nantes.fr/" title="Centrale"> Ecole Centrale Nantes</a></li>               
                     </ul>
                 </div>
 
