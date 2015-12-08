@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <!--[if lt IE 8 ]><html class="ie ie7" lang="en"> <![endif]-->
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
@@ -20,9 +23,10 @@
    ================================================== -->
         <link rel="stylesheet" href="css/base.css">
         <link rel="stylesheet" href="css/layout.css">
+
         <!--[if lt IE 9]>
-                       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-               <![endif]-->
+                <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
 
         <!-- Favicons
              ================================================== -->
@@ -35,7 +39,7 @@
 
 
         <!-- Header
-        ================================================== -->
+          ================================================== -->
         <?php
         $idco = $_GET['idco'];
 
@@ -58,11 +62,12 @@
         print(" <li ><a href=\"http://localhost/lion/Lion/php/homeC.php?idco=$idco\">Home</a></li>");
         print(" <li ><a href=\"http://localhost/lion/Lion/php/agendaC.php?idco=$idco\">Agenda</a></li>");
         print(" <li ><a href=\"http://localhost/lion/Lion/php/infoC.php?idco=$idco\">Info</a></li>");
-        print(" <li class=\"active\"><a href=\"http://localhost/lion/Lion/php/contactC.php?idco=$idco\">Contact</a></li>");
+        print(" <li ><a href=\"http://localhost/lion/Lion/php/contactC.php?idco=$idco\">Contact</a></li>");
 
         print(" <li><a href=\"http://localhost/lion/Lion/php/panier.php?idco=$idco\" style=\"font-weight:bold; align :right\"><FONT size=\"4pt\"> Panier</FONT></a></li>");
         print(" <li><a href=\"http://localhost/lion/Lion/php/moncompte.php?idco=$idco\" style=\"font-weight:bold; align :right\"><FONT size=\"4pt\"> Mon compte</FONT></a></li>");
-print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\" style=\"font-weight:bold; align :right\"><FONT size=\"4pt\"> Se déconnecter</FONT></a></li>");
+        print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\" style=\"font-weight:bold; align :right\"><FONT size=\"4pt\"> Se déconnecter</FONT></a></li>");
+
         echo'  </ul>
                     </nav>
                 </div>
@@ -70,97 +75,40 @@ print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\
 
         </header>';
         ?>
+
         <!-- Header End -->
 
 
-        <!-- Contact Section
-          ================================================== -->
-
+        <!-- Section deconnexion
+        ================================================== -->
 
         <div class="row section-head">
             <div class="col full">
-                <h2 style="margin : 65px ; color : #11ABB0; text-align : center"> Contact Us</h2>
-
+                <br></br>
+                <br></br>
+                <span><h2 style = "color :#11ABB0; margin : 65px; text-align : center"> Voulez-vous vraiment vous déconnecter ?                 
+                </span>
             </div>
         </div>
-
-        <div class="row">
-
-            <div class="col g-7">
-
-                <!-- form -->
-                <form name="contactForm" id="contactForm" method="post" action="verifContact.php">
-                    <fieldset>
-                        <h7 style="color : #FF0000;"> ERREUR ! SAISIR A NOUVEAU LES INFORMATIONS</h7>
-                        <div>
-                            <label for="contactName">Nom <span class="required">*</span></label>
-                            <input name="contactName" type="text" id="contactName" size="35" value="" />
-                        </div>
-
-                        <div>
-                            <label for="contactEmail">E-mail <span class="required">*</span></label>
-                            <input name="contactEmail" type="text" id="contactEmail" size="35" value="" />
-                        </div>
-
-                        <div>
-                            <label for="contactSubject">Sujet</label>
-                            <input name="contactSubject" type="text" id="contactSubject" size="35" value="" />
-                        </div>
-
-                        <div>
-                            <label  for="contactMessage">Message <span class="required">*</span></label>
-                            <textarea name="contactMessage"  id="contactMessage" rows="15" cols="50" ></textarea>
-                        </div>
-
-                        <div>
-                            <button class="submit">Envoyer</button>
-                            <span id="image-loader">
-                                <img src="images/loader.gif" alt="" />
-                            </span>
-                        </div>
-
-                    </fieldset>
-                </form> <!-- Form End -->
-
-                <!-- contact-warning -->
-                <div id="message-warning"></div>
-                <!-- contact-success -->
-                <div id="message-success">
-                    <i class="icon-ok"></i>Votre message a bien été envoyé, Merci!<br />
-                </div>
-
-            </div>
-
-
-            <aside class="col g-5">
-
-                <h3>Contactez-nous en utilisant le formulaire ci-contre ou bien à l'adresse ci-dessous.</br></h3>
-
-                <p> </p>
-
-                <p style="text-align : center">
-                    <b> Lions Clubs International <br/>
-                        Maison des Lions de France <br/>
-                        295, rue Saint Jacques <br/>
-                        75005 Paris - FRANCE <br/></b>
-                </p>
-
-                <p style="text-align : center">
-                    <b> Téléphone: 01 46 34 14 10<br /></b>
-
-                </p><br />
-
-
-
-            </aside>
-
+    <center>
+        <form name="deco" id="deco" method="post"  action="">
+        <div>
+            <input type="submit" name="bouton" value="Déconnexion">
+            <br> </br>
+            <br> </br>
         </div>
+        </form>
+    </center>
 
-    </section> <!-- Contact Section End-->
+   <?php if (isset($_POST['bouton'])) {
+   header('Location: home.php');}
+       ?>
+ 
+    <!-- Section End-->
 
     <!-- footer
     ================================================== -->
-        <?php include("footer.php"); ?>
+    <?php include("footer.php"); ?>
     <!-- Footer End-->
 
     <!-- Java Script

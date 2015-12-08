@@ -264,7 +264,7 @@ function testConnexion($bdd, $mail, $mdp) {
 
             print(" <li><a href=\"http://localhost/lion/Lion/php/panier.php?idco=$idco\" style=\"font-weight:bold; align :right\"><FONT size=\"4pt\"> Panier</FONT></a></li>");
             print(" <li><a href=\"http://localhost/lion/Lion/php/moncompte.php?idco=$idco\" style=\"font-weight:bold; align :right\"><FONT size=\"4pt\"> Mon compte</FONT></a></li>");
-
+print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\" style=\"font-weight:bold; align :right\"><FONT size=\"4pt\"> Se déconnecter</FONT></a></li>");
             echo'  </ul>
                     </nav>
                 </div>
@@ -286,6 +286,7 @@ function testConnexion($bdd, $mail, $mdp) {
         <br></br>
             <span><h2 style = "color :#70F861; margin : 65px; text-align : center"> Connexion réussie <br></br>
            <center><FONT size="3.5pt " style = "color :#F0FFFF ;font-weight:normal">Vous pouvez désormais vous inscrire à des activités dans l\'onglet "Agenda" </center></FONT></h2><span>
+        <br></br>
         <br></br>
         <br></br>
 </div>
