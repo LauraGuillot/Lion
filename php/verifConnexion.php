@@ -17,8 +17,8 @@ function testConnexion($bdd, $mail, $mdp) {
 
         /* Si il n'y a pas de résultat, message d'erreur */
         if (count($res) == 0) {
-            /*On réaffiche la page avec un message d'erreur*/
-           
+            /* On réaffiche la page avec un message d'erreur */
+
             echo'<!DOCTYPE html>
 <!--[if lt IE 8 ]><html class="ie ie7" lang="en"> <![endif]-->
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
@@ -57,9 +57,10 @@ function testConnexion($bdd, $mail, $mdp) {
 
 
         <!-- Header
-        ================================================== -->
-        <?php include("header1.php"); ?>
-        <!-- Header End -->
+        ================================================== -->';
+            include("header1.php");
+
+            echo'<!-- Header End -->
 
 
 
@@ -162,8 +163,10 @@ function testConnexion($bdd, $mail, $mdp) {
 
     <!-- footer
     ================================================== -->
-    <br>
-    <?php include("footer.php"); ?>
+    <br>';
+            include("footer.php");
+
+            echo '
     <!-- Footer End-->
 
     <!-- Java Script
@@ -183,18 +186,24 @@ function testConnexion($bdd, $mail, $mdp) {
 </body>
 
 </html>';
-            
-    
         } else {/* Si il y a un résultat, connexion + mise à jour de la date de dernière connexion */
             foreach ($res as $ligne) {
 
                 $id = $ligne["Person_ID"];
                 $stmt2 = $bdd->prepare("UPDATE Connexion SET Last_Connexion = NOW() WHERE Connexion_ID =(SELECT Connexion_ID FROM Member WHERE (Person_ID = $id))");
                 $stmt2->execute();
-                include 'homeC.php';
+
+                $req3 = $bdd->prepare("SELECT Connexion_ID FROM Member WHERE (Person_ID = $id)", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+                $req3->execute(array());
+                $row = $req3->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+                $idco = $row["Connexion_ID"];
+     
             }
+            
+            echo"<a href=\"http://localhost/lion/Lion/php/homeC.php?idco=$idco\" > Connexion effectuée ! </a>"; 
+
+           /* include 'homeC.php';*/
         }
-   
     } catch (PDOException $e) {
         echo 'Connexion échouée : ' . $e->getMessage();
     }

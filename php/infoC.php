@@ -37,7 +37,40 @@
 
         <!-- Header
         ================================================== -->
-       <?php include("header2.php"); ?>
+       <?php
+        $idco = $_GET['idco'];
+
+        echo' <header class="mobile">';
+
+        echo'<div class="row"';
+
+        echo' <div class="col full">
+
+                    <div class="logo">';
+        print(" <a href=\"http://localhost/lion/Lion/php/homeC.php?idco=$idco\" style=\"top : 4px\"><img alt=\"\" src=\"images/logo.png\" style=\"height:  50px; width: 55px; top: 4px\"></a>");
+        echo'</div>
+
+                    <nav id="nav-wrap" >
+
+                        <a class="mobile-btn" href="#nav-wrap" title="Show navigation">Show navigation</a>
+                        <a class="mobile-btn" href="#" title="Hide navigation">Hide navigation</a>
+
+                        <ul id="nav" class="nav">';
+        print(" <li ><a href=\"http://localhost/lion/Lion/php/homeC.php?idco=$idco\">Home</a></li>");
+        print(" <li ><a href=\"http://localhost/lion/Lion/php/agendaC.php?idco=$idco\">Agenda</a></li>");
+        print(" <li class=\"active\" ><a href=\"http://localhost/lion/Lion/php/infoC.php?idco=$idco\">Info</a></li>");
+        print(" <li ><a href=\"http://localhost/lion/Lion/php/contactC.php?idco=$idco\">Contact</a></li>");
+
+        print(" <li><a href=\"http://localhost/lion/Lion/php/panier.php?idco=$idco\" style=\"font-weight:bold; align :right\"><FONT size=\"4pt\"> Panier</FONT></a></li>");
+        print(" <li><a href=\"http://localhost/lion/Lion/php/moncompte.php?idco=$idco\" style=\"font-weight:bold; align :right\"><FONT size=\"4pt\"> Mon compte</FONT></a></li>");
+
+        echo'  </ul>
+                    </nav>
+                </div>
+            </div>
+
+        </header>';
+        ?>
         <!-- Header End -->
 
         <!-- Info section

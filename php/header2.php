@@ -1,6 +1,6 @@
 <?php
 
-function afficheHeader() {
+function afficheHeader($idco) {
 
     /* Le eader est différent selon la page sur laquelle on se trouve */
     /* On récupère donc le nom de la page et on affiche différemment seon ce nom */
@@ -170,9 +170,10 @@ function afficheHeader() {
                             <li ><a href="homeC.php">Home</a></li>
                             <li ><a href="agendaC.php">Agenda</a></li>
                             <li><a href="infoC.php">Informations pratiques</a></li>
-                            <li><a href="contactC.php">Contact</a></li>
-                            <li class="active"><a href="panier.php" style="font-weight:bold; align :right"><FONT size="4pt"> Panier</FONT></a></li>
-                            <li ><a href="moncompte.php" style="font-weight:bold; align :right"><FONT size="4pt"> Mon compte</FONT></a></li>
+                            <li><a href="contactC.php">Contact</a></li>';
+                            
+                          echo"  <li class=\"active\"><a href=\"panier.php\".$idco style=\"font-weight:bold; align :right\"><FONT size=\"4pt\"> Panier</FONT></a></li>";
+                            echo'<li ><a href="moncompte.php" style="font-weight:bold; align :right"><FONT size="4pt"> Mon compte</FONT></a></li>
                         </ul>
                     </nav>
                 </div>
@@ -252,5 +253,5 @@ function afficheHeader() {
     }
 }
 
-afficheHeader();
+
 ?>
