@@ -144,7 +144,8 @@ function afficheAgenda() {
     /* Affichage des activités */
     echo'<html> <div class="row section-head">
         <div class="col full">
-            <span><h2 style = "color :#11ABB0; margin : 65px; text-align : center">Agenda des conférences et des activités</h2><span>
+            <span><h2 style = "color :#11ABB0; margin : 65px; text-align : center">Agenda des conférences et des activités <br>
+           <center><FONT size="3.5pt " style = "color :#F0FFFF ;font-weight:normal">Connectez vous pour pouvoir choisir des activités!</center></FONT></h2><span>
         </div>
         </html>';
     
