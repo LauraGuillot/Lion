@@ -4,7 +4,7 @@
 <!--[if (gte IE 8)|!(IE)]><!--><html lang="fr"> <!--<![endif]-->
     <head>
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 
         <!--- Basic Page Needs
         ================================================== -->
@@ -71,7 +71,7 @@
                                 <INPUT type="radio" name="civilite" value="3"> M.
                             </FORM>
                         </div>
-                        
+
                         <div>
                             <label for="contactSubject">Prénom<span class="required">*</span></label>
                             <input name="prenom" type="text" id="prenom" size="35" value="" />
@@ -89,17 +89,17 @@
 
                         <div style="color:#3d4145; font : 14px/24px opensans-bold, sans-serif; margin : 12px 0">
                             <FORM>
-                                <INPUT type="radio" name="titre"  value="1"> Lion
+                                <INPUT type="radio" name="titre" value="1"> Lion
                                 <INPUT type="radio" name="titre" value="2"> Leo
-                            </FORM>  
+                            </FORM>
                         </div>
-                        
+
                         <div style="color:#3d4145; font : 14px/24px opensans-bold, sans-serif; margin : 12px 0;">
                             <p></br> District<span class="required" style="color:#8B9798">*</span></p>
                         </div>
-                        
+
                         <div>
-                            <FORM  method="post">
+                            <FORM  method="post" name="district">
                                 <SELECT id="district" name="district">
                                     <OPTION> Choisissez votre district </OPTION>
                                     <OPTION value ="CENTRE"> CENTRE </OPTION>
@@ -120,36 +120,26 @@
                                     <OPTION value="SUD-OUEST"> SUD-OUEST  </OPTION>
                                     <OPTION value="AUTRE"> AUTRE  </OPTION>
                                 </SELECT>
-             <input type="hidden" name="district2" value=".$_POST['district']">
+
                             </FORM>
                         </div>
 
                         <div>
                             <label for="contactSubject">Club<span class="required">*</span></label>
-                            <div>
-                            
-                            <FORM>
-                            <script src="script.js"></script>
-                            <input name="club" type="text" id="club" size="35"/>
-                            
-                            
-                            	
-                            </FORM>
-                            </div>
-                            	
-                            
+                            <input name="club" type="text" id="club" size="35" value="" />
+
                         </div>
-                        
+
                         <div class="row section-head">
                             <h2 >Coordonnées</h2>
                         </div>
-                        
+
                         <div>
                             <label for="contactSubject">Rue<span class="required">*</span></label>
                             <input name="rue" type="text" id="rue" size="35" value="" />
                         </div>
 
-						<div>
+                        <div>
                             <label for="contactSubject">Complément d'adresse</label>
                             <input name="cadr" type="text" id="cadr" size="5" value="" />
                         </div>
