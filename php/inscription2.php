@@ -119,53 +119,53 @@
                                 <OPTION value="SUD-OUEST"> SUD-OUEST  </OPTION>
                                 <OPTION value="AUTRE"> AUTRE  </OPTION>
                             </SELECT>
-                        </div>                       
-<div style="color:#3d4145; font : 14px/24px opensans-bold, sans-serif; margin : 12px 0;">
+                        </div>    
+                        
+                        <div style="color:#3d4145; font : 14px/24px opensans-bold, sans-serif; margin : 12px 0;">
                             <p></br> Club<span class="required" style="color:#8B9798">*</span></p>
                         </div>
-    <?php            
-  /* * ************************************************ */
-/* Fontion pour afficher les clubs en fonction du district choisi */
-/* * *********************************************** */
-$district = $_POST['district'];
+                        
+                        <?php
+                        /************************************************* */
+                        /* Fontion pour afficher les clubs en fonction du district choisi */
+                        /* *********************************************** */
+                        $district = $_POST['district'];
 
-function afficheClub($bdd,$district) {
-    try {
+                        function afficheClub($bdd, $district) {
+                            try {
 
-        /* Préparation de la requête */
-        $sql = 'SELECT Club_Name FROM Club ' .
-                'INNER JOIN District ON (District.District_ID = Club.District_ID) ' .
-                'WHERE (District_Name = :district) ORDER BY (Club_Name);';
+                                /* Préparation de la requête */
+                                $sql = 'SELECT Club_Name FROM Club ' .
+                                        'INNER JOIN District ON (District.District_ID = Club.District_ID) ' .
+                                        'WHERE (District_Name = :district) ORDER BY (Club_Name);';
 
-        $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+                                $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
 
-        /* Exécution de la requête */
-        $stmt->execute(array(':district' => "$district"));
+                                /* Exécution de la requête */
+                                $stmt->execute(array(':district' => "$district"));
 
-        /* Exploitation des résultats */
-					print("<div>");
-					print("<SELECT id=\"district\" name=\"district\">");
-                 /* Affichage des activités */
-                 	echo '<OPTION value ="Choisissez votre club">Choisissez votre club</OPTION>';
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
- $nom=$row["Club_Name"];
-        			echo '<OPTION value ="'.$nom.'">' .$nom. '</OPTION>';
-        			}
-            
-            print("</SELECT>");
-            print("</div>");
-            }
-        
-            catch (PDOException $e) {
-        echo 'Connexion échouée : ' . $e->getMessage();
-    }
-    }
-    
-    /* Connexion à la base de données */
-    $bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', 'lion');
-    afficheClub($bdd,$district);
-              ?>  
-                            
+                                /* Exploitation des résultats */
+                                print("<div>");
+                                print("<SELECT id=\"district\" name=\"district\">");
+                                /* Affichage des activités */
+                                echo '<OPTION value ="Choisissez votre club">Choisissez votre club</OPTION>';
+                                while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
+                                    $nom = $row["Club_Name"];
+                                    echo '<OPTION value ="' . $nom . '">' . $nom . '</OPTION>';
+                                }
+
+                                print("</SELECT>");
+                                print("</div>");
+                            } catch (PDOException $e) {
+                                echo 'Connexion échouée : ' . $e->getMessage();
+                            }
+                        }
+
+                        /* Connexion à la base de données */
+                        $bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', '');
+                        afficheClub($bdd, $district);
+                        ?>  
+
                         <div class="row section-head">
                             <h2 >Coordonnées</h2>
                         </div>
@@ -232,7 +232,7 @@ function afficheClub($bdd,$district) {
         <!-- footer
         ================================================== -->
 
-        <?php include("footer.php"); ?>
+<?php include("footer.php"); ?>
         <!-- Footer End-->
 
         <!-- Java Script

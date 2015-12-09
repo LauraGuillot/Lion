@@ -1,10 +1,13 @@
 <?php
 
+$idco =$_GET['idco'];
+
+
 /* * ****************************************** */
 /* Fontion pour afficher le tableau des repas */
 /* * ****************************************** */
 
-function afficheRepas($bdd) {
+function afficheRepas($bdd,$idco) {
     try {
 
         /* Préparation de la requête */
@@ -38,9 +41,9 @@ function afficheRepas($bdd) {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
 
             if ($row["Activity_Capacity"] > 0) {
-                afficheActiviteLibre($row["Activity_Name"], $row["Activity_Date"], $row["Activity_Price1"], $row["Activity_Price2"]);
+                afficheActiviteLibre($row["Activity_Name"], $row["Activity_Date"], $row["Activity_Price1"], $row["Activity_Price2"],$idco);
             } else {
-                afficheActiviteComplete($row["Activity_Name"], $row["Activity_Date"], $row["Activity_Price1"], $row["Activity_Price2"]);
+                afficheActiviteComplete($row["Activity_Name"], $row["Activity_Date"], $row["Activity_Price1"], $row["Activity_Price2"],$idco);
             }
         }
 
@@ -57,7 +60,7 @@ function afficheRepas($bdd) {
 /* Fontion pour afficher le tableau des excursions */
 /* * *********************************************** */
 
-function afficheExcursions($bdd) {
+function afficheExcursions($bdd,$idco) {
     try {
 
         /* Préparation de la requête */
@@ -91,9 +94,9 @@ function afficheExcursions($bdd) {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
 
             if ($row["Activity_Capacity"] > 0) {
-                afficheActiviteLibre($row["Activity_Name"], $row["Activity_Date"], $row["Activity_Price1"], $row["Activity_Price2"]);
+                afficheActiviteLibre($row["Activity_Name"], $row["Activity_Date"], $row["Activity_Price1"], $row["Activity_Price2"],$idco);
             } else {
-                afficheActiviteComplete($row["Activity_Name"], $row["Activity_Date"], $row["Activity_Price1"], $row["Activity_Price2"]);
+                afficheActiviteComplete($row["Activity_Name"], $row["Activity_Date"], $row["Activity_Price1"], $row["Activity_Price2"],$idco);
             }
         }
 
@@ -110,7 +113,7 @@ function afficheExcursions($bdd) {
 /* Fontion pour afficher d'une activité libre */
 /* * *********************************************** */
 
-function afficheActiviteLibre($nom, $date, $prix1, $prix2) {
+function afficheActiviteLibre($nom, $date, $prix1, $prix2, $idco) {
 
     echo'<TR >
                                         <Td class ="col" height=44.688  width=20% style="border:1px solid black; text-align : center;"> <FONT style="color : #F0FFFF"><b>' . $date . '</b></FONT></Td>
@@ -118,8 +121,12 @@ function afficheActiviteLibre($nom, $date, $prix1, $prix2) {
                                         <Td class ="col" height=44.688 width=20% style="border:1px solid black; text-align : center"> <FONT style="color : #F0FFFF"> ' . $prix1 . ' € </FONT> </Td>
                                         <Td class ="col" height=44.688 width=20% style="border:1px solid black;text-align : center"><FONT style="color : #F0FFFF"> ' . $prix2 . '€</FONT></Td>
                                         <Td class ="col" width=100.65 style ="padding:9px 36px" height=44.688 width=10% style="border:1px solid black;text-align : center">  
-                                              <input type="button" style= "padding:0 ; margin-bottom : 0;margin-top : 9; height : 25px; width : 25px; background:#70F861"   name="add" value="+">
-                                          </Td>                        
+                                            <form action="ajoutActivite.php" method="post" onclick="alert(\'Activité ajoutée au panier\')"> 
+                                                <input type="submit" style= "padding:0 ; margin-bottom : 0;margin-top : 9; height : 25px; width : 25px; background:#70F861"   name="add" value="+">
+                                                 <input type="hidden"  name="activity" value="'.$nom.'">
+                                                  <input type="hidden"  name="idco" value="'.$idco.'">
+                                                </form>
+                                        </Td>                        
          </TR>';
 }
 
@@ -127,7 +134,7 @@ function afficheActiviteLibre($nom, $date, $prix1, $prix2) {
 /* Fontion pour afficher d'une activité complète */
 /* * *********************************************** */
 
-function afficheActiviteComplete($nom, $date, $prix1, $prix2) {
+function afficheActiviteComplete($nom, $date, $prix1, $prix2,$idco) {
 
     echo' <TR style="color: #525252;">
                                         <Td class ="col" height =33 width=20% style="border:1px solid black; text-align : center;"><b> ' . $date . '</b></Td>
@@ -138,7 +145,7 @@ function afficheActiviteComplete($nom, $date, $prix1, $prix2) {
                                     </TR>';
 }
 
-function afficheAgenda() {
+function afficheAgenda($idco) {
 
     /* Conexion à la base de données */
     $bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', '');
@@ -150,10 +157,11 @@ function afficheAgenda() {
         </div>
         </html>';
 
-    afficheRepas($bdd);
-    afficheExcursions($bdd);
+    afficheRepas($bdd,$idco);
+    afficheExcursions($bdd,$idco);
     echo'<html> </div></html>';
 }
 
-afficheAgenda();
+afficheAgenda($idco);
+
 ?> 
