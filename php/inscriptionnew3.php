@@ -37,7 +37,7 @@
 
         <!-- Header
         ================================================== -->
-       <?php include("header1.php"); ?>
+        <?php include("header1.php"); ?>
         <!-- Header End -->
 
 
@@ -97,9 +97,9 @@
                         </div>
 
                         <div style="color:#3d4145; font : 18px/28px opensans-bold, sans-serif; margin : 12px 0">
-                            <FORM>
-                                <INPUT type="checkbox" name="train" value="1"> Arrivée en train (Des navettes seront disponibles pour rejoindre votre hôtel)
-                            </FORM>
+
+                            <INPUT type="checkbox" name="train" value="1"> Arrivée en train (Des navettes seront disponibles pour rejoindre votre hôtel)
+
                         </div>
 
                         <div style="color:#3d4145; font : 18px/28px opensans-bold, sans-serif; margin : 12px 0">
@@ -115,10 +115,7 @@
                             <input name="trainheure" type="time" id="trainHeure" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0"/>
                         </div>
 
-                        <button class="submit">Valider</button>
-                        <span id="image-loader">
-                            <img src="images/loader.gif" alt="" />
-                        </span>
+                       <input type="submit" name="v3" value="Valider">
                         </div>
 
                     </fieldset>
@@ -126,12 +123,7 @@
 
                 <!-- Form End -->
 
-                <!-- contact-warning -->
-                <div id="message-warning"></div>
-                <!-- contact-success -->
-                <div id="message-success">
-                    <i class="icon-ok" href=""></i><br />
-                </div>
+
 
             </div>
 
@@ -144,8 +136,8 @@
 
     <!-- footer
     ================================================== -->
-       <br></br>
-        <?php include("footer.php"); ?>
+    <br></br>
+    <?php include("footer.php"); ?>
     <!-- Footer End-->
 
     <!-- Java Script

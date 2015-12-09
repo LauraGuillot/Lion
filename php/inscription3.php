@@ -120,12 +120,7 @@
 
                 <!-- Form End -->
 
-                <!-- contact-warning -->
-                <div id="message-warning"></div>
-                <!-- contact-success -->
-                <div id="message-success">
-                    <i class="icon-ok" href=""></i><br />
-                </div>
+               
 
             </div>
 

@@ -37,7 +37,7 @@
 
         <!-- Header
         ================================================== -->
-       <?php include("header1.php"); ?>
+        <?php include("header1.php"); ?>
         <!-- Header End -->
 
 
@@ -45,9 +45,6 @@
 
         <!-- Inscription Section
           ================================================== -->
-
-
-
 
         <div class="row">
 
@@ -61,7 +58,7 @@
 
                 <h7 style="color : #FF0000;"> ERREUR ! SAISIR A NOUVEAU LES INFORMATIONS</h7>
                 <!-- form -->
-                <form name="contactForm" id="contactForm" method="post" action="verif.php" >
+                <form name="contactForm" id="contactForm" method="post" action="verif1.php" >
                     <fieldset >
 
                         <div>
@@ -79,13 +76,8 @@
                             <input name="cmdp" type="password" id="cmdp" size="35" value="" />
                         </div>
 
-
-
                         <div>
-                            <button class="submit">Valider</button>
-                            <span id="image-loader">
-                                <img src="images/loader.gif" alt="" />
-                            </span>
+                            <input type="submit" name="v1" value="Valider">
                         </div>
 
                     </fieldset>
@@ -153,10 +145,10 @@
 
     <!-- footer
     ================================================== -->
-        <br></br>
-        
-        <?php include("footer.php"); ?>
-      <!-- Footer End-->
+    <br></br>
+
+    <?php include("footer.php"); ?>
+    <!-- Footer End-->
 
     <!-- Java Script
     ================================================== -->

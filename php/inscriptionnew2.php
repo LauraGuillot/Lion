@@ -70,145 +70,146 @@
 
 
                         <div style="color:#3d4145; font : 14px/24px opensans-bold, sans-serif; margin : 12px 0">
-                            <FORM>
+                            <FORM
                                 <INPUT type="radio" name="civilite" value="1"> Mlle
                                 <INPUT type="radio" name="civilite" value="2"> Mme
-                                <INPUT type="radio" name="civilite" value="3" > M.
-                            </FORM>
+                                <INPUT type="radio" name="civilite" value="3" checked > M.
+
+                                </div>
+                                <div>
+                                    <label for="contactSubject">Prénom<span class="required">*</span></label>
+                                    <input name="prenom" type="text" id="prenom" size="35" value="" />
+                                </div>
+
+                                <div>
+                                    <label for="contactSubject">Nom<span class="required">*</span></label>
+                                    <input name="nom" type="text" id="nom" size="35" value="" />
+                                </div>
+                                <div class="row section-head">
+
+                                    <div class="row section-head">
+
+                                        <h2 >Statut dans le club</h2>
+                                    </div>
+
+                                    <div style="color:#3d4145; font : 14px/24px opensans-bold, sans-serif; margin : 12px 0">
+
+                                        <INPUT type="radio" name="titre" value="1" checked> Lion
+                                        <INPUT type="radio" name="titre" value="2"> Leo
+
+                                        </FORM
+                                    </div>
+                                    <div style="color:#3d4145; font : 14px/24px opensans-bold, sans-serif; margin : 12px 0;">
+                                        <p></br> District<span class="required" style="color:#8B9798">*</span></p>
+                                    </div>
+                                    <div>
+
+
+                                        <SELECT id="district" name="district">
+                                            <OPTION> Choisissez votre district </OPTION>
+                                            <OPTION value ="CENTRE"> CENTRE </OPTION>
+                                            <OPTION value ="CENTRE-EST"> CENTRE - EST  </OPTION>
+                                            <OPTION value ="CENTRE-OUEST"> CENTRE - OUEST  </OPTION>
+                                            <OPTION value ="CENTRE-SUD"> CENTRE - SUD  </OPTION>
+                                            <OPTION value ="COTE-AZUR"> COTE D'AZUR - CORSE </OPTION>
+
+                                            <OPTION value ="EST"> EST  </OPTION>
+                                            <OPTION value ="ILE-DE-FRANCE"> ILE DE FRANCE - EST  </OPTION>
+                                            <OPTION value ="ILE-DE-FRANCE-OUEST"> ILE DE FRANCE - OUEST  </OPTION>
+                                            <OPTION value ="ILE-DE-FRANCE-PARIS"> ILE DE FRANCE - PARIS  </OPTION>
+                                            <OPTION value="NORD"> NORD </OPTION> 
+                                            <OPTION value ="NORMANDIE"> NORMANDIE  </OPTION>
+                                            <OPTION value ="OUEST"> OUEST  </OPTION>
+                                            <OPTION value ="SUD"> SUD  </OPTION>
+                                            <OPTION value ="SUD-EST"> SUD-EST  </OPTION>
+                                            <OPTION value="SUD-OUEST"> SUD-OUEST  </OPTION>
+                                            <OPTION value="AUTRE"> AUTRE  </OPTION>
+                                        </SELECT>
+                                    </div>
+
+
+
+                                    <div>
+                                        <label for="contactSubject">Club<span class="required">*</span></label>
+                                        <input name="club" type="text" id="club" size="35" value="" />
+                                    </div>
+                                    <div class="row section-head">
+
+                                        <h2 >Coordonnées</h2>
+                                    </div>
+                                    <div>
+                                        <label for="contactSubject">Rue<span class="required">*</span></label>
+                                        <input name="rue" type="text" id="rue" size="35" value="" />
+                                    </div>
+
+                                    <div>
+                                        <label for="contactSubject">N°<span class="required">*</span></label>
+                                        <input name="num" type="text" id="num" size="35" value="" />
+                                    </div>
+
+                                    <div>
+                                        <label for="contactSubject">Code Postal<span class="required">*</span></label>
+                                        <input name="cp" type="text" id="cp" size="5" value="" />
+                                    </div>
+
+                                    <div>
+                                        <label for="contactSubject">Ville<span class="required">*</span></label>
+                                        <input name="ville" type="text" id="ville" size="35" value="" />
+                                    </div>
+
+                                    <div>
+                                        <label for="contactSubject">Pays<span class="required">*</span></label>
+                                        <input name="pays" type="text" id="pays" size="35" value="" />
+                                    </div>
+
+                                    <div>
+                                        <label for="contactSubject">Téléphone<span class="required">*</span></label>
+                                        <input name="tel" type="tel" id="tel" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
+                                    </div>
+                                    <div>
+                                        <label for="contactSubject">Portable</label>
+                                        <input name="portable" type="tel" id="portable" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0"/>
+                                    </div>
+
+
+
+                                    <input type="submit" name="v2" value="Valider">
+                                    <br></br>
+                                    <br></br>
+                                </div>
+
+                                </fieldset>
+                            </form> 
+
+                            <!-- Form End -->
+
+
+
                         </div>
-                        <div>
-                            <label for="contactSubject">Prénom<span class="required">*</span></label>
-                            <input name="prenom" type="text" id="prenom" size="35" value="" />
-                        </div>
-
-                        <div>
-                            <label for="contactSubject">Nom<span class="required">*</span></label>
-                            <input name="nom" type="text" id="nom" size="35" value="" />
-                        </div>
-                        <div class="row section-head">
-
-                            <div class="row section-head">
-
-                                <h2 >Statut dans le club</h2>
-                            </div>
-
-                            <div style="color:#3d4145; font : 14px/24px opensans-bold, sans-serif; margin : 12px 0">
-                                <FORM>
-                                    <INPUT type="radio" name="titre" value="1"> Lion
-                                    <INPUT type="radio" name="titre" value="2"> Leo
-
-                                </FORM>
-                            </div>
-                            <div style="color:#3d4145; font : 14px/24px opensans-bold, sans-serif; margin : 12px 0;">
-                                <p></br> District<span class="required" style="color:#8B9798">*</span></p>
-                            </div>
-                            <div>
-                                <FORM>
-                                    <SELECT name="district" >
-                                        <OPTION> CENTRE
-                                        <OPTION> CENTRE - EST
-                                        <OPTION> CENTRE - OUEST
-                                        <OPTION> CENTRE - SUD
-                                        <OPTION> COTE D'AZUR
-                                        <OPTION> CORSE
-                                        <OPTION> EST
-                                        <OPTION> ILE DE FRANCE - EST
-                                        <OPTION> ILE DE FRANCE - OUEST
-                                        <OPTION> ILE DE FRANCE - PARIS
-                                        <OPTION> NORD
-                                        <OPTION> NORMANDIE
-                                        <OPTION> OUEST
-                                        <OPTION> SUD
-                                        <OPTION> SUD-EST
-                                        <OPTION> SUD-OUEST
-                                        <OPTION> AUTRE
-                                    </SELECT>
-                                </FORM>
-
-
-                            </div>
-
-                            <div>
-                                <label for="contactSubject">Club<span class="required">*</span></label>
-                                <input name="club" type="text" id="club" size="35" value="" />
-                            </div>
-                            <div class="row section-head">
-
-                                <h2 >Coordonnées</h2>
-                            </div>
-                            <div>
-                                <label for="contactSubject">Rue<span class="required">*</span></label>
-                                <input name="rue" type="text" id="rue" size="35" value="" />
-                            </div>
-
-                            <div>
-                                <label for="contactSubject">N°<span class="required">*</span></label>
-                                <input name="num" type="text" id="num" size="35" value="" />
-                            </div>
-
-                            <div>
-                                <label for="contactSubject">Code Postal<span class="required">*</span></label>
-                                <input name="cp" type="text" id="cp" size="5" value="" />
-                            </div>
-
-                            <div>
-                                <label for="contactSubject">Ville<span class="required">*</span></label>
-                                <input name="ville" type="text" id="ville" size="35" value="" />
-                            </div>
-
-                            <div>
-                                <label for="contactSubject">Pays<span class="required">*</span></label>
-                                <input name="pays" type="text" id="pays" size="35" value="" />
-                            </div>
-
-                            <div>
-                                <label for="contactSubject">Téléphone<span class="required">*</span></label>
-                                <input name="tel" type="tel" id="tel" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
-                            </div>
-                            <div>
-                                <label for="contactSubject">Portable</label>
-                                <input name="portable" type="tel" id="portable" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0"/>
-                            </div>
 
 
 
-                            <input type="submit" name="v2" value="Valider">
-                            <br></br>
-                            <br></br>
-                        </div>
+                        </section> <!-- Contact Section End-->
 
-                    </fieldset>
-                </form> 
+                        <!-- footer
+                        ================================================== -->
+                        <?php include("footer.php"); ?>
+                        <!-- Footer End-->
 
-                <!-- Form End -->
+                        <!-- Java Script
+                        ================================================== -->
+                        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+                        <script>window.jQuery || document.write('<script src="js/jquery-1.10.2.min.js"><\/script>')</script>
+                        <script type="text/javascript" src="js/jquery-migrate-1.2.1.min.js"></script>
 
+                        <script src="js/scrollspy.js"></script>
+                        <script src="js/jquery.flexslider.js"></script>
+                        <script src="js/jquery.reveal.js"></script>
+                        <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
+                        <script src="js/gmaps.js"></script>
+                        <script src="js/init.js"></script>
+                        <script src="js/smoothscrolling.js"></script>
 
+                        </body>
 
-            </div>
-
-
-
-        </section> <!-- Contact Section End-->
-
-        <!-- footer
-        ================================================== -->
-            <?php include("footer.php"); ?>
-        <!-- Footer End-->
-
-        <!-- Java Script
-        ================================================== -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/jquery-1.10.2.min.js"><\/script>')</script>
-        <script type="text/javascript" src="js/jquery-migrate-1.2.1.min.js"></script>
-
-        <script src="js/scrollspy.js"></script>
-        <script src="js/jquery.flexslider.js"></script>
-        <script src="js/jquery.reveal.js"></script>
-        <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
-        <script src="js/gmaps.js"></script>
-        <script src="js/init.js"></script>
-        <script src="js/smoothscrolling.js"></script>
-
-</body>
-
-</html>
+                        </html>

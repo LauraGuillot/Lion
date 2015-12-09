@@ -18,10 +18,10 @@ $pays = $_POST['pays'];
 $tel = $_POST['tel'];
 $portable = $_POST['portable'];
 
+print("<meta charset=\"utf-8\">");
 print("<head>");
 
 print("<body>");
-
 
 
 print("<form name=\"contactForm3\" id=\"contactForm3\" method=\"post\" action=\"verif3.php\">");
@@ -45,7 +45,7 @@ print("<input type=\"hidden\" name=\"tel\" value=\"$tel\"/>");
 print("<input type=\"hidden\" name=\"portable\" value=\"$portable\"/>");
 
 if (empty($civilite) or empty($nom) or empty($prenom) or empty($club) or empty($rue) or empty($num) or empty($cp) or empty($ville) or empty($pays) or empty($tel)) {
-    include "inscriptionnew2.php";
+    include ("inscriptionnew2.php");
 } else {
 
     include ("inscription3.php");

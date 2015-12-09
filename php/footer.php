@@ -8,7 +8,7 @@ function afficheFooter() {
                 <div class="col g-7">
                     <ul class="copyright">
                         <li>&copy; 2016 Lions Clubs</li>
-                        <li>Design by <a href="http://www.ec-nantes.fr/" title="Centrale"> Ecole Centrale Nantes</a></li>               
+                        <li>Design by <a href="http://www.styleshout.com//" title="styleshout"> Styleshout</a></li>               
                     </ul>
                 </div>
 

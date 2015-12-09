@@ -68,7 +68,7 @@
 
                             <INPUT type="radio" name="civilite" value="1"> Mlle
                             <INPUT type="radio" name="civilite" value="2"> Mme
-                            <INPUT type="radio" name="civilite" value="3"> M.
+                            <INPUT type="radio" name="civilite" value="3" checked> M.
 
                         </div>
 
@@ -89,8 +89,8 @@
 
                         <div style="color:#3d4145; font : 14px/24px opensans-bold, sans-serif; margin : 12px 0">
 
-                            <INPUT type="radio" name="titre" value="1"> Lion
-                            <INPUT type="radio" name="titre" value="2"> Leo
+                            <INPUT type="radio" name="titre" value="1" checked> Lion
+                            <INPUT type="radio" name="titre" value="2" > Leo
 
                         </div>
 
@@ -105,8 +105,8 @@
                                 <OPTION value ="CENTRE-EST"> CENTRE - EST  </OPTION>
                                 <OPTION value ="CENTRE-OUEST"> CENTRE - OUEST  </OPTION>
                                 <OPTION value ="CENTRE-SUD"> CENTRE - SUD  </OPTION>
-                                <OPTION value ="COTE-AZUR"> COTE D'AZUR  </OPTION>
-                                <OPTION value ="CORSE"> CORSE  </OPTION>
+                                <OPTION value ="COTE-AZUR"> COTE D'AZUR - CORSE </OPTION>
+
                                 <OPTION value ="EST"> EST  </OPTION>
                                 <OPTION value ="ILE-DE-FRANCE"> ILE DE FRANCE - EST  </OPTION>
                                 <OPTION value ="ILE-DE-FRANCE-OUEST"> ILE DE FRANCE - OUEST  </OPTION>
