@@ -197,14 +197,13 @@ function afficheActiviteComplete($nom, $date, $prix1, $prix2, $idco, $bdd) {
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $activiteID = $row["Activity_ID"];
 
-    echo"$activiteID";
     /* on regarde si l'activité est dans son panier ou non */
     $sql3 = 'SELECT count(Basket_ID) FROM Belong WHERE (Basket_ID = :Bid AND Activity_ID = :Aid )';
     $stmt = $bdd->prepare($sql3, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $stmt->execute(array('Bid' => "$basketID", 'Aid' => "$activiteID"));
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $cpt = $row["count(Basket_ID)"];
-echo"$cpt";
+
 
     if ($cpt == 0) {
 
