@@ -8,7 +8,7 @@ function afficheHeader() {
     $path = $_SERVER['PHP_SELF'];
     $file = basename($path);
 
-    if (strcmp($file , 'home.php')==0) {
+    if (strcmp($file , 'home.php')==0 || strcmp($file , 'deco.php')==0) {
         echo' 
     <html>
          <header class="mobile">

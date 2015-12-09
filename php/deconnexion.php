@@ -91,7 +91,7 @@
             </div>
         </div>
     <center>
-        <form name="deco" id="deco" method="post"  action="">
+        <form name="deco" id="deco" method="post"  action="deco.php">
         <div>
             <input type="submit" name="bouton" value="Déconnexion">
             <br> </br>
@@ -101,9 +101,7 @@
         </form>
     </center>
 
-   <?php if (isset($_POST['bouton'])) {
-   header('Location: home.php');}
-       ?>
+ 
  
     <!-- Section End-->
 

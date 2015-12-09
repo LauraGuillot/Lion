@@ -122,22 +122,43 @@ if (empty($fClub) or empty($fDistrict)) {
     $followerID = $row["Follower_ID"];
 
 
-    $req8 = $bdd->prepare("SELECT DATE(Now())", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $req8 = $bdd->prepare("SELECT YEAR(DATE(Now()))", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $req8->execute(array());
     $row = $req8->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $date = $row["DATE(Now())"];
+    $annee = $row["YEAR(DATE(Now()))"];
+    
+    $req82 = $bdd->prepare("SELECT MONTH(DATE(Now()))", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $req82->execute(array());
+    $row = $req82->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $mois = $row["MONTH(DATE(Now()))"];
+    
+    $req83 = $bdd->prepare("SELECT DAY(DATE(Now()))", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $req83->execute(array());
+    $row = $req83->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $day = $row["DAY(DATE(Now()))"];
 
-    $req81 = $bdd->prepare("SELECT TIME(Now())", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $req81 = $bdd->prepare("SELECT HOUR(Now())", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $req81->execute(array());
     $row = $req81->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $heure = $row["TIME(Now())"];
+    $heure = $row["HOUR(Now())"];
  
-      $connexion=$chaine.$date."..".$heure;
+    $req84 = $bdd->prepare("SELECT MINUTE(Now())", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $req84->execute(array());
+    $row = $req84->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $min= $row["MINUTE(Now())"];
+    
+    $req85 = $bdd->prepare("SELECT SECOND(Now())", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $req85->execute(array());
+    $row = $req85->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $sec= $row["SECOND(Now())"];
+    
+    
+      $connexion=$chaine.$day.$mois.$annee.$heure.$min.$sec;
       
     $req9 = $bdd->prepare('INSERT INTO Connexion (Connexion_ID,Last_Connexion) VALUE (:chaine,:Last_Connexion)');
     $req9->execute(array(
         'chaine' => "$connexion",
-        'Last_Connexion' => "$date.'..'.$heure"));
+        'Last_Connexion' => "$day.'.'$mois.'.'.$annee.'.'.$heure.'.'.$min.'.'.$sec"));
 
   
 
