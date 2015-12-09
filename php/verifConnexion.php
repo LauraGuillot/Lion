@@ -257,7 +257,7 @@ function testConnexion($bdd, $mail, $mdp) {
                         <a class="mobile-btn" href="#" title="Hide navigation">Hide navigation</a>
 
                         <ul id="nav" class="nav">';
-            print(" <li class=\"active\"><a href=\"http://localhost/lion/Lion/php/homeC.php?idco=$idco\">Home</a></li>");
+            print(" <li ><a href=\"http://localhost/lion/Lion/php/homeC.php?idco=$idco\">Home</a></li>");
             print(" <li ><a href=\"http://localhost/lion/Lion/php/agendaC.php?idco=$idco\">Agenda</a></li>");
             print(" <li ><a href=\"http://localhost/lion/Lion/php/infoC.php?idco=$idco\">Info</a></li>");
             print(" <li ><a href=\"http://localhost/lion/Lion/php/contactC.php?idco=$idco\">Contact</a></li>");
