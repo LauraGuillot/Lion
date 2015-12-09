@@ -31,7 +31,7 @@ function afficheRepas($bdd) {
                         <TH class ="col" height=60 width=30% style="border:1px solid black;">Intitulé </TH>
                         <th class ="col" height=60 width=20% style="border:1px solid black">Tarif privilège <br>(jusqu\'au 31/30)  </th>
                         <th class ="col" height=60 width=20% style="border:1px solid black">Tarif plein <br>(à compter du 01/04)  </th>
-                        <th class ="col" height=60 width=10% style="border:1px solid black"> <FONT size="2.5pt">Ajouter au panier </FONT></th>
+                        <th class ="col" height=60 width=100.65 width=10% style="border:1px solid black"> <FONT size="2.5pt">Ajouter au panier </FONT></th>
                      </TR>';
 
         /* Affichage des activités */
@@ -84,7 +84,7 @@ function afficheExcursions($bdd) {
                         <TH class ="col" height=60 width=30% style="border:1px solid black;">Intitulé </TH>
                         <th class ="col" height=60 width=20% style="border:1px solid black">Tarif privilège <br>(jusqu\'au 31/30)  </th>
                         <th class ="col" height=60 width=20% style="border:1px solid black">Tarif plein <br>(à compter du 01/04)  </th>
-                        <th class ="col" height=60 width=10% style="border:1px solid black"> <FONT size="2.5pt">Ajouter au panier </FONT></th>
+                        <th class ="col" height=60 width=100.65 width=10% style="border:1px solid black"> <FONT size="2.5pt">Ajouter au panier </FONT></th>
                      </TR>';
 
         /* Affichage des activités */
@@ -117,10 +117,9 @@ function afficheActiviteLibre($nom, $date, $prix1, $prix2) {
                                         <Td class ="col" height=44.688 width=30% style="border:1px solid black; text-align : center;"> <FONT style="color : #F0FFFF">' . $nom . ' </FONT></Td>
                                         <Td class ="col" height=44.688 width=20% style="border:1px solid black; text-align : center"> <FONT style="color : #F0FFFF"> ' . $prix1 . ' € </FONT> </Td>
                                         <Td class ="col" height=44.688 width=20% style="border:1px solid black;text-align : center"><FONT style="color : #F0FFFF"> ' . $prix2 . '€</FONT></Td>
-                                        <Td class ="col" style ="padding:9px 36px" height=44.688 width=10% style="border:1px solid black;text-align : center">  
-                                            <div>
-                                                 <input type="button" style= "padding:0 ; margin-bottom : 0;margin-top : 9; height : 25px; width : 25px; background:#70F861"   name="add" value="+">
-                                             </div>                                
+                                        <Td class ="col" width=100.65 style ="padding:9px 36px" height=44.688 width=10% style="border:1px solid black;text-align : center">  
+                                              <input type="button" style= "padding:0 ; margin-bottom : 0;margin-top : 9; height : 25px; width : 25px; background:#70F861"   name="add" value="+">
+                                          </Td>                        
          </TR>';
 }
 
@@ -135,7 +134,7 @@ function afficheActiviteComplete($nom, $date, $prix1, $prix2) {
                                         <Td class ="col" height =33 width=30% style="border:1px solid black; text-align : center;"> ' . $nom . '</Td>
                                         <Td class ="col" height =33 width=20% style="border:1px solid black; text-align : center"> ' . $prix1 . ' € </Td>
                                         <Td class ="col" height =33 width=20% style="border:1px solid black;text-align : center">' . $prix2 . ' €</Td>
-                                        <Td class ="col" height =33 width=10% style="border:1px solid black;text-align : center"><FONT style="color : #FF5E4D"> Complet </FONT></Td>
+                                        <Td class ="col" height =33 width=100.65 width=10% style="border:1px solid black;text-align : center"><FONT style="color : #FF5E4D"> Complet </FONT></Td>
                                     </TR>';
 }
 

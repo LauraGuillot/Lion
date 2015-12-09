@@ -31,7 +31,7 @@ function afficheRepas($bdd) {
                         <TH class ="col" height=60 width=30% style="border:1px solid black;">Intitulé </TH>
                         <th class ="col" height=60 width=20% style="border:1px solid black">Tarif privilège <br>(jusqu\'au 31/30)  </th>
                         <th class ="col" height=60 width=20% style="border:1px solid black">Tarif plein <br>(à compter du 01/04)  </th>
-                        <th class ="col" height=60 width=10% style="border:1px solid black"> <FONT size="2.5pt">Places restantes </FONT></th>
+                        <th class ="col" height=60 width=100.65 width=10% style="border:1px solid black"> <FONT size="2.5pt">Places restantes </FONT></th>
                      </TR>';
 
         /* Affichage des activités */
@@ -84,7 +84,7 @@ function afficheExcursions($bdd) {
                         <TH class ="col" height=60 width=30% style="border:1px solid black;">Intitulé </TH>
                         <th class ="col" height=60 width=20% style="border:1px solid black">Tarif privilège <br>(jusqu\'au 31/30)  </th>
                         <th class ="col" height=60 width=20% style="border:1px solid black">Tarif plein <br>(à compter du 01/04)  </th>
-                        <th class ="col" height=60 width=10% style="border:1px solid black"> <FONT size="2.5pt">Places restantes </FONT></th>
+                        <th class ="col" height=60 width=100.65 width=10% style="border:1px solid black"> <FONT size="2.5pt">Places restantes </FONT></th>
                      </TR>';
 
         /* Affichage des activités */
@@ -113,11 +113,11 @@ function afficheExcursions($bdd) {
 function afficheActiviteLibre($nom, $date, $prix1, $prix2, $capacity) {
 
     echo'<TR >
-                                        <Td class ="col" rowspan="2" width=20% style="border:1px solid black; text-align : center;"> <FONT style="color : #F0FFFF"><b>' . $date . '</b></FONT></Td>
-                                        <Td class ="col" width=30% style="border:1px solid black; text-align : center;"> <FONT style="color : #F0FFFF">' . $nom . ' </FONT></Td>
-                                        <Td class ="col" width=20% style="border:1px solid black; text-align : center"> <FONT style="color : #F0FFFF"> ' . $prix1 . ' € </FONT> </Td>
-                                        <Td class ="col" width=20% style="border:1px solid black;text-align : center"><FONT style="color : #F0FFFF"> ' . $prix2 . '€</FONT></Td>
-                                        <Td class ="col" width=10% style="border:1px solid black;text-align : center"><FONT style="color : #70F861"> <b> '.$capacity.' </b></FONT></Td>
+                                        <Td class ="col" height =33 rowspan="2" width=20% style="border:1px solid black; text-align : center;"> <FONT style="color : #F0FFFF"><b>' . $date . '</b></FONT></Td>
+                                        <Td class ="col" height =33 width=30% style="border:1px solid black; text-align : center;"> <FONT style="color : #F0FFFF">' . $nom . ' </FONT></Td>
+                                        <Td class ="col" height =33 width=20% style="border:1px solid black; text-align : center"> <FONT style="color : #F0FFFF"> ' . $prix1 . ' € </FONT> </Td>
+                                        <Td class ="col" height =33 width=20% style="border:1px solid black;text-align : center"><FONT style="color : #F0FFFF"> ' . $prix2 . '€</FONT></Td>
+                                        <Td class ="col" height =33 width=100.65 width=10% style="border:1px solid black;text-align : center"><FONT style="color : #70F861"> <b> '.$capacity.' </b></FONT></Td>
                                     </TR>';
 }
 
@@ -128,11 +128,11 @@ function afficheActiviteLibre($nom, $date, $prix1, $prix2, $capacity) {
 function afficheActiviteComplete($nom, $date, $prix1, $prix2) {
 
     echo' <TR style="color: #525252;">
-                                        <Td class ="col" width=20% style="border:1px solid black; text-align : center;"><b> ' . $date . '</b></Td>
-                                        <Td class ="col" width=30% style="border:1px solid black; text-align : center;"> ' . $nom . '</Td>
-                                        <Td class ="col" width=20% style="border:1px solid black; text-align : center"> ' . $prix1 . ' € </Td>
-                                        <Td class ="col" width=20% style="border:1px solid black;text-align : center">' . $prix2 . ' €</Td>
-                                        <Td class ="col" width=10% style="border:1px solid black;text-align : center"><FONT style="color : #FF5E4D"> Complet </FONT></Td>
+                                        <Td class ="col"  height =33 width=20% style="border:1px solid black; text-align : center;"><b> ' . $date . '</b></Td>
+                                        <Td class ="col" height =33 width=30% style="border:1px solid black; text-align : center;"> ' . $nom . '</Td>
+                                        <Td class ="col" height =33 width=20% style="border:1px solid black; text-align : center"> ' . $prix1 . ' € </Td>
+                                        <Td class ="col" height =33 width=20% style="border:1px solid black;text-align : center">' . $prix2 . ' €</Td>
+                                        <Td class ="col" height =33 width=100.65 style="border:1px solid black;text-align : center"><FONT style="color : #FF5E4D"> Complet </FONT></Td>
                                     </TR>';
 }
 
