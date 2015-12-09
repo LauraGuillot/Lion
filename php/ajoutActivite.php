@@ -123,17 +123,16 @@ echo"D";
         $stmt->execute(array('total' => "$total2", 'id' => "$basketID"));  
         
         /*On décrémente le nombre de places de l'activité*/
-        $sql7 = 'SELECT Activity_Capacity  FROM Activity '
-                 . ' WHERE (Activity_ID = :id)';
-                
+      /*  $sql7 = 'SELECT Activity_Capacity  FROM Activity  WHERE (Activity_ID = :id)';         
         $stmt = $bdd->prepare($sql7, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
         $stmt->execute(array('id' => "$activityID"));
         $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-        $suml = $row["Activity_ID"];  
+        $cap = $row["Activity_Capacity"];  
         
+        $sum = $cap-1;
         $sql8 = 'UPDATE Activity SET Activity_Capacity = :sum WHERE (Activity_ID=:id)';
         $stmt = $bdd->prepare($sql8);
-        $stmt->execute(array('sum' => "$sum", 'id' => "$activiteID")); 
+        $stmt->execute(array('sum' => "$sum", 'id' => "$activiteID")); */
         
         header("location:".  $_SERVER['HTTP_REFERER']);
     }
