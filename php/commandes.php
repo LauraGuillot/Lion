@@ -36,6 +36,7 @@
     <body data-spy="scroll" data-target="#nav-wrap">
 
 
+ 
         <!-- Header
         ================================================== -->
 
@@ -64,14 +65,14 @@
         print(" <li ><a href=\"http://localhost/lion/Lion/php/contactC.php?idco=$idco\">Contact</a></li>");
 
         print(" <li ><a href=\"http://localhost/lion/Lion/php/panier.php?idco=$idco\" style=\"font-weight:bold; align :right\"><FONT size=\"4pt\"> Panier</FONT></a></li>");
-        print(" <li   class=\"active\"><a href=\"http://localhost/lion/Lion/php/moncompte.php?idco=$idco\" style=\"font-weight:bold; align :right\"><FONT size=\"4pt\"> Mon compte</FONT></a></li>");
+        print(" <li  class=\"active\"><a href=\"http://localhost/lion/Lion/php/moncompte.php?idco=$idco\" style=\"font-weight:bold; align :right\"><FONT size=\"4pt\"> Mon compte</FONT></a></li>");
         print(" <li ><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\" style=\"font-weight:bold; align :right\"><FONT size=\"4pt\"> Se déconnecter</FONT></a></li>");
         echo'  </ul>
                     </nav>
                 </div>
             </div>';
 
-        /* Sous onglets */
+/* Sous onglets */
         echo'<div class="row">
 
         <div class="col full">
@@ -82,9 +83,9 @@
                         <a class="mobile-btn" href="#" title="Hide navigation">Hide navigation</a>
 
                         <ul id="nav" class="nav" >';
-        print(" <li  class=\"active\"><a href=\"http://localhost/lion/Lion/php/monCompte.php?idco=$idco\"> Informations personnelles</a></li>");
-        print(" <li><a href=\"http://localhost/lion/Lion/php/achats.php?idco=$idco\"> Mes achats</a></li>");
-        print(" <li   ><a href=\"http://localhost/lion/Lion/php/commandes.php?idco=$idco\"> Mes commandes</a></li>");
+        print(" <li  ><a href=\"http://localhost/lion/Lion/php/monCompte.php?idco=$idco\"> Informations personnelles</a></li>");
+        print(" <li ><a href=\"http://localhost/lion/Lion/php/achats.php?idco=$idco\"> Mes achats</a></li>");
+        print(" <li  class=\"active\" ><a href=\"http://localhost/lion/Lion/php/commandes.php?idco=$idco\"> Mes commandes</a></li>");
         echo' 
          </ul>
         </nav>
@@ -94,6 +95,12 @@
         </header>';
         ?>
 
+
+ 
+     
+        
+        
+        
 
 
 
@@ -106,7 +113,7 @@
             <div class="col full">
                 <br></br>
                 <br></br>
-                <h2 style="margin : 65px ; color : #11ABB0; text-align : center"> Vos informations personnelles </h2>
+                <h2 style="margin : 65px ; color : #11ABB0; text-align : center"> Vos commandes en cours </h2>
                 <br></br>
                 <br></br>
                 <br></br>
