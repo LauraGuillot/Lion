@@ -94,9 +94,9 @@
                         </div>
 
                         <div style="color:#3d4145; font : 18px/28px opensans-bold, sans-serif; margin : 12px 0">
-                            <FORM>
+  
                                 <INPUT type="checkbox" name="train" value="1"> Arrivée en train (Des navettes seront disponibles pour rejoindre votre hôtel)
-                            </FORM>
+
                         </div>
 
                         <div style="color:#3d4145; font : 18px/28px opensans-bold, sans-serif; margin : 12px 0">

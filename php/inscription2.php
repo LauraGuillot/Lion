@@ -89,8 +89,8 @@
 
                         <div style="color:#3d4145; font : 14px/24px opensans-bold, sans-serif; margin : 12px 0">
 
-                            <INPUT type="radio" name="titre" value="4"> Lion
-                            <INPUT type="radio" name="titre" value="5"> Leo
+                            <INPUT type="radio" name="titre" value="1"> Lion
+                            <INPUT type="radio" name="titre" value="2"> Leo
 
                         </div>
 

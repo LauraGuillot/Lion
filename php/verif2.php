@@ -33,7 +33,7 @@ print("<input type=\"hidden\" name=\"civilite\" value=\"$civilite\"/>");
 print("<input type=\"hidden\" name=\"nom\" value=\"$nom\"/>");
 print("<input type=\"hidden\" name=\"prenom\" value=\"$prenom\"/>");
 print("<input type=\"hidden\" name=\"titre\" value=\"$titre\"/>");
-print("<input type=\"hidden\" name=\"district2\" value=\"$district\"/>");
+print("<input type=\"hidden\" name=\"district\" value=\"$district\"/>");
 print("<input type=\"hidden\" name=\"club\" value=\"$club\"/>");
 print("<input type=\"hidden\" name=\"rue\" value=\"$rue\"/>");
 print("<input type=\"hidden\" name=\"num\" value=\"$num\"/>");

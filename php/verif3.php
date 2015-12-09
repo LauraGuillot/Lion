@@ -7,7 +7,7 @@ $civilite = $_POST['civilite'];
 $nom = $_POST['nom'];
 $prenom = $_POST['prenom'];
 $titre = $_POST['titre'];
-$district2 = $_POST['district2'];
+$district = $_POST['district'];
 $club = $_POST['club'];
 $rue = $_POST['rue'];
 $num = $_POST['num'];
@@ -21,19 +21,15 @@ $fClub = $_POST['fClub'];
 $fDistrict = $_POST['fDistrict'];
 $prenomAcc = $_POST['prenomAcc'];
 $nomAcc = $_POST['nomAcc'];
-$train = $_POST['train'];
+
+if (isset($_POST['train'])){
+$train = "true";
+}else{
+   $train ="false"; 
+}
 $traindate = $_POST['traindate'];
 $trainheure = $_POST['trainheure'];
 
-echo "élément district existe bien";
-echo "$district2";
-
-
-if ($train == 1) {
-    $train = "true";
-} else {
-    $train = "false";
-}
 
 switch ($civilite) {
     case 1:$civilite = "Mlle";
@@ -143,7 +139,7 @@ if (empty($fClub) or empty($fDistrict)) {
         'districtID' => "$districtID",
         'clubID' => "$clubID",
         'num' => "$num",
-        'supad' => "$supad",
+        'supad' => "$cadr",
         'cp' => "$cp",
         'rue' => "$rue",
         'ville' => "$ville",
@@ -159,7 +155,6 @@ if (empty($fClub) or empty($fDistrict)) {
         'personID' => "$personID",
         'mdp' => "$mdp",));
 
-    echo "$titre\n";
 
     /* echo "$civilite\n";
       echo "$status\n";
@@ -187,7 +182,7 @@ if (empty($fClub) or empty($fDistrict)) {
 
      */
 
-/*
+
     $idco = $chaine.$date ;
 
     echo'<!DOCTYPE html>
@@ -307,6 +302,6 @@ if (empty($fClub) or empty($fDistrict)) {
 
 </body>
 
-</html>';*/
+</html>';
 }
 ?>
