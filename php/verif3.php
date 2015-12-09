@@ -8,10 +8,11 @@ $civilite = $_POST['civilite'];
 $nom = $_POST['nom'];
 $prenom = $_POST['prenom'];
 $titre = $_POST['titre'];
-$district = $_POST['district'];
+$district2 = $_POST['district2'];
 $club = $_POST['club'];
 $rue = $_POST['rue'];
 $num = $_POST['num'];
+$cadr= $_POST['cadr'];
 $cp = $_POST['cp'];
 $ville = $_POST['ville'];
 $pays = $_POST['pays'];
@@ -25,8 +26,8 @@ $train = $_POST['train'];
 $traindate = $_POST['traindate'];
 $trainheure = $_POST['trainheure'];
 
-   // L'élément "district" existe bien
-    echo "$district" ;
+   echo "élément district existe bien";
+    echo "$district2";
 
 
 if ($train ==1){
@@ -35,11 +36,11 @@ $train = "true";}
 else{
 $train = "false";}
 
-if ($civilite ==0){
+if ($civilite ==1){
 $civilite = "Mlle";
 }
 
-if ($civilite ==1){
+if ($civilite ==2){
 $civilite = "Mme";
 }
 
@@ -68,7 +69,7 @@ return $string;
 
 // APPEL
 // Génère une chaine de longueur 20
-$chaine = random(20);
+$chaine = random(70);
 
     
 
@@ -143,7 +144,7 @@ if (empty($fClub) or empty($fDistrict)) {
     $req11 = $bdd->prepare('INSERT INTO Member (Member_Title, Member_Satus, District_ID, Club_ID, Member_Num, Member_Additional_Adress, Member_Postal_Code, Member_Street, Member_City, Member_Phone, Member_Mobile, Member_Email, Member_Position_Club, Member_Position_District, Member_By_Train, Member_Date_Train, Connexion_ID,Person_ID, Follower_ID, Member_Password ) VALUES (:civilite,:status,:districtID,:clubID,:num,:supad,:cp,:rue,:ville,:phone,:mobile,:email,:pclub,:pdistrict,:btrain,:htrain,:connexion,:personID2,:personID,:mdp)');
     $req11->execute(array(
         'civilite' => "$civilite",
-        'status' => "$status",
+        'status' => "$titre",
         'districtID' => "$districtID",
         'clubID' => "$clubID",
         'num' => "$num",
@@ -164,9 +165,9 @@ if (empty($fClub) or empty($fDistrict)) {
         'personID' => "$personID",
         'mdp' => "$mdp",));
         
-   
-     /*   
-        echo "$civilite\n";
+    echo "$titre\n";
+        
+       /* echo "$civilite\n";
         echo "$status\n";
         echo "$districtID\n";
         echo "$clubID\n";
@@ -188,9 +189,9 @@ if (empty($fClub) or empty($fDistrict)) {
         echo "$personID\n";
         echo "$mdp\n";
             
-       */ 
-         
         
+         
+        */
 
         
         
