@@ -90,13 +90,11 @@ function affiche($bdd, $idco) {
                     </TR>
                     </TABLE>
                         </div>
-                        <br>
+                        <br>';
                         
-<form name="validPanier" id="contactForm" method="post"  action="">
-            <div align="right">
-                <input type="submit" name="v" value="Valider">
-            </div>
-        </form></html>';
+afficheBoutonValider($basketID,$bdd);
+
+       echo' </form></html>';
         
     } catch (PDOException $e) {
         echo 'Connexion échouée : ' . $e->getMessage();
@@ -115,7 +113,7 @@ function afficheActivite($type, $nom, $date, $prix, $idco, $bdd) {
                                         <Td class ="col" height=44.688 width=20% style="border:1px solid black; text-align : center"> <FONT style="color : #F0FFFF"> ' . $nom . '  </FONT> </Td>
                                         <Td class ="col" height=44.688 width=15% style="border:1px solid black;text-align : center"><FONT style="color : #F0FFFF"> ' . $prix . '€</FONT></Td>
                                         <Td class ="col" width=100.65 style ="padding:9px 115px" height=44.688 width=25% style="border:1px solid black;text-align : center">  
-                                            <form action="suppActivite.php" method="post" onclick="alert(\'Activité supprimée du panier\')"> 
+                                            <form action="suppActivite.php" method="post"> 
                                                 <input type="submit" style= "padding:0 ; margin-bottom : 0;margin-top : 9; height : 25px; width : 25px; background:#FF5E4D"   name="supp" value="-">
                                                  <input type="hidden"  name="activity" value="' . $nom . '">
                                                   <input type="hidden"  name="idco" value="' . $idco . '">
@@ -123,6 +121,31 @@ function afficheActivite($type, $nom, $date, $prix, $idco, $bdd) {
                                         </Td>                        
          </TR>';
 }
+
+/*****************************************************/
+ /* Affichage d'un bouton pour valider le panier*/
+ /****************************************************/
+function afficheBoutonValider($basketID, $bdd){
+     /* on regarde si l'activité est dans son panier ou non */
+    $sql3 = 'SELECT count(Activity_ID) FROM Belong WHERE (Basket_ID = :id )';
+    $stmt = $bdd->prepare($sql3, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $stmt->execute(array('id' => "$basketID"));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $cpt = $row["count(Activity_ID)"];
+
+    if ($cpt != 0) {
+        echo'<form name="validPanier" id="contactForm" method="post"  action="recapitulatifPanier.php">
+            <div align="right">
+                <input type="submit" name="v" value="Valider">
+            </div>';
+    }else{
+        echo'
+            <div>
+                <br></br>
+            </div>';
+    }
+}
+
 
 /* Conexion à la base de données */
 $bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', '');
