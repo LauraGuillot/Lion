@@ -115,7 +115,7 @@ function afficheActivite($type, $nom, $date, $prix, $idco, $bdd) {
                                         <Td class ="col" height=44.688 width=20% style="border:1px solid black; text-align : center"> <FONT style="color : #F0FFFF"> ' . $nom . '  </FONT> </Td>
                                         <Td class ="col" height=44.688 width=15% style="border:1px solid black;text-align : center"><FONT style="color : #F0FFFF"> ' . $prix . '€</FONT></Td>
                                         <Td class ="col" width=100.65 style ="padding:9px 115px" height=44.688 width=25% style="border:1px solid black;text-align : center">  
-                                            <form action="" method="post" onclick="alert(\'Activité supprimée du panier\')"> 
+                                            <form action="suppActivite.php" method="post" onclick="alert(\'Activité supprimée du panier\')"> 
                                                 <input type="submit" style= "padding:0 ; margin-bottom : 0;margin-top : 9; height : 25px; width : 25px; background:#FF5E4D"   name="supp" value="-">
                                                  <input type="hidden"  name="activity" value="' . $nom . '">
                                                   <input type="hidden"  name="idco" value="' . $idco . '">
