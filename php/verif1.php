@@ -4,7 +4,7 @@ $email = $_POST['email'];
 $mdp = $_POST['mdp'];
 $mdp2 = $_POST['cmdp'];
 
-
+echo "$email";
 print("<meta charset=\"utf-8\">");
 print("<head>");
 print("<body>");

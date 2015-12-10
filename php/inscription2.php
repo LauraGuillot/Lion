@@ -120,96 +120,8 @@
                                 <OPTION value="AUTRE"> AUTRE  </OPTION>
                             </SELECT>
                         </div>                       
-<div style="color:#3d4145; font : 14px/24px opensans-bold, sans-serif; margin : 12px 0;">
-                            <p></br> Club<span class="required" style="color:#8B9798">*</span></p>
-                        </div>
-    <?php            
-  /* * ************************************************ */
-/* Fontion pour afficher les clubs en fonction du district choisi */
-/* * *********************************************** */
-$district = $_POST['district'];
 
-function afficheClub($bdd,$district) {
-    try {
-
-        /* Préparation de la requête */
-        $sql = 'SELECT Club_Name FROM Club ' .
-                'INNER JOIN District ON (District.District_ID = Club.District_ID) ' .
-                'WHERE (District_Name = :district) ORDER BY (Club_Name);';
-
-        $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-
-        /* Exécution de la requête */
-        $stmt->execute(array(':district' => "$district"));
-
-        /* Exploitation des résultats */
-					print("<div>");
-					print("<SELECT id=\"district\" name=\"district\">");
-                 /* Affichage des activités */
-                 	echo '<OPTION value ="Choisissez votre club">Choisissez votre club</OPTION>';
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
- $nom=$row["Club_Name"];
-        			echo '<OPTION value ="'.$nom.'">' .$nom. '</OPTION>';
-        			}
-            
-            print("</SELECT>");
-            print("</div>");
-            }
-        
-            catch (PDOException $e) {
-        echo 'Connexion échouée : ' . $e->getMessage();
-    }
-    }
-    
-    /* Connexion à la base de données */
-    $bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', 'lion');
-    afficheClub($bdd,$district);
-              ?>  
-                            
-                        <div class="row section-head">
-                            <h2 >Coordonnées</h2>
-                        </div>
-
-                        <div>
-                            <label for="contactSubject">Rue<span class="required">*</span></label>
-                            <input name="rue" type="text" id="rue" size="35" value="" />
-                        </div>
-
-                        <div>
-                            <label for="contactSubject">Complément d'adresse</label>
-                            <input name="cadr" type="text" id="cadr" size="5" value="" />
-                        </div>
-
-                        <div>
-                            <label for="contactSubject">N°<span class="required">*</span></label>
-                            <input name="num" type="text" id="num" size="35" value="" />
-                        </div>
-
-                        <div>
-                            <label for="contactSubject">Code Postal<span class="required">*</span></label>
-                            <input name="cp" type="text" id="cp" size="5" value="" />
-                        </div>
-
-                        <div>
-                            <label for="contactSubject">Ville<span class="required">*</span></label>
-                            <input name="ville" type="text" id="ville" size="35" value="" />
-                        </div>
-
-                        <div>
-                            <label for="contactSubject">Pays<span class="required">*</span></label>
-                            <input name="pays" type="text" id="pays" size="35" value="" />
-                        </div>
-
-                        <div>
-                            <label for="contactSubject">Téléphone<span class="required">*</span></label>
-                            <input name="tel" type="tel" id="tel" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
-                        </div>
-                        <div>
-                            <label for="contactSubject">Portable</label>
-                            <input name="portable" type="tel" id="portable" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0"/>
-                        </div>
-
-
+						<div>
                         <input type="submit" name="v2" value="Valider">
                         <br></br>
                         <br></br>
@@ -225,9 +137,9 @@ function afficheClub($bdd,$district) {
 
             </div>
 
+</div>
 
-
-        </section> <!-- Contact Section End-->
+     <!-- Contact Section End-->
 
         <!-- footer
         ================================================== -->
