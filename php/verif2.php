@@ -27,7 +27,9 @@ print("<input type=\"hidden\" name=\"nom\" value=\"$nom\"/>");
 print("<input type=\"hidden\" name=\"prenom\" value=\"$prenom\"/>");
 print("<input type=\"hidden\" name=\"titre\" value=\"$titre\"/>");
 print("<input type=\"hidden\" name=\"district\" value=\"$district\"/>");
-;
+print("</form>");
+print("</body>");
+print("</html>");
 
 if (empty($civilite) or empty($nom) or empty($prenom)) {
     include ("inscriptionnew2.php");
@@ -36,9 +38,4 @@ if (empty($civilite) or empty($nom) or empty($prenom)) {
     include ("inscription2bis.php");
 }
 
-print("</form>");
-
-print("</body>");
-
-print("</html>");
 ?>

@@ -12,7 +12,8 @@ print("<form name=\"contactForm2\" id=\"contactForm2\" method=\"post\" action=\"
 
 print("<input type=\"hidden\" name=\"email\" value=\"$email\"/>");
 print("<input type=\"hidden\" name=\"mdp\" value=\"$mdp\"/>");
-print("<input type=\"hidden\" name=\"mdp2\" value=\"$mdp2\"/>");print("</form>");
+print("<input type=\"hidden\" name=\"mdp2\" value=\"$mdp2\"/>");
+print("</form>");
 
 print("</body>");
 print("</html>"); 

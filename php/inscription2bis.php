@@ -143,7 +143,7 @@ function afficheClub($bdd,$district) {
                         </div>
 
 
-                        <input type="submit" name="v2" value="Valider">
+                        <input type="submit" name="v2bis" value="Valider">
                         <br></br>
                         <br></br>
 

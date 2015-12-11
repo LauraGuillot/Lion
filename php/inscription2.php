@@ -119,9 +119,12 @@
                                 <OPTION value="SUD-OUEST"> SUD-OUEST  </OPTION>
                                 <OPTION value="AUTRE"> AUTRE  </OPTION>
                             </SELECT>
+
                         </div>                       
 
-						<div>
+                  
+  
+                        <div>
                         <input type="submit" name="v2" value="Valider">
                         <br></br>
                         <br></br>
@@ -133,18 +136,18 @@
 
                 <!-- Form End -->
 
-
+            </div>
 
             </div>
 
-</div>
+
 
      <!-- Contact Section End-->
 
         <!-- footer
         ================================================== -->
 
-        <?php include("footer.php"); ?>
+<?php include("footer.php"); ?>
         <!-- Footer End-->
 
         <!-- Java Script
