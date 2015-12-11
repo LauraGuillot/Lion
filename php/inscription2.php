@@ -114,15 +114,15 @@
                             <SELECT id="district" name="district">
                                 <OPTION> Choisissez votre district </OPTION>
                                 <OPTION value ="CENTRE"> CENTRE </OPTION>
-                                <OPTION value ="CENTRE-EST"> CENTRE - EST  </OPTION>
-                                <OPTION value ="CENTRE-OUEST"> CENTRE - OUEST  </OPTION>
-                                <OPTION value ="CENTRE-SUD"> CENTRE - SUD  </OPTION>
-                                <OPTION value ="COTE-AZUR"> COTE D'AZUR - CORSE </OPTION>
+                                <OPTION value ="CENTRE-EST"> CENTRE-EST  </OPTION>
+                                <OPTION value ="CENTRE-OUEST"> CENTRE-OUEST  </OPTION>
+                                <OPTION value ="CENTRE-SUD"> CENTRE-SUD  </OPTION>
+                                <OPTION value ="COTE-AZUR"> COTE D'AZUR-CORSE </OPTION>
 
                                 <OPTION value ="EST"> EST  </OPTION>
-                                <OPTION value ="ILE-DE-FRANCE"> ILE DE FRANCE - EST  </OPTION>
-                                <OPTION value ="ILE-DE-FRANCE-OUEST"> ILE DE FRANCE - OUEST  </OPTION>
-                                <OPTION value ="ILE-DE-FRANCE-PARIS"> ILE DE FRANCE - PARIS  </OPTION>
+                                <OPTION value ="ILE-DE-FRANCE"> ILE DE FRANCE-EST  </OPTION>
+                                <OPTION value ="ILE-DE-FRANCE-OUEST"> ILE DE FRANCE-OUEST  </OPTION>
+                                <OPTION value ="ILE-DE-FRANCE-PARIS"> ILE DE FRANCE-PARIS  </OPTION>
                                 <OPTION value="NORD"> NORD </OPTION> 
                                 <OPTION value ="NORMANDIE"> NORMANDIE  </OPTION>
                                 <OPTION value ="OUEST"> OUEST  </OPTION>

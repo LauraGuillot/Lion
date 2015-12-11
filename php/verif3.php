@@ -81,7 +81,8 @@ if (empty($fClub) or empty($fDistrict)) {
         'nomAcc' => "$nomAcc",
         'prenomAcc' => "$prenomAcc"));
 
-
+    
+    
     /*Ajout de l'accompagnateur dans la table follower*/
     $req2 = $bdd->prepare("SELECT Person_ID FROM Person WHERE (Person_Lastname = '$nomAcc' AND Person_Firstname = '$prenomAcc')", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $req2->execute(array());
@@ -92,7 +93,7 @@ if (empty($fClub) or empty($fDistrict)) {
     $req3->execute(array(
         'id' => "$personID",));
     
-
+    
     
  
 
@@ -109,8 +110,7 @@ if (empty($fClub) or empty($fDistrict)) {
 
 
 
-        
-    
+
     $req22 = $bdd->prepare("SELECT Person_ID FROM Person WHERE (Person_Lastname = '$nom' AND Person_Firstname = '$prenom')", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $req22->execute(array());
     $row = $req22->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
@@ -155,7 +155,7 @@ if (empty($fClub) or empty($fDistrict)) {
     
       $connexion=$chaine.$day.$mois.$annee.$heure.$min.$sec;
       
-    $req9 = $bdd->prepare('INSERT INTO Connexion (Connexion_ID,Last_Connexion) VALUE (:chaine,:Last_Connexion)');
+    $req9 = $bdd->prepare('INSERT INTO Connexion (Connexion_ID, First_Connexion, Connexion_Activ ) VALUE (:chaine,:Last_Connexion, 0)');
     $req9->execute(array(
         'chaine' => "$connexion",
         'Last_Connexion' => "$day.'.'$mois.'.'.$annee.'.'.$heure.'.'.$min.'.'.$sec"));
@@ -202,15 +202,9 @@ if (empty($fClub) or empty($fDistrict)) {
       echo "$train\n";
       echo "$traindate\n";
       echo "$connexion\n";
-
       echo "$personID2\n";
       echo "$personID\n";
       echo "$mdp\n";
-
-
-
-    
-
 
     $idco = $connexion ;
 
