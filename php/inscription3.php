@@ -56,7 +56,11 @@
 
             <div class="col g-7"style="top: 80px">
 
-                <?php
+              
+                <!-- form -->
+                <form name="contactForm" id="contactForm" method="post" action="verif3.php" style = "width : 1000px">
+                    <fieldset>
+  <?php
                 $email = $_POST['email'];
 $mdp = $_POST['mdp'];
 $mdp2 = $_POST['mdp2'];
@@ -95,10 +99,6 @@ print("<input type=\"hidden\" name=\"tel\" value=\"$tel\"/>");
 print("<input type=\"hidden\" name=\"portable\" value=\"$portable\"/>");
 
 ?>
-                <!-- form -->
-                <form name="contactForm" id="contactForm" method="post" action="verif3.php" style = "width : 1000px">
-                    <fieldset>
-
                         <div class="row section-head">
 
                             <h2 >Fonction</h2>
