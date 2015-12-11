@@ -86,7 +86,7 @@
             <div class="col full">
                 <br></br>
                 <br></br>
-                <span><h2 style = "color :#11ABB0; margin : 65px; text-align : center"> Voulez-vous vraiment vous déconnecter ?                 
+                <span><h2 style = "color :#11ABB0; margin : 65px; text-align : center"> Voulez-vous vraiment vous déconnecter ? <br> <FONT size="4" style="color : #32787A; font-weight:normal;">(Votre panier sera vidé) </FONT>               
                 </span>
             </div>
         </div>
