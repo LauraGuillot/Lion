@@ -60,6 +60,18 @@
                 <!-- form -->
                 <form name="contactForm" id="contactForm" method="post" action="verif2.php">
                     <fieldset>
+
+                        <?php
+                        $email = $_POST['email'];
+                        $mdp = $_POST['mdp'];
+                        $mdp2 = $_POST['cmdp'];
+
+                        print("<input type=\"hidden\" name=\"email\" value=\"$email\"/>");
+                        print("<input type=\"hidden\" name=\"mdp\" value=\"$mdp\"/>");
+                        print("<input type=\"hidden\" name=\"mdp2\" value=\"$mdp2\"/>");
+                        ?>                 
+
+
                         <div class="row section-head">
                             <h2 >Civilité</h2>
                         </div>
@@ -122,12 +134,12 @@
 
                         </div>                       
 
-                  
-  
+
+
                         <div>
-                        <input type="submit" name="v2" value="Valider">
-                        <br></br>
-                        <br></br>
+                            <input type="submit" name="v2" value="Valider">
+                            <br></br>
+                            <br></br>
 
                         </div>
 
@@ -138,11 +150,11 @@
 
             </div>
 
-            </div>
+        </div>
 
 
 
-     <!-- Contact Section End-->
+        <!-- Contact Section End-->
 
         <!-- footer
         ================================================== -->
@@ -164,6 +176,6 @@
         <script src="js/init.js"></script>
         <script src="js/smoothscrolling.js"></script>
 
-</body>
+    </body>
 
 </html>
