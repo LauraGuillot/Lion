@@ -148,15 +148,11 @@ function afficheHeader() {
         echo' 
     <html>
          <header class="mobile">
-
             <div class="row">
-
                 <div class="col full">
-
                     <div class="logo">
                         <a href="home.php" style="top : 4px"><img alt="" src="images/logo.png" style="height:  50px; width: 55px; top: 4px"></a>
                     </div>
-
                     <nav id="nav-wrap" >
 
                         <a class="mobile-btn" href="#nav-wrap" title="Show navigation">Show navigation</a>

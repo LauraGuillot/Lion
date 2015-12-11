@@ -225,9 +225,13 @@ function afficheActiviteComplete($nom, $date, $prix1, $prix2, $idco, $bdd) {
     }
 }
 
+/* * *********************************************************** */
+/* * **************Affichage de tout l'agenda****************** */
+/* * ********************************************************** */
+
 function afficheAgenda($idco) {
 
-    /* Conexion à la base de données */
+    /* Connexion à la base de données */
     $bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', '');
 
     /* Affichage des activités */
@@ -237,10 +241,75 @@ function afficheAgenda($idco) {
         </div>
         </html>';
 
+    compteurPanier($bdd, $idco);
     afficheRepas($bdd, $idco);
     afficheExcursions($bdd, $idco);
     echo'<html> </div></html>';
 }
+
+/* * *********************************************************** */
+/* * ************** Compteur pour le panier ****************** */
+/* * ********************************************************** */
+
+function compteurPanier($bdd, $idco) {
+    /* Récupération du membre id */
+    $sql = 'SELECT Member_ID FROM Member WHERE (Connexion_ID = :idco)';
+    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $stmt->execute(array(':idco' => "$idco"));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $memberID = $row["Member_ID"];
+
+    /* Récupération du basket id */
+    $sql = 'SELECT Basket_ID FROM Basket WHERE (Member_ID = :id AND Congress_ID = 1)';
+    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $stmt->execute(array(':id' => "$memberID"));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $basketID = $row["Basket_ID"];
+
+    /* Récupération du nombre d'activités dans le panier */
+    $sql = 'SELECT Count(Activity.Activity_ID) FROM Activity '
+            . 'INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
+            . ' WHERE (Basket_ID = :id AND Belong_Paid = 0) ';
+    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $stmt->execute(array(':id' => "$basketID"));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $cpt = $row["Count(Activity.Activity_ID)"];
+
+    /* Exploitation des résultats */
+
+    if ($cpt == 0) {
+ echo' 
+                <div align="right">
+                <TABLE id="tableau" border cols="1" style="border:1px solid #32787A; margin-left : 0; width : 10%">
+                    <TR class="row" >
+                        <TH class ="col" height=60 width=100 "><FONT style="color : #32787A; font-weight:normal;"> Panier vide </FONT></TH>
+                    </TR>
+                </TABLE>
+                </div>';
+    } else {
+        if ($cpt == 1) {
+            echo' 
+                <div align="right">
+                <TABLE id="tableau" border cols="1" style="border:1px solid #32787A; margin-left : 0; width : 10%">
+                    <TR class="row" >
+                        <TH class ="col" height=60 width=100 "><FONT style="color : #32787A; font-weight:normal;"> Panier <FONT><br><FONT size="5" style="color : #11ABB0;">' . $cpt . ' </FONT></TH>
+                    </TR>
+                </TABLE>
+                </div>';
+        } else {
+            echo' 
+                <div align="right">
+                <TABLE id="tableau" border cols="1" style="border:1px solid #32787A; margin-left : 0; width : 10%">
+                    <TR class="row" >
+                        <TH class ="col" height=60 width=100 "><FONT style="color : #32787A; font-weight:normal;"> Panier <FONT><br><FONT size="5" style="color : #11ABB0;">' . $cpt . ' </FONT></TH>
+                    </TR>
+                </TABLE>
+                </div>';
+        }
+    }
+}
+
+/* Exécution */
 
 afficheAgenda($idco);
 ?> 
