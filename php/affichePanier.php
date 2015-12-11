@@ -28,7 +28,7 @@ function affiche($bdd, $idco) {
         $sql = 'SELECT Activity_Type_Name, Activity_Name, Activity_Date, Belong_Price FROM Activity '
                 . 'INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
                 . 'INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
-                . ' WHERE (Basket_ID = :id) ORDER BY (Activity_Date)';
+                . ' WHERE (Basket_ID = :id AND Belong_Paid = 0) ORDER BY (Activity_Date)';
 
         $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
         $stmt->execute(array(':id' => "$basketID"));

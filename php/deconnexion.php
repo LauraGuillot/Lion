@@ -94,6 +94,10 @@
         <form name="deco" id="deco" method="post"  action="deco.php">
         <div>
             <input type="submit" name="bouton" value="Déconnexion">
+            <?php
+             $idco = $_GET['idco'];
+            print("<input type=\"hidden\"  name=\"idco\" value=\"$idco\">");
+                    ?>
             <br> </br>
             <br> </br>
             <br> </br>

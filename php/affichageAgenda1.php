@@ -29,7 +29,7 @@ function afficheRepas($bdd) {
                     <TR class="row" >
                         <TH class ="col" height=60 width=20% style="border:1px solid black;">Date</TH>
                         <TH class ="col" height=60 width=30% style="border:1px solid black;">Intitulé </TH>
-                        <th class ="col" height=60 width=20% style="border:1px solid black">Tarif privilège <br>(jusqu\'au 31/30)  </th>
+                        <th class ="col" height=60 width=20% style="border:1px solid black">Tarif privilège <br>(jusqu\'au 31/03)  </th>
                         <th class ="col" height=60 width=20% style="border:1px solid black">Tarif plein <br>(à compter du 01/04)  </th>
                         <th class ="col" height=60 width=100.65 width=10% style="border:1px solid black"> <FONT size="2.5pt">Places restantes </FONT></th>
                      </TR>';
@@ -82,7 +82,7 @@ function afficheExcursions($bdd) {
                     <TR class="row" >
                         <TH class ="col" height=60 width=20% style="border:1px solid black;">Date</TH>
                         <TH class ="col" height=60 width=30% style="border:1px solid black;">Intitulé </TH>
-                        <th class ="col" height=60 width=20% style="border:1px solid black">Tarif privilège <br>(jusqu\'au 31/30)  </th>
+                        <th class ="col" height=60 width=20% style="border:1px solid black">Tarif privilège <br>(jusqu\'au 31/03)  </th>
                         <th class ="col" height=60 width=20% style="border:1px solid black">Tarif plein <br>(à compter du 01/04)  </th>
                         <th class ="col" height=60 width=100.65 width=10% style="border:1px solid black"> <FONT size="2.5pt">Places restantes </FONT></th>
                      </TR>';
@@ -115,8 +115,8 @@ function afficheActiviteLibre($nom, $date, $prix1, $prix2, $capacity) {
     echo'<TR >
                                         <Td class ="col" height =33 rowspan="2" width=20% style="border:1px solid black; text-align : center;"> <FONT style="color : #F0FFFF"><b>' . $date . '</b></FONT></Td>
                                         <Td class ="col" height =33 width=30% style="border:1px solid black; text-align : center;"> <FONT style="color : #F0FFFF">' . $nom . ' </FONT></Td>
-                                        <Td class ="col" height =33 width=20% style="border:1px solid black; text-align : center"> <FONT style="color : #F0FFFF"> ' . $prix1 . ' € </FONT> </Td>
-                                        <Td class ="col" height =33 width=20% style="border:1px solid black;text-align : center"><FONT style="color : #F0FFFF"> ' . $prix2 . '€</FONT></Td>
+                                        <Td class ="col" height =33 width=20% style="border:1px solid black; text-align : center"> <FONT style="color : #F0FFFF"> ' . $prix1 . ' €</FONT> </Td>
+                                        <Td class ="col" height =33 width=20% style="border:1px solid black;text-align : center"><FONT style="color : #F0FFFF"> ' . $prix2 . ' €</FONT></Td>
                                         <Td class ="col" height =33 width=100.65 width=10% style="border:1px solid black;text-align : center"><FONT style="color : #70F861"> <b> '.$capacity.' </b></FONT></Td>
                                     </TR>';
 }

@@ -155,7 +155,7 @@ if (empty($fClub) or empty($fDistrict)) {
     
       $connexion=$chaine.$day.$mois.$annee.$heure.$min.$sec;
       
-    $req9 = $bdd->prepare('INSERT INTO Connexion (Connexion_ID, First_Connexion, Connexion_Activ ) VALUE (:chaine,:Last_Connexion, 0)');
+    $req9 = $bdd->prepare('INSERT INTO Connexion (Connexion_ID, First_Connexion, Connexion_Activ ) VALUE (:chaine,:Last_Connexion, 1)');
     $req9->execute(array(
         'chaine' => "$connexion",
         'Last_Connexion' => "$day.'.'$mois.'.'.$annee.'.'.$heure.'.'.$min.'.'.$sec"));

@@ -75,7 +75,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
 
         /* On ajoute à la table belong le basket_ID, l'activity_ID et le prix */
  
-         $sql4 = 'INSERT INTO Belong (Activity_ID, Basket_ID, Belong_Price) VALUES (:activiteID, :basketID , :prix)';
+         $sql4 = 'INSERT INTO Belong (Activity_ID, Basket_ID, Belong_Price, Belong_Paid) VALUES (:activiteID, :basketID , :prix, 0)';
         $stmt = $bdd->prepare($sql4);
         $stmt->execute(array('activiteID' => "$activiteID", 'basketID' => "$basketID", 'prix' => "$prix"));
         

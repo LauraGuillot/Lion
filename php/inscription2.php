@@ -48,7 +48,7 @@
 
         <div class="row section-head">
             <div class="col full" style="top: 80px">
-                <h2 style="color : #11ABB0;"> Inscription 2/3</h2> 
+                <h2 style="color : #11ABB0;"> Inscription 2/4</h2> 
             </div>
         </div>
 

@@ -190,7 +190,7 @@ function testConnexion($bdd, $mail, $mdp) {
             foreach ($res as $ligne) {
 
                 $id = $ligne["Person_ID"];
-                $stmt2 = $bdd->prepare("UPDATE Connexion SET Last_Connexion = NOW() WHERE Connexion_ID =(SELECT Connexion_ID FROM Member WHERE (Person_ID = $id))");
+                $stmt2 = $bdd->prepare("UPDATE Connexion SET Connexion_Activ = 1 WHERE Connexion_ID =(SELECT Connexion_ID FROM Member WHERE (Person_ID = $id))");
                 $stmt2->execute();
 
                 $req3 = $bdd->prepare("SELECT Connexion_ID FROM Member WHERE (Person_ID = $id)", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
