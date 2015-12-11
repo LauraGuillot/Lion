@@ -144,7 +144,7 @@ function afficheHeader() {
     </html>';
     }
     
-    if (strcmp($file , 'verifConnexion.php') == 0 ||strcmp($file , 'verif1.php') == 0 || strcmp($file , 'verif3.php') == 0 || strcmp($file , 'verif2.php') == 0 || strcmp($file , 'inscription.php') == 0 || strcmp($file, 'inscription2.php' )==0 || strcmp($file , 'inscription3.php')==0 || strcmp($file , 'inscriptionnew2.php')==0 || strcmp($file , 'inscriptionnew3.php')==0 || strcmp($file , 'inscriptionnew.php')==0) {
+    if (strcmp($file , 'verif2bis.php') == 0 ||strcmp($file , 'verifConnexion.php') == 0 ||strcmp($file , 'verif1.php') == 0 || strcmp($file , 'verif3.php') == 0 || strcmp($file , 'verif2.php') == 0 || strcmp($file , 'inscription.php') == 0 || strcmp($file, 'inscription2.php' )==0 || strcmp($file , 'inscription3.php')==0 || strcmp($file , 'inscriptionnew2.php')==0 || strcmp($file , 'inscriptionnew3.php')==0 || strcmp($file , 'inscriptionnew.php')==0) {
         echo' 
     <html>
          <header class="mobile">
