@@ -61,7 +61,7 @@
                 <form name="contactForm" id="contactForm" method="post" action="verif3.php" style = "width : 1000px">
                     <fieldset>
   <?php
-                $email = $_POST['email'];
+$email = $_POST['email'];
 $mdp = $_POST['mdp'];
 $mdp2 = $_POST['mdp2'];
 $civilite = $_POST['civilite'];

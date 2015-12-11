@@ -53,7 +53,7 @@
                     <?php
                     $email = $_POST['email'];
                     $mdp = $_POST['mdp'];
-                    $mdp2 = $_POST['cmdp'];
+                    $mdp2 = $_POST['mdp2'];
                     $civilite = $_POST['civilite'];
                     $nom = $_POST['nom'];
                     $prenom = $_POST['prenom'];
@@ -111,7 +111,7 @@
                     }
 
                     /* Connexion à la base de données */
-                    $bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', 'lion');
+                    $bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', '');
                     afficheClub($bdd, $district);
                     ?>  
 
