@@ -24,7 +24,7 @@ function affiche($bdd, $idco) {
         $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
         $basketID = $row["Basket_ID"];
 
-        /* Récupération du basket id */
+        /* Récupération des activités non payées */
         $sql = 'SELECT Activity_Type_Name, Activity_Name, Activity_Date, Belong_Price FROM Activity '
                 . 'INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
                 . 'INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
