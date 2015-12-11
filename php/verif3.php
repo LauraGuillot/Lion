@@ -87,16 +87,15 @@ if (empty($fClub) or empty($fDistrict)) {
     $req2 = $bdd->prepare("SELECT Person_ID FROM Person WHERE (Person_Lastname = '$nomAcc' AND Person_Firstname = '$prenomAcc')", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $req2->execute(array());
     $row = $req2->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $personID = $row["Person_ID"];
+    $accID = $row["Person_ID"];
 
     $req3 = $bdd->prepare("INSERT INTO Follower (Person_ID) VALUE (:id)");
     $req3->execute(array(
-        'id' => "$personID",));
+        'id' => "$accID",));
     
     
     
  
-
 /*Récupération du club et du district*/
     $req4 = $bdd->prepare("SELECT Club_ID FROM Club WHERE (Club_Name = '$club')", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $req4->execute(array());
@@ -109,14 +108,12 @@ if (empty($fClub) or empty($fDistrict)) {
     $districtID = $row["District_ID"];
 
 
-
-
     $req22 = $bdd->prepare("SELECT Person_ID FROM Person WHERE (Person_Lastname = '$nom' AND Person_Firstname = '$prenom')", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $req22->execute(array());
     $row = $req22->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $personID2 = $row["Person_ID"];
+    $personID = $row["Person_ID"];
     
-    $req6 = $bdd->prepare("SELECT Follower_ID FROM Follower WHERE (Person_ID = '$personID')", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $req6 = $bdd->prepare("SELECT Follower_ID FROM Follower WHERE (Person_ID = '$accID')", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $req6->execute(array());
     $row = $req6->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $followerID = $row["Follower_ID"];
@@ -160,7 +157,7 @@ if (empty($fClub) or empty($fDistrict)) {
         'chaine' => "$connexion",
         'Last_Connexion' => "$day.'.'$mois.'.'.$annee.'.'.$heure.'.'.$min.'.'.$sec"));
 
-  
+  /*On ajoute le membre*/
 
     $req11 = $bdd->prepare('INSERT INTO Member (Member_Title, Member_Status, District_ID, Club_ID, Member_Num, Member_Additional_Adress, Member_Postal_Code, Member_Street, Member_City, Member_Phone, Member_Mobile, Member_Email, Member_Position_Club, Member_Position_District, Member_By_Train, Member_Date_Train, Connexion_ID,Person_ID, Follower_ID, Member_Password ) VALUES (:civilite,:titre,:districtID,:clubID,:num,:supad,:cp,:rue,:ville,:phone,:mobile,:email,:pclub,:pdistrict,:btrain,:htrain,:connexion,:personID2,:personID,:mdp)');
     $req11->execute(array(
@@ -181,31 +178,21 @@ if (empty($fClub) or empty($fDistrict)) {
         'btrain' => $train,
         'htrain' => $traindate,
         'connexion' => $connexion,
-        'personID2' => $personID2,
+        'personID2' => $personID,
         'personID' => $followerID,
         'mdp' => $mdp));
 
-
-     echo "$civilite\n";
-      echo "$districtID\n";
-      echo "$clubID\n";
-      echo "$num\n";
-      echo "$cadr\n";
-      echo "$cp\n";
-      echo "$rue\n";
-      echo "$ville\n";
-      echo "$tel\n";
-      echo "$portable\n";
-      echo "$email\n";
-      echo "$fClub\n";
-      echo "$fDistrict\n";
-      echo "$train\n";
-      echo "$traindate\n";
-      echo "$connexion\n";
-      echo "$personID2\n";
-      echo "$personID\n";
-      echo "$mdp\n";
-
+/*On lui crée un panier*/
+  $req13 = $bdd->prepare("SELECT Member_ID FROM Member WHERE (Person_ID = :id)", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $req13->execute(array('id' => "$personID"));
+    $row = $req13->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $memberID = $row["Member_ID"];   
+    
+ $req12 = $bdd->prepare('INSERT INTO Basket (Basket_Total, Basket_Meal_Total, Basket_Trip_Total, Member_ID, Congress_ID) VALUE (0,0,0,:id,1)');
+ $req12->execute(array(
+        'id' => "$memberID"));  
+    
+    
     $idco = $connexion ;
 
     echo'<!DOCTYPE html>
