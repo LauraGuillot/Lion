@@ -44,7 +44,7 @@ if (isset($_POST['bouton'])) {
 
 
     /* Suppression des activités non payées */
-   $sql = 'DELETE FROM Belong WHERE(Basket_ID = :id AND Belong_Paid = 0)';
+   $sql = 'DELETE FROM Belong WHERE(Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL)';
     $stmt = $bdd->prepare($sql);
     $stmt->execute(array(':id' => "$basketID"));
 

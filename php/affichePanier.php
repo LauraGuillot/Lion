@@ -28,7 +28,7 @@ function affiche($bdd, $idco) {
         $sql = 'SELECT Activity_Type_Name, Activity_Name, Activity_Date, Belong_Price FROM Activity '
                 . 'INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
                 . 'INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
-                . ' WHERE (Basket_ID = :id AND Belong_Paid = 0) ORDER BY (Activity_Date)';
+                . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL) ORDER BY (Activity_Date)';
 
         $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
         $stmt->execute(array(':id' => "$basketID"));
@@ -92,7 +92,7 @@ function affiche($bdd, $idco) {
                         </div>
                         <br>';
                         
-afficheBoutonValider($basketID,$bdd);
+afficheBoutonValider($basketID,$bdd,$idco);
 
        echo' </form></html>';
         
@@ -125,7 +125,7 @@ function afficheActivite($type, $nom, $date, $prix, $idco, $bdd) {
 /*****************************************************/
  /* Affichage d'un bouton pour valider le panier*/
  /****************************************************/
-function afficheBoutonValider($basketID, $bdd){
+function afficheBoutonValider($basketID, $bdd, $idco){
      /* on regarde si l'activité est dans son panier ou non */
     $sql3 = 'SELECT count(Activity_ID) FROM Belong WHERE (Basket_ID = :id )';
     $stmt = $bdd->prepare($sql3, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
@@ -137,6 +137,7 @@ function afficheBoutonValider($basketID, $bdd){
         echo'<form name="validPanier" id="contactForm" method="post"  action="recapitulatifPanier.php">
             <div align="right">
                 <input type="submit" name="v" value="Valider">
+                 <input type="hidden"  name="idco" value="' . $idco . '">
             </div>';
     }else{
         echo'
@@ -147,7 +148,7 @@ function afficheBoutonValider($basketID, $bdd){
 }
 
 
-/* Conexion à la base de données */
+/* Connexion à la base de données */
 $bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', '');
 
 affiche($bdd, $idco);

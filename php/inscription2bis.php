@@ -120,6 +120,10 @@
                     </div>
 
                     <div>
+                        <label for="contactSubject">N°<span class="required">*</span></label>
+                        <input name="num" type="text" id="num" size="35" value="" />
+                    </div>
+                    <div>
                         <label for="contactSubject">Rue<span class="required">*</span></label>
                         <input name="rue" type="text" id="rue" size="35" value="" />
                     </div>
@@ -129,11 +133,7 @@
                         <input name="cadr" type="text" id="cadr" size="5" value="" />
                     </div>
 
-                    <div>
-                        <label for="contactSubject">N°<span class="required">*</span></label>
-                        <input name="num" type="text" id="num" size="35" value="" />
-                    </div>
-
+                    
                     <div>
                         <label for="contactSubject">Code Postal<span class="required">*</span></label>
                         <input name="cp" type="text" id="cp" size="5" value="" />
