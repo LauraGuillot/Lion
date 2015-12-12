@@ -72,7 +72,7 @@ ob_start();
                     </div>
 <div class="col full">
        <br>
-       <h2 style="margin : 65px ; color : #11ABB0; text-align : center"> <FONT size="6"> Récapitulatif - Réservation d'activités - <?php echo"$dateauj"?> </FONT></h2>
+       <h2 style="margin : 65px ; color : #252E43; text-align : center"> <FONT size="6"> Récapitulatif - Réservation d'activités - <?php echo"$dateauj"?> </FONT></h2>
 
             </div>
 
@@ -81,11 +81,11 @@ ob_start();
         </div>
         
 <div>
-        <div style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > <u>Civilité</u> : <?php echo"$titre";?></FONT> </div> 
+        <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Civilité</u> : <?php echo"$titre";?></FONT> </div> 
         
-        <div style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > <u>Nom</u> :  <?php echo"$nom";?> </FONT></div> 
+        <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Nom</u> :  <?php echo"$nom";?> </FONT></div> 
        
-        <div style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > <u>Prenom</u> : <?php echo"$prenom";?></FONT></div> 
+        <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Prenom</u> : <?php echo"$prenom";?></FONT></div> 
        
     </div>
 
@@ -94,13 +94,13 @@ ob_start();
          </div>
          
 <div>
-            <div style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" >  <u>Adresse</u> : <?php echo"$num $rue ($adressesup) $cp $ville";?></FONT> </div> 
+            <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" >  <u>Adresse</u> : <?php echo"$num $rue ($adressesup) $cp $ville";?></FONT> </div> 
        
-            <div style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" >  <u>Téléphone</u> : <?php echo"$tel";?></FONT> </div> 
+            <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" >  <u>Téléphone</u> : <?php echo"$tel";?></FONT> </div> 
        
-            <div style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > <u>Mobile</u> : <?php echo"$mobile";?> </FONT></div> 
+            <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Mobile</u> : <?php echo"$mobile";?> </FONT></div> 
       
-            <div style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > <u>Mail</u> : <?php echo"$mail";?></FONT></div> 
+            <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Mail</u> : <?php echo"$mail";?></FONT></div> 
    </div>
         
         <div class="row section-head">
@@ -109,22 +109,22 @@ ob_start();
 
 
    <div>
-             <div style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > <u>Satut</u> :<?php echo"$status";?></FONT></div> 
+             <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Satut</u> :<?php echo"$status";?></FONT></div> 
   
-            <div style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > <u>District</u> : <?php echo"$district";?></FONT></div> 
+            <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>District</u> : <?php echo"$district";?></FONT></div> 
       
-           <div style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > <u>Position au sein du district</u> : <?php echo"$positiondistrict";?></FONT></div> 
+           <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Position au sein du district</u> : <?php echo"$positiondistrict";?></FONT></div> 
        
-           <div style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" >  <u>Club</u> : <?php echo"$club";?></FONT></div> 
+           <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" >  <u>Club</u> : <?php echo"$club";?></FONT></div> 
         
-            <div style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > <u>Position au sein du club</u> : <?php echo"$positionclub";?></FONT></div> 
+            <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Position au sein du club</u> : <?php echo"$positionclub";?></FONT></div> 
         </div>
         
  <div class="row section-head">
             <h2 style="color : #8BB24C;"><FONT size="5"> Arrivée </FONT></h2>
          </div>
    
-           <div style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > <?php echo"$resulttrain";?></FONT></div> 
+           <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <?php echo"$resulttrain";?></FONT></div> 
        
 
 
@@ -132,7 +132,7 @@ ob_start();
             <h2 style="color : #8BB24C;"> <FONT size="5">Accompagnant</FONT></h2>
          </div>
       <div>
-          <div style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > <?php echo"$fprenom $fnom";?></FONT></div> 
+          <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <?php echo"$fprenom $fnom";?></FONT></div> 
         </div>
 
 
