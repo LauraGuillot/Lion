@@ -39,7 +39,7 @@
         <!-- Header
         ================================================== -->
               <?php
-        $idco = $_GET['idco'];
+        $idco = $_POST['idco'];
 
         echo' <header class="mobile">';
 

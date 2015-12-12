@@ -307,4 +307,46 @@ echo'
                     </TABLE>
                         </div>
                         <br>';
+
+/***********************************************/
+/*BOUTONS*/
+/************************************************/
+
+ if (!($cpt = 0 && $cpt2=0)) {
+        echo'
+            
+<div>
+ <TABLE id="tableau" border width=50% cols="2" style="width : 100%; margin-left : 0" >
+
+     <TR class="row" >
+            <Td class ="col"  width=200 height = 35 style=" text-align : left;"><FONT size="4" style="color : #52574B">  
+            <form name="validPanier" id="contactForm" method="post"  action="paiement.php">
+                 <input type="submit" name="v" value="Valider et payer">
+                 <input type="hidden"  name="idco" value="' . $idco . '">
+           </form> 
+            </Td>      
+ 
+           <Td class ="col"  width=200 height = 35 style=" text-align : left;"><FONT size="4" style="color : #52574B">  
+            <form name="imprim" id="contactForm" method="post"  action="p">
+                 <input type="submit" name="i" value="Imprimer">
+                 <input type="hidden"  name="idco" value="' . $idco . '">
+           </form> 
+            </Td> 
+    </TR>
+                    
+    </TABLE>
+    <br>
+ </div>';
+                
+ }
+
+
+
+
+
+
+
+
+
+
 ?>
