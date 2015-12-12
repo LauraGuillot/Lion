@@ -327,7 +327,7 @@ echo'
             </Td>      
  
            <Td class ="col"  width=200 height = 35 style=" text-align : left;"><FONT size="4" style="color : #52574B">  
-            <form name="imprim" id="contactForm" method="post"  action="p">
+            <form name="imprim" id="contactForm" method="post"  action="recapPDF.php">
                  <input type="submit" name="i" value="Imprimer">
                  <input type="hidden"  name="idco" value="' . $idco . '">
            </form> 
