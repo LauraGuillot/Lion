@@ -77,7 +77,7 @@ ob_start();
             </div>
 
         <div class="row section-head">      
-            <h2 style="color : #11ABB0;" > <FONT size="5"> INFORMATIONS PERSONNELLES </FONT></h2>
+            <h2 style="color : #11ABB0;" > <FONT size="5">INFORMATIONS PERSONNELLES </FONT></h2>
         </div>
         
 <div>
@@ -138,7 +138,7 @@ ob_start();
 
         <div class="row section-head">
            <br>
-            <h2 style="color : #11ABB0;" > <FONT size="5"> ACTIVITEES RESERVEES </FONT></h2> 
+            <h2 style="color : #11ABB0;" > <FONT size="5">ACTIVITEES RESERVEES</FONT></h2> 
             
         </div>
         
