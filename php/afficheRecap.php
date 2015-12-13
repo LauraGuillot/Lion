@@ -230,7 +230,7 @@ echo'
             <h2 style="color : #8BB24C;"> <FONT size="5"> Excursions<FONT></h2>
          </div>';
 
-/* Récupération du nombre d'e repas'excursions réservés */
+/* Récupération du nombre d'excursions réservées */
 $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
         . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
         . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
@@ -245,7 +245,7 @@ if ($cpt2 != 0) {
     $sql = 'SELECT  Activity_Name, Activity_Date, Belong_Price FROM Activity '
             . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
             . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
-            . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL AND Activity_Type_Name = "Excursions") ORDER BY (Activity_Date)';
+            . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL AND Activity_Type_Name = "Excursion") ORDER BY (Activity_Date)';
 
     $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $stmt->execute(array(':id' => "$basketID"));
