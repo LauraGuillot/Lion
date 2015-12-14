@@ -27,9 +27,17 @@ $train = 1;
 }else{
    $train =0; 
 }
+
+if (isset($_POST['traindate'])){
 $traindate = $_POST['traindate'];
+}else{
+   $traindate="0000-00-00";
+}
+
+
 $trainheure = $_POST['trainheure'];
 
+$traindate = $traindate.' à '.$trainheure;
 
 switch ($civilite) {
     case 1:$civilite = "Mlle";
