@@ -51,12 +51,17 @@
                     </div>
 
                 </div>
+                
+                 <h7 style="color : #FF0000;"> ERREUR DE SAISIE OU EMAIL INCONNU</h7>
+                 
                     <!-- form -->
                     <form name="initMdp" id="initMdp" method="post"  action="initMdp.php">
                         <fieldset >
+
                             <div>
-                                <label for="contactSubject"> Adresse Mail <span class="required">*</span></label>
-                                <input name="mail" type="text" id="mail" size="35" value="" />
+                                <label for="contactEmail">Adresse email <span class="required">*</span></label>
+                                <input name="mail" type="mail" id="mail" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
+
                             </div>
 
                             <div>
