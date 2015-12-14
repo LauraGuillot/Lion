@@ -8,7 +8,7 @@ $bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', '')
 /* Récupération des données personnelles du membre */
 $sql = 'SELECT Member_ID, Person_Lastname, Person_Firstname, Member_Title, Member_Status, District_Name, Club_Name, '
         . ' Member_Num, Member_Additional_Adress, Member_Street, Member_City, Member_Postal_Code, Member_Phone, '
-        . ' Member_Mobile, Member_EMail, Member_Position_Club, Member_Position_District, Member_By_Train, Member_Date_Train, Follower_ID'
+        . ' Member_Mobile, Member_EMail, Member_Position_Club, Member_Position_District, Member_By_Train, Member_Date_Train '
         . ' FROM Member '
         . ' INNER JOIN Person ON (Person.Person_ID = Member.Person_ID) '
         . ' INNER JOIN Club ON (Club.Club_ID = Member.Club_ID) '
@@ -38,16 +38,16 @@ $positionclub = $row["Member_Position_Club"];
 $positiondistrict = $row["Member_Position_District"];
 $train = $row["Member_By_Train"];
 $traindate = $row["Member_Date_Train"];
-$followerID = $row["Follower_ID"];
 
 
 /* Récupération du follower */
 $sql = 'SELECT Person_Lastname, Person_Firstname '
         . 'FROM Follower '
         . ' INNER JOIN Person ON (Person.Person_ID = Follower.Person_ID) '
-        . ' WHERE (Follower_ID = :id)';
+        . ' INNER JOIN Member ON (Member.Member_ID = Follower.Member_ID)'
+        . ' WHERE (Member_ID = :id)';
 $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-$stmt->execute(array(':id' => "$followerID"));
+$stmt->execute(array(':id' => "$memberID"));
 $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
 $fnom = $row["Person_Lastname"];
 $fprenom = $row["Person_Firstname"];
