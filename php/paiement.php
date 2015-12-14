@@ -56,15 +56,15 @@
                         <a class="mobile-btn" href="#nav-wrap" title="Show navigation">Show navigation</a>
                         <a class="mobile-btn" href="#" title="Hide navigation">Hide navigation</a>
 
-                        <ul id="nav" class="nav">';
+                        <ul id="nav" class="nav" style = "margin-left :76px">';
         print(" <li ><a href=\"http://localhost/lion/Lion/php/homeC.php?idco=$idco\">Home</a></li>");
         print(" <li ><a href=\"http://localhost/lion/Lion/php/agendaC.php?idco=$idco\">Agenda</a></li>");
         print(" <li ><a href=\"http://localhost/lion/Lion/php/infoC.php?idco=$idco\">Info</a></li>");
         print(" <li ><a href=\"http://localhost/lion/Lion/php/contactC.php?idco=$idco\">Contact</a></li>");
 
-        print(" <li><a href=\"http://localhost/lion/Lion/php/panier.php?idco=$idco\" style=\"font-weight:bold; align :right\"><FONT size=\"4pt\"> Panier</FONT></a></li>");
-        print(" <li><a href=\"http://localhost/lion/Lion/php/moncompte.php?idco=$idco\" style=\"font-weight:bold; align :right\"><FONT size=\"4pt\"> Mon compte</FONT></a></li>");
-print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\" style=\"font-weight:bold; align :right\"><FONT size=\"4pt\"> Se déconnecter</FONT></a></li>");
+        print(" <li><a href=\"http://localhost/lion/Lion/php/panier.php?idco=$idco><FONT size=\"4pt\"> Panier</a></li>");
+        print(" <li><a href=\"http://localhost/lion/Lion/php/moncompte.php?idco=$idco\" > Mon compte</a></li>");
+print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\"> Se déconnecter</a></li>");
         echo'  </ul>
                     </nav>
                 </div>

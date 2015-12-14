@@ -38,8 +38,6 @@
         ================================================== -->
        
         <?php
-        $idco = $_GET['idco'];
-
         echo' <header class="mobile">';
 
         echo'<div class="row"';
@@ -92,7 +90,7 @@ print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\
                 <!-- form -->
                 <form name="contactForm" id="contactForm" method="post" action="verifContactC.php">
                     <fieldset>
-
+ <h7 style="color : #FF0000;"> ERREUR ! SAISIR A NOUVEAU LES INFORMATIONS</h7>
                         <div>
                             <label for="contactName">Nom <span class="required">*</span></label>
                             <input name="contactName" type="text" id="contactName" size="35" value="" />
@@ -115,7 +113,7 @@ print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\
 
                          <div>
                            
-                         <?php print("   <input name=\"idco\" type=\"hidden\" id=\"idco\" size=\"35\" value=\"$idco\" />");?>
+                         <?php print("   <input name=\"contactIdco\" type=\"hidden\" id=\"contactidco\" size=\"35\" value=\"$idco\" />");?>
                         </div>
                         
                         
