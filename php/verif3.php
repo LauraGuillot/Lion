@@ -22,18 +22,20 @@ $fDistrict = $_POST['fDistrict'];
 $prenomAcc = $_POST['prenomAcc'];
 $nomAcc = $_POST['nomAcc'];
 
-if (isset($_POST['train'])){
-$train = 1;
-}else{
-   $train =0; 
+if (isset($_POST['train'])) {
+    $train = 1;
+} else {
+    $train = 0;
 }
 
+if (isset($_POST['train'])) {
+    $traindate = $_POST['traindate'];
+    $trainheure = $_POST['trainheure'];
+    $traindate = $traindate . " à " . $trainheure;
+} else {
+    $traindate = '0000-00-00';
+}
 
-$traindate = $_POST['traindate'];
-
-$trainheure = $_POST['trainheure'];
-
-$traindate = $traindate." à ".$trainheure;
 
 switch ($civilite) {
     case 1:$civilite = "Mlle";
@@ -71,14 +73,14 @@ if (empty($fClub) or empty($fDistrict)) {
     include("inscriptionnew3.php");
 } else {
     $bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', '');
-    
-    /* Insertion du membre dans la table personne*/
+
+    /* Insertion du membre dans la table personne */
     $req0 = $bdd->prepare('INSERT INTO Person (Person_Lastname, Person_Firstname) VALUES (:nom,:prenom)');
     $req0->execute(array(
         'nom' => $nom,
         'prenom' => $prenom));
 
-/*Récupération du club et du district*/
+    /* Récupération du club et du district */
     $req4 = $bdd->prepare("SELECT Club_ID FROM Club WHERE (Club_Name = '$club')", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $req4->execute(array());
     $row = $req4->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
@@ -94,7 +96,7 @@ if (empty($fClub) or empty($fDistrict)) {
     $req22->execute(array());
     $row = $req22->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $personID = $row["Person_ID"];
-    
+
 
 //Préparation du connexionID
 
@@ -102,12 +104,12 @@ if (empty($fClub) or empty($fDistrict)) {
     $req8->execute(array());
     $row = $req8->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $annee = $row["YEAR(DATE(Now()))"];
-    
+
     $req82 = $bdd->prepare("SELECT MONTH(DATE(Now()))", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $req82->execute(array());
     $row = $req82->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $mois = $row["MONTH(DATE(Now()))"];
-    
+
     $req83 = $bdd->prepare("SELECT DAY(DATE(Now()))", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $req83->execute(array());
     $row = $req83->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
@@ -117,26 +119,26 @@ if (empty($fClub) or empty($fDistrict)) {
     $req81->execute(array());
     $row = $req81->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $heure = $row["HOUR(Now())"];
- 
+
     $req84 = $bdd->prepare("SELECT MINUTE(Now())", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $req84->execute(array());
     $row = $req84->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $min= $row["MINUTE(Now())"];
-    
+    $min = $row["MINUTE(Now())"];
+
     $req85 = $bdd->prepare("SELECT SECOND(Now())", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $req85->execute(array());
     $row = $req85->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $sec= $row["SECOND(Now())"];
+    $sec = $row["SECOND(Now())"];
 
-      $connexion=$chaine.$day.$mois.$annee.$heure.$min.$sec;
-      
-      //Insertion dans la table connexion
+    $connexion = $chaine . $day . $mois . $annee . $heure . $min . $sec;
+
+    //Insertion dans la table connexion
     $req9 = $bdd->prepare('INSERT INTO Connexion (Connexion_ID, First_Connexion, Connexion_Activ ) VALUE (:chaine,:Last_Connexion, 1)');
     $req9->execute(array(
         'chaine' => "$connexion",
         'Last_Connexion' => "$day.'.'$mois.'.'.$annee.'.'.$heure.'.'.$min.'.'.$sec"));
 
-  /*On ajoute le membre*/
+    /* On ajoute le membre */
     $req11 = $bdd->prepare('INSERT INTO Member (Member_Title, Member_Status, District_ID, Club_ID, Member_Num, Member_Additional_Adress, Member_Postal_Code, Member_Street, Member_City, Member_Phone, Member_Mobile, Member_Email, Member_Position_Club, Member_Position_District, Member_By_Train, Member_Date_Train, Connexion_ID,Person_ID, Member_Password ) VALUES (:civilite,:titre,:districtID,:clubID,:num,:supad,:cp,:rue,:ville,:phone,:mobile,:email,:pclub,:pdistrict,:btrain,:htrain,:connexion,:personID,:mdp)');
     $req11->execute(array(
         'civilite' => $civilite,
@@ -145,7 +147,7 @@ if (empty($fClub) or empty($fDistrict)) {
         'clubID' => $clubID,
         'num' => "$num",
         'supad' => $cadr,
-        'cp' => "$cp",         
+        'cp' => "$cp",
         'rue' => $rue,
         'ville' => $ville,
         'phone' => "$tel",
@@ -159,44 +161,44 @@ if (empty($fClub) or empty($fDistrict)) {
         'personID' => $personID,
         'mdp' => $mdp));
 
-   /*On récupère le membre ID*/ 
-     $req = $bdd->prepare("SELECT Member_ID FROM Member WHERE (Member_EMail = :mail)", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    /* On récupère le membre ID */
+    $req = $bdd->prepare("SELECT Member_ID FROM Member WHERE (Member_EMail = :mail)", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $req->execute(array('mail' => "$email"));
     $row = $req->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $memberID= $row["Member_ID"];
-    
- /*Si il a un follower, on l'ajoute*/
-if (!(empty($nomAcc) && empty($prenomAcc))){
-    /*Insertion de l'accompagnateur dans la table personne*/
-  
-    $req1 = $bdd->prepare('INSERT INTO Person (Person_Lastname, Person_Firstname) VALUES (:nomAcc,:prenomAcc)');
-    $req1->execute(array(
-        'nomAcc' => "$nomAcc",
-        'prenomAcc' => "$prenomAcc"));
+    $memberID = $row["Member_ID"];
 
-    /*Ajout de l'accompagnateur dans la table follower*/
-    $req2 = $bdd->prepare("SELECT Person_ID FROM Person WHERE (Person_Lastname = '$nomAcc' AND Person_Firstname = '$prenomAcc')", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $req2->execute(array());
-    $row = $req2->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $accID = $row["Person_ID"];
+    /* Si il a un follower, on l'ajoute */
+    if (!(empty($nomAcc) && empty($prenomAcc))) {
+        /* Insertion de l'accompagnateur dans la table personne */
 
-    $req3 = $bdd->prepare("INSERT INTO Follower (Person_ID, Member_ID) VALUE (:id, :mid)");
-    $req3->execute(array(
-        'id' => "$accID",'mid' => "$memberID"));
-}
-    
-/*On lui crée un panier*/
-  $req13 = $bdd->prepare("SELECT Member_ID FROM Member WHERE (Person_ID = :id)", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+        $req1 = $bdd->prepare('INSERT INTO Person (Person_Lastname, Person_Firstname) VALUES (:nomAcc,:prenomAcc)');
+        $req1->execute(array(
+            'nomAcc' => "$nomAcc",
+            'prenomAcc' => "$prenomAcc"));
+
+        /* Ajout de l'accompagnateur dans la table follower */
+        $req2 = $bdd->prepare("SELECT Person_ID FROM Person WHERE (Person_Lastname = '$nomAcc' AND Person_Firstname = '$prenomAcc')", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+        $req2->execute(array());
+        $row = $req2->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+        $accID = $row["Person_ID"];
+
+        $req3 = $bdd->prepare("INSERT INTO Follower (Person_ID, Member_ID) VALUE (:id, :mid)");
+        $req3->execute(array(
+            'id' => "$accID", 'mid' => "$memberID"));
+    }
+
+    /* On lui crée un panier */
+    $req13 = $bdd->prepare("SELECT Member_ID FROM Member WHERE (Person_ID = :id)", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $req13->execute(array('id' => "$personID"));
     $row = $req13->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $memberID = $row["Member_ID"];   
-    
- $req12 = $bdd->prepare('INSERT INTO Basket (Basket_Total, Basket_Meal_Total, Basket_Trip_Total, Member_ID, Congress_ID) VALUE (0,0,0,:id,1)');
- $req12->execute(array(
-        'id' => "$memberID"));  
-    
-    
-    $idco = $connexion ;
+    $memberID = $row["Member_ID"];
+
+    $req12 = $bdd->prepare('INSERT INTO Basket (Basket_Total, Basket_Meal_Total, Basket_Trip_Total, Member_ID, Congress_ID) VALUE (0,0,0,:id,1)');
+    $req12->execute(array(
+        'id' => "$memberID"));
+
+
+    $idco = $connexion;
 
     echo'<!DOCTYPE html>
 <!--[if lt IE 8 ]><html class="ie ie7" lang="en"> <![endif]-->
