@@ -124,7 +124,7 @@ if ($cpt != 0) {
              </div>';
 } else {
     $repas = $repas . ' 
-           <div style="" > <FONT size="3.5" style="font-weight:normal;color : #707B82;" > Aucun repas réservé</div> 
+           <div style="" > <FONT size="3.5" style="font-weight:normal;color : #707B82;" > Aucun repas réservé</FONT></div> 
         ';
 }
 
