@@ -40,16 +40,9 @@
         <?php include("header1.php"); ?>
         <!-- Header End -->
 
-
-
-
         <!-- Inscription Section
           ================================================== -->
-
-
-
-
-
+        <section>
         <div class="row">
 
             <div class="col g-7" style="top: 80px">
@@ -88,11 +81,6 @@
 
                     </fieldset>
                 </form> 
-
-                <!-- Form End -->
-
-
-
             </div>
 
 
@@ -118,29 +106,23 @@
                             <input name="mdp" type="password" id="mdp" size="35" value="" />
                         </div>
 
+                        <div>
+                            <a href="perteMdp.php"  title="perte de mot de passe">Si vous avez perdu votre mot de passe, cliquez ici</a> 
+                            
+                        </div>
 
                         <div>
+                            <br>
                             <button name="v1" id="v1" class="submit">Valider</button>
-
                         </div>
 
                     </fieldset>
                 </form> 
-
-                <!-- Form End -->
-
-                <!-- contact-warning -->
-                <div id="message-warning"></div>
-                <!-- contact-success -->
-                <div id="message-success">
-                    <i class="icon-ok" ></i><br />
-                </div>
-
             </aside>
 
         </div>
 
-    </section> <!-- Contact Section End-->
+    </section> <!-- Inscription Section End-->
 
     <!-- footer
     ================================================== -->
