@@ -52,31 +52,8 @@
                         <h2 style="color : #11ABB0;"> S'inscrire</h2> 
                     </div>
                 </div>
-<h7 style="color : #FF0000;"> ERREUR ! SAISIR A NOUVEAU LES INFORMATIONS</h7>
-<?php 
- $bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', '');
-function testInscription($bdd, $email) {
-       
-        /* Préparation de la requête */
-        $stmt = $bdd->prepare("SELECT Person.Person_ID FROM Person INNER JOIN Member ON (Person.Person_ID = Member.Person_ID) WHERE (Member_EMail='$email');", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+<h7 style="color : #FF0000;"> <?php echo"$erreur"; ?></h7>
 
-        /* Exécution de la requête */
-        $stmt->execute(array());
-
-        /* Exploitation des résultats */
-
-        $res = $stmt->fetchAll();
-
-        /* S'il y a au moins un résultat, l'adresse utilisee est invalide */
-        if (count($res) != 0) {
-           echo '<h7 style="color : #FF0000;"> CETTE ADRESSE EST DEJA UTILISEE </h7>';
-    }
-    
-        }
-        $email=$_POST['email'];
-        testInscription($bdd,$email);
-    
-            ?>
 
                 <!-- form -->
                 <form name="contactForm" id="contactForm" method="post"  action="verif1.php">
