@@ -74,7 +74,7 @@ if ($cpt != 0) {
              </div>';
 } else {
     echo'  <div>
-           <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > Aucun repas réservé</h2> 
+           <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > Aucun repas commandé</h2> 
         </div>';
 }
 
@@ -136,7 +136,7 @@ if ($cpt2 != 0) {
              </div>';
 } else {
     echo'  <div>
-           <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > Aucune excursion réservée</h2> 
+           <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > Aucune excursion commandée</h2> 
         </div>';
 }
 /* * *************************** */

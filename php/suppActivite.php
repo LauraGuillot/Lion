@@ -111,8 +111,14 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
         $stmt->execute(array('id' => "$activiteID"));
         $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
         $cap = $row["Activity_Capacity"];  
+        
+        $sql1 = 'SELECT Count(Follower_ID) FROM Follower WHERE (Member_ID = :id )';
+        $stmt = $bdd->prepare($sql1, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+        $stmt->execute(array('id' => "$memberID"));
+        $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+        $c = $row["Count(Follower_ID)"];
 
-        $sum = "$cap"+"1";
+        $sum = "$cap"+"1"+"$c";/*si il y a un follower, on incrémente de 2*/
         $sql8 = 'UPDATE Activity SET Activity_Capacity = :sum WHERE (Activity_ID=:id)';
         $stmt = $bdd->prepare($sql8);
         $stmt->execute(array('sum' => "$sum", 'id' => "$activiteID")); 

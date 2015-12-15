@@ -23,27 +23,34 @@ if (isset($_POST['bouton'])) {
     $stmt->execute(array('id' => "$memberID"));
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $basketID = $row["Basket_ID"];
- 
+
     /* Incrémentation des capacités de toutes les activités supprimées */
-    $sql = 'SELECT Belong.Activity_ID , Activity_Capacity FROM Belong  INNER JOIN Activity ON (Belong.Activity_ID = Activity.Activity_ID) WHERE (Belong.Basket_ID ='.$basketID.' AND Belong_Paid =0)';
+
+    $sql1 = 'SELECT Count(Follower_ID) FROM Follower WHERE (Member_ID = :id )';
+    $stmt = $bdd->prepare($sql1, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $stmt->execute(array('id' => "$memberID"));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $c = $row["Count(Follower_ID)"];
+
+    $sql = 'SELECT Activity.Activity_ID , Activity_Capacity FROM Activity  INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) WHERE (Basket_ID =' . $basketID . ' AND Belong_Paid =0)';
     $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute();
-    
-     
+    $stmt->execute(array());
+  
+
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
+
         $activiteID = $row["Activity_ID"];
-     
         $cap = $row["Activity_Capacity"];
-        $cap1 = $cap + 1;
-     
+        $cap1 = "$cap" + "1" + "$c"; /* Si il y a un follower, on augmente de 2 */
+
         $sql2 = 'UPDATE Activity SET Activity_Capacity = :c WHERE (Activity_ID = :id)';
         $stmt2 = $bdd->prepare($sql2);
         $stmt2->execute(array('c' => "$cap1", 'id' => "$activiteID"));
-   }
+    }
 
 
     /* Suppression des activités non payées */
-   $sql = 'DELETE FROM Belong WHERE(Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL)';
+    $sql = 'DELETE FROM Belong WHERE(Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL)';
     $stmt = $bdd->prepare($sql);
     $stmt->execute(array(':id' => "$basketID"));
 
