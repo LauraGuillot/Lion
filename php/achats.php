@@ -106,16 +106,16 @@
 
         <div class="row section-head">
             <div class="col full">
-                <br></br>
+                
                 <br></br>
                 <h2 style="margin : 65px ; color : #11ABB0; text-align : center"> Vos achats </h2>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
+
             </div>
+            <?php include("afficheAchats.php");?>
         </div>
 
+        
+         
         <!-- Section End-->
 
 

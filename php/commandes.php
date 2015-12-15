@@ -36,7 +36,7 @@
     <body data-spy="scroll" data-target="#nav-wrap">
 
 
- 
+
         <!-- Header
         ================================================== -->
 
@@ -72,7 +72,7 @@
                 </div>
             </div>';
 
-/* Sous onglets */
+        /* Sous onglets */
         echo'<div class="row">
 
         <div class="col full">
@@ -96,11 +96,11 @@
         ?>
 
 
- 
-     
-        
-        
-        
+
+
+
+
+
 
 
 
@@ -112,14 +112,14 @@
         <div class="row section-head">
             <div class="col full">
                 <br></br>
-                <br></br>
+
                 <h2 style="margin : 65px ; color : #11ABB0; text-align : center"> Vos commandes en cours </h2>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
+
             </div>
+            <?php include("afficheCommande.php"); ?>
         </div>
+
+
 
         <!-- Section End-->
 
