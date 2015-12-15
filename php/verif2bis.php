@@ -11,7 +11,7 @@ $tel = $_POST['tel'];
 $portable = $_POST['portable'];
 
 if (empty($club) or empty($rue) or empty($num) or empty($cp) or empty($ville) or empty($pays) or empty($tel)) {
-    include ("inscriptionnew2bisnew.php");
+    include ("inscription2bisnew.php");
 } else {
 
     include ("inscription3.php");

@@ -53,10 +53,12 @@
                     </div>
                 </div>
 <h7 style="color : #FF0000;"> ERREUR ! SAISIR A NOUVEAU LES INFORMATIONS</h7>
-<?php function testInscription($bdd, $email) {
-        $bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', 'lion');
+<?php 
+ $bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', '');
+function testInscription($bdd, $email) {
+       
         /* Préparation de la requête */
-        $stmt = $bdd->prepare("SELECT Person.Person_ID FROM Person INNER JOIN Member ON (Person.Person_ID = Member.Person_ID) WHERE (Member_EMail='$mail');", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+        $stmt = $bdd->prepare("SELECT Person.Person_ID FROM Person INNER JOIN Member ON (Person.Person_ID = Member.Person_ID) WHERE (Member_EMail='$email');", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
 
         /* Exécution de la requête */
         $stmt->execute(array());
@@ -71,6 +73,7 @@
     }
     
         }
+        $email=$_POST['email'];
         testInscription($bdd,$email);
     
             ?>
@@ -81,7 +84,7 @@
 
                         <div>
                             <label for="contactEmail">Adresse email <span class="required">*</span></label>
-                            <input name="email" type="mail" id="mail" size="35" value="$email" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
+                            <input name="email" type="mail" id="email" size="35" value="<?php echo"$email"?>" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
 
                         </div>
 

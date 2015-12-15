@@ -64,7 +64,7 @@
                         <?php
                         $email = $_POST['email'];
                         $mdp = $_POST['mdp'];
-                        $mdp2 = $_POST['cmdp'];
+                        $mdp2 = $_POST['mdp2'];
 
                         print("<input type=\"hidden\" name=\"email\" value=\"$email\"/>");
                         print("<input type=\"hidden\" name=\"mdp\" value=\"$mdp\"/>");
