@@ -40,12 +40,9 @@
         <?php include("header1.php"); ?>
         <!-- Header End -->
 
-
-
-
         <!-- Inscription Section
           ================================================== -->
-
+        <section>
         <div class="row">
 
             <div class="col g-7" style="top: 80px">
@@ -55,15 +52,37 @@
                         <h2 style="color : #11ABB0;"> S'inscrire</h2> 
                     </div>
                 </div>
+<h7 style="color : #FF0000;"> ERREUR ! SAISIR A NOUVEAU LES INFORMATIONS</h7>
+<?php function testInscription($bdd, $email) {
+        $bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', 'lion');
+        /* Préparation de la requête */
+        $stmt = $bdd->prepare("SELECT Person.Person_ID FROM Person INNER JOIN Member ON (Person.Person_ID = Member.Person_ID) WHERE (Member_EMail='$mail');", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
 
-                <h7 style="color : #FF0000;"> ERREUR ! SAISIR A NOUVEAU LES INFORMATIONS</h7>
+        /* Exécution de la requête */
+        $stmt->execute(array());
+
+        /* Exploitation des résultats */
+
+        $res = $stmt->fetchAll();
+
+        /* S'il y a au moins un résultat, l'adresse utilisee est invalide */
+        if (count($res) != 0) {
+           echo '<h7 style="color : #FF0000;"> CETTE ADRESSE EST DEJA UTILISEE </h7>';
+    }
+    
+        }
+        testInscription($bdd,$email);
+    
+            ?>
+
                 <!-- form -->
-                <form name="contactForm" id="contactForm" method="post" action="verif1.php" >
+                <form name="contactForm" id="contactForm" method="post"  action="verif1.php">
                     <fieldset >
 
                         <div>
                             <label for="contactEmail">Adresse email <span class="required">*</span></label>
-                            <input name="email" type="mail" id="mail" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
+                            <input name="email" type="mail" id="mail" size="35" value="$email" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
+
                         </div>
 
                         <div>
@@ -76,22 +95,14 @@
                             <input name="cmdp" type="password" id="cmdp" size="35" value="" />
                         </div>
 
+
+
                         <div>
                             <input type="submit" name="v1" value="Valider">
                         </div>
 
                     </fieldset>
                 </form> 
-
-                <!-- Form End -->
-
-                <!-- contact-warning -->
-                <div id="message-warning"></div>
-                <!-- contact-success -->
-                <div id="message-success">
-                    <i class="icon-ok" href="inscription2.php"></i><br />
-                </div>
-
             </div>
 
 
@@ -104,49 +115,40 @@
                 </div>
 
                 <!-- form -->
-                <form name="contactForm" id="contactForm" method="post" action="" >
+                <form name="contactForm" id="contactForm" method="post" action="verifConnexion.php" >
                     <fieldset >
 
                         <div>
-                            <label for="contactEmail">Adresse e-mail <span class="required">*</span></label>
-                            <input name="contactEmail" type="mail" id="mail" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
+                            <label for="mail">Adresse e-mail <span class="required">*</span></label>
+                            <input name="mail" type="mail" id="mail" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
                         </div>
 
                         <div>
-                            <label for="contactSubject">Mot de passe<span class="required">*</span></label>
-                            <input name="contactSubject" type="password" id="mdp" size="35" value="" />
+                            <label for="mdp">Mot de passe<span class="required">*</span></label>
+                            <input name="mdp" type="password" id="mdp" size="35" value="" />
                         </div>
 
+                        <div>
+                            <a href="perteMdp.php"  title="perte de mot de passe">Si vous avez perdu votre mot de passe, cliquez ici</a> 
+                            
+                        </div>
 
                         <div>
-                            <button class="submit">Valider</button>
-                            <span id="image-loader">
-                                <img src="images/loader.gif" alt="" />
-                            </span>
+                            <br>
+                            <button name="v1" id="v1" class="submit">Valider</button>
                         </div>
 
                     </fieldset>
                 </form> 
-
-                <!-- Form End -->
-
-                <!-- contact-warning -->
-                <div id="message-warning"></div>
-                <!-- contact-success -->
-                <div id="message-success">
-                    <i class="icon-ok" ></i><br />
-                </div>
-
             </aside>
 
         </div>
 
-    </section> <!-- Contact Section End-->
+    </section> <!-- Inscription Section End-->
 
     <!-- footer
     ================================================== -->
-    <br></br>
-
+    <br>
     <?php include("footer.php"); ?>
     <!-- Footer End-->
 

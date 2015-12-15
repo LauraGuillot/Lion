@@ -37,7 +37,7 @@
 
         <!-- Header
         ================================================== -->
-        <?php include("header1.php"); ?>
+       <?php include("header1.php"); ?>
         <!-- Header End -->
 
 
@@ -47,7 +47,7 @@
 
         <div class="row section-head">
             <div class="col full" style="top: 80px">
-                <h2 style="color : #11ABB0;"> Inscription 3/3 </h2> 
+                <h2 style="color : #11ABB0;"> Inscription 4/4 </h2> 
             </div>
         </div>
 
@@ -56,13 +56,49 @@
 
             <div class="col g-7"style="top: 80px">
 
+              <h7 style="color : #FF0000;"> ERREUR ! SAISIR A NOUVEAU LES INFORMATIONS</h7>
                 <!-- form -->
-                <form name="contactForm" id="contactForm" method="post" action="validationInscription3.php" style = "width : 1000px">
+                <form name="contactForm" id="contactForm" method="post" action="verif3.php" style = "width : 1000px">
                     <fieldset>
-                        <div>
-                            <h7 style="color : #FF0000;"> ERREUR - VEUILLEZ REMPLIR TOUS LES CHAMPS OBLIGATOIRES</h7>
-                            <br></br>	
-                        </div>
+  <?php
+$email = $_POST['email'];
+$mdp = $_POST['mdp'];
+$mdp2 = $_POST['mdp2'];
+$civilite = $_POST['civilite'];
+$nom = $_POST['nom'];
+$prenom = $_POST['prenom'];
+$titre = $_POST['titre'];
+$district = $_POST['district'];
+$club = $_POST['club'];
+$rue = $_POST['rue'];
+$num = $_POST['num'];
+$cadr= $_POST['cadr'];
+$cp = $_POST['cp'];
+$ville = $_POST['ville'];
+$pays = $_POST['pays'];
+$tel = $_POST['tel'];
+$portable = $_POST['portable'];
+
+
+print("<input type=\"hidden\" name=\"email\" value=\"$email\"/>");
+print("<input type=\"hidden\" name=\"mdp\" value=\"$mdp\"/>");
+print("<input type=\"hidden\" name=\"mdp2\" value=\"$mdp2\"/>");
+print("<input type=\"hidden\" name=\"civilite\" value=\"$civilite\"/>");
+print("<input type=\"hidden\" name=\"nom\" value=\"$nom\"/>");
+print("<input type=\"hidden\" name=\"prenom\" value=\"$prenom\"/>");
+print("<input type=\"hidden\" name=\"titre\" value=\"$titre\"/>");
+print("<input type=\"hidden\" name=\"district\" value=\"$district\"/>");
+print("<input type=\"hidden\" name=\"club\" value=\"$club\"/>");
+print("<input type=\"hidden\" name=\"rue\" value=\"$rue\"/>");
+print("<input type=\"hidden\" name=\"num\" value=\"$num\"/>");
+print("<input type=\"hidden\" name=\"cadr\" value=\"$cadr\"/>");
+print("<input type=\"hidden\" name=\"cp\" value=\"$cp\"/>");
+print("<input type=\"hidden\" name=\"ville\" value=\"$ville\"/>");
+print("<input type=\"hidden\" name=\"pays\" value=\"$pays\"/>");
+print("<input type=\"hidden\" name=\"tel\" value=\"$tel\"/>");
+print("<input type=\"hidden\" name=\"portable\" value=\"$portable\"/>");
+
+?>
                         <div class="row section-head">
 
                             <h2 >Fonction</h2>
@@ -97,8 +133,8 @@
                         </div>
 
                         <div style="color:#3d4145; font : 18px/28px opensans-bold, sans-serif; margin : 12px 0">
-
-                            <INPUT type="checkbox" name="train" value="1"> Arrivée en train (Des navettes seront disponibles pour rejoindre votre hôtel)
+  
+                                <INPUT type="checkbox" name="train" value="1"> Arrivée en train (Des navettes seront disponibles pour rejoindre votre hôtel)
 
                         </div>
 
@@ -115,7 +151,7 @@
                             <input name="trainheure" type="time" id="trainHeure" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0"/>
                         </div>
 
-                       <input type="submit" name="v3" value="Valider">
+                        <input type="submit" name="v3" value="Valider">
                         </div>
 
                     </fieldset>
@@ -123,7 +159,7 @@
 
                 <!-- Form End -->
 
-
+               
 
             </div>
 
@@ -137,7 +173,7 @@
     <!-- footer
     ================================================== -->
     <br></br>
-    <?php include("footer.php"); ?>
+        <?php include("footer.php"); ?>
     <!-- Footer End-->
 
     <!-- Java Script
