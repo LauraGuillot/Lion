@@ -111,7 +111,10 @@
                 <h2 style="margin : 65px ; color : #11ABB0; text-align : center"> Vos achats </h2>
 
             </div>
-            <?php include("afficheAchats.php");?>
+            <?php
+        $idco = $_GET['idco'];
+        include("afficheAchats.php");
+        ?>
         </div>
 
         

@@ -63,6 +63,14 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
 $fnom = $row["Person_Lastname"];
 $fprenom = $row["Person_Firstname"];
 
+$accompagnant = "";
+
+if (!(empty($fnom) && empty($fprenom))){
+    $accompagnant = $fprenom." ".$fnom;
+}else{
+    $accompagnant = "Aucun";
+}
+
 $dateauj = date("d-m-Y");
 
 /* * ****************************************** */
@@ -249,7 +257,7 @@ ob_start();
         <h2 style="color : #8BB24C;"> <FONT size="5">Accompagnant</FONT></h2>
     </div>
     <div>
-        <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <?php echo"$fprenom $fnom"; ?></FONT></div> 
+        <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <?php echo"$accompagnant"; ?></FONT></div> 
     </div>
     <page_footer backtop="5mm" backbottom="10mm" backleft="10mm" backright="10mm">
         <div  style="text-align:center"> <FONT size="3.5" style="font-weight:normal;color : #252E43; text-align:center" ><i>Page 1/2</i> </FONT></div>

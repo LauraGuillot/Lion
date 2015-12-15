@@ -112,11 +112,12 @@
                 <br></br>
                 <h2 style="margin : 65px ; color : #11ABB0; text-align : center"> Vos informations personnelles </h2>
             </div>
+            
+        <?php include("afficheInfoPerso.php");?>
         </div>
 
         
         
-        <?php include("afficheInfoPerso.php");?>
         
         <!-- Section End-->
 

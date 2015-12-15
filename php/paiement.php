@@ -38,7 +38,7 @@
 
         <!-- Header
         ================================================== -->
-              <?php
+        <?php
         $idco = $_POST['idco'];
 
         echo' <header class="mobile">';
@@ -64,7 +64,7 @@
 
         print(" <li><a href=\"http://localhost/lion/Lion/php/panier.php?idco=$idco><FONT size=\"4pt\"> Panier</a></li>");
         print(" <li><a href=\"http://localhost/lion/Lion/php/moncompte.php?idco=$idco\" > Mon compte</a></li>");
-print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\"> Se déconnecter</a></li>");
+        print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\"> Se déconnecter</a></li>");
         echo'  </ul>
                     </nav>
                 </div>
@@ -72,7 +72,7 @@ print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\
 
         </header>';
         ?>
-        
+
         <!-- Header End -->
 
         <!-- Choix paiement Section
@@ -86,16 +86,17 @@ print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\
         </div>
 
     <center>
-        <form name="PaiementForm" id="PaiementForm" method="post" action="">
+        <form name="PaiementForm" id="PaiementForm" method="post" action="choixpaiement.php">
             <fieldset>
                 <div style="color:#3d4145; font : 20px/30px opensans-bold, sans-serif; margin : 12px 0">
-                    <FORM>
-                        <INPUT width=450px type="radio" name="typePaiement" value="1" checked> Carte bleue <br></br>        
-                        <INPUT width=450px type="radio" name="typePaiement" value="2"> Chèque
-                    </FORM>
+                    
+                        <INPUT width=450px type="radio" name="choix" value="1" checked> Carte bleue <br></br>        
+                        <INPUT width=450px type="radio" name="choix" value="2"> Chèque
                 </div>
 
 
+                 <input type="hidden"  name="idco" value="<?php echo"$idco";?>">
+          
                 <br></br>
                 <input type="submit" name="valid" value="Valider">
 
