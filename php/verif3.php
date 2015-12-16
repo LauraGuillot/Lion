@@ -1,5 +1,7 @@
 <?php
 
+include "constantes.php";
+
 $email = $_POST['email'];
 $mdp = $_POST['mdp'];
 $mdp2 = $_POST['mdp2'];
@@ -72,7 +74,7 @@ $chaine = random(70);
 if (empty($fClub) or empty($fDistrict)) {
     include("inscriptionnew3.php");
 } else {
-    $bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', '');
+    
 
     /* Insertion du membre dans la table personne */
     $req0 = $bdd->prepare('INSERT INTO Person (Person_Lastname, Person_Firstname) VALUES (:nom,:prenom)');

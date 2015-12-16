@@ -1,5 +1,7 @@
 <?php
 
+include "constantes.php";
+
 /* * ****************************************** */
 /* Fontion pour afficher le tableau des repas */
 /* * ****************************************** */
@@ -10,7 +12,7 @@ function afficheRepas($bdd) {
         /* Préparation de la requête */
         $sql = 'SELECT Activity_Name, Activity_Date, Activity_Price1, Activity_Price2, Activity_Capacity FROM Activity ' .
                 'INNER JOIN Activity_Type ON (Activity.Activity_Type_ID = Activity_Type.Activity_Type_ID) ' .
-                'WHERE (Congress_ID = 1 AND (Activity_Type_Name= :nom)) ORDER BY (Activity_Date);';
+                'WHERE (Congress_ID ='.congressID.' AND (Activity_Type_Name= :nom)) ORDER BY (Activity_Date);';
 
         $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
 
@@ -63,7 +65,7 @@ function afficheExcursions($bdd) {
         /* Préparation de la requête */
         $sql = 'SELECT Activity_Name, Activity_Date, Activity_Price1, Activity_Price2, Activity_Capacity FROM Activity ' .
                 'INNER JOIN Activity_Type ON (Activity.Activity_Type_ID = Activity_Type.Activity_Type_ID) ' .
-                'WHERE (Congress_ID = 1 AND (Activity_Type_Name= :nom)) ORDER BY (Activity_Date);';
+                'WHERE (Congress_ID ='.congressID.' AND (Activity_Type_Name= :nom)) ORDER BY (Activity_Date);';
 
         $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
 
@@ -136,11 +138,7 @@ function afficheActiviteComplete($nom, $date, $prix1, $prix2) {
                                     </TR>';
 }
 
-function afficheAgenda() {
-
-    /* Connexion à la base de données */
-    $bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', '');
-
+function afficheAgenda($bdd) {
     /* Affichage des activités */
     echo'<html> <div class="row section-head">
         <div class="col full">
@@ -154,5 +152,8 @@ function afficheAgenda() {
    echo'</html> </div></html>';
 }
 
-afficheAgenda();
+
+
+
+afficheAgenda($bdd);
 ?> 

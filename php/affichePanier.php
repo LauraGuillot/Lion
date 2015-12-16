@@ -1,7 +1,7 @@
 <?php
 
 $idco = $_GET['idco'];
-
+include "constantes.php";
 
 /* * ****************************************************** */
 /* Fontion pour afficher le tableau des activités du panier */
@@ -18,7 +18,7 @@ function affiche($bdd, $idco) {
         $memberID = $row["Member_ID"];
 
         /* Récupération du basket id */
-        $sql = 'SELECT Basket_ID FROM Basket WHERE (Member_ID = :id AND Congress_ID = 1)';
+        $sql = 'SELECT Basket_ID FROM Basket WHERE (Member_ID = :id)';
         $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
         $stmt->execute(array(':id' => "$memberID"));
         $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
@@ -28,7 +28,7 @@ function affiche($bdd, $idco) {
         $sql = 'SELECT Activity_Type_Name, Activity_Name, Activity_Date, Belong_Price FROM Activity '
                 . 'INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
                 . 'INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
-                . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL) ORDER BY (Activity_Date)';
+                . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL AND Congress_ID ='.congressID.') ORDER BY (Activity_Date)';
 
         $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
         $stmt->execute(array(':id' => "$basketID"));
@@ -61,7 +61,7 @@ function affiche($bdd, $idco) {
                         <br></br></html>';
 
         /* Total */
-        $sql = 'SELECT Basket_Meal_Total, Basket_Trip_Total, Basket_Total FROM Basket WHERE (Basket_ID = :id AND Congress_ID = 1)';
+        $sql = 'SELECT Basket_Meal_Total, Basket_Trip_Total, Basket_Total FROM Basket WHERE (Basket_ID = :id)';
         $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
         $stmt->execute(array(':id' => "$basketID"));
         $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
@@ -127,11 +127,12 @@ function afficheActivite($type, $nom, $date, $prix, $idco, $bdd) {
  /****************************************************/
 function afficheBoutonValider($basketID, $bdd, $idco){
      /* on regarde si l'activité est dans son panier ou non */
-    $sql3 = 'SELECT count(Activity_ID) FROM Belong WHERE (Basket_ID = :id )';
+    $sql3 = 'SELECT count(Belong.Activity_ID) FROM Belong INNER JOIN Activity ON (Activity.Activity_ID = Belong.Activity_ID)'
+            . 'WHERE (Basket_ID = :id AND Congress_ID ='.congressID.' AND Belong_Paid =0 AND Belong_Payement_Way IS NULL)';
     $stmt = $bdd->prepare($sql3, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $stmt->execute(array('id' => "$basketID"));
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $cpt = $row["count(Activity_ID)"];
+    $cpt = $row["count(Belong.Activity_ID)"];
 
     if ($cpt != 0) {
         echo'<form name="validPanier" id="contactForm" method="post"  action="recapitulatifPanier.php">
@@ -148,8 +149,6 @@ function afficheBoutonValider($basketID, $bdd, $idco){
 }
 
 
-/* Connexion à la base de données */
-$bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', '');
 
 affiche($bdd, $idco);
 ?> 

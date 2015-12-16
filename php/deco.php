@@ -1,5 +1,7 @@
 <?php
 
+include "constantes.php";
+
 if (isset($_POST['bouton'])) {
 
     $idco = $_POST['idco'];
@@ -18,7 +20,7 @@ if (isset($_POST['bouton'])) {
     $memberID = $row["Member_ID"];
 
     /* Récupération du basket id */
-    $sql = 'SELECT Basket_ID FROM Basket WHERE (Member_ID = :id AND Congress_ID = 1)';
+    $sql = 'SELECT Basket_ID FROM Basket WHERE (Member_ID = :id )';
     $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $stmt->execute(array('id' => "$memberID"));
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
@@ -32,7 +34,7 @@ if (isset($_POST['bouton'])) {
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $c = $row["Count(Follower_ID)"];
 
-    $sql = 'SELECT Activity.Activity_ID , Activity_Capacity FROM Activity  INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) WHERE (Basket_ID =' . $basketID . ' AND Belong_Paid =0)';
+    $sql = 'SELECT Activity.Activity_ID , Activity_Capacity FROM Activity  INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) WHERE (Basket_ID =' . $basketID . ' AND Belong_Paid =0 AND Belong_Payement_Way IS NULL AND Congress_ID ='.congressID.' )';
     $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $stmt->execute(array());
   
@@ -43,7 +45,7 @@ if (isset($_POST['bouton'])) {
         $cap = $row["Activity_Capacity"];
         $cap1 = "$cap" + "1" + "$c"; /* Si il y a un follower, on augmente de 2 */
 
-        $sql2 = 'UPDATE Activity SET Activity_Capacity = :c WHERE (Activity_ID = :id)';
+        $sql2 = 'UPDATE Activity SET Activity_Capacity = :c WHERE (Activity_ID = :id AND Congress_ID ='.congressID.' )';
         $stmt2 = $bdd->prepare($sql2);
         $stmt2->execute(array('c' => "$cap1", 'id' => "$activiteID"));
     }

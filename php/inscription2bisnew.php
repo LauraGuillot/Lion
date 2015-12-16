@@ -47,7 +47,7 @@
         <div class="row">
 
             <div class="col g-7"style="top: 80px">
-<h7 style="color : #FF0000;"> ERREUR ! SAISIR A NOUVEAU LES INFORMATIONS</h7>
+                <h7 style="color : #FF0000;"> ERREUR ! SAISIR A NOUVEAU LES INFORMATIONS</h7>
 
                 <form name="contactForm" id="contactForm" method="post" action="verif2bis.php">
 
@@ -77,9 +77,10 @@
                     </div>
 
                     <?php
-                    /*                     * ************************************************ */
+                    /************************************************ */
                     /* Fontion pour afficher les clubs en fonction du district choisi */
-                    /*                     * *********************************************** */
+                    /*********************************************** */
+                    include "constantes.php";
 
                     function afficheClub($bdd, $district) {
                         try {
@@ -134,7 +135,7 @@
                         <input name="cadr" type="text" id="cadr" size="5" value="" />
                     </div>
 
-                    
+
                     <div>
                         <label for="contactSubject">Code Postal<span class="required">*</span></label>
                         <input name="cp" type="text" id="cp" size="5" value="" />
@@ -175,7 +176,7 @@
     <!-- footer
     ================================================== -->
 
-    <?php include("footer.php"); ?>
+<?php include("footer.php"); ?>
     <!-- Footer End-->
 
     <!-- Java Script

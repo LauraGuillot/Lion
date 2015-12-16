@@ -4,7 +4,8 @@ $mdp = $_POST['mdp'];
 $mdp2 = $_POST['cmdp'];
 
 
- $bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', '');
+
+include "constantes.php";
        
         /* Préparation de la requête */
         $stmt = $bdd->prepare("SELECT Count(Member_ID) FROM Member WHERE (Member_EMail='$email');", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));

@@ -2,6 +2,7 @@
 
 $idco = $_GET['idco'];
 
+include "constantes.php";
 
 /* * ****************************************** */
 /* Fontion pour afficher le tableau des repas */
@@ -13,7 +14,7 @@ function afficheRepas($bdd, $idco) {
         /* Préparation de la requête */
         $sql = 'SELECT Activity_Name, Activity_Date, Activity_Price1, Activity_Price2, Activity_Capacity FROM Activity ' .
                 'INNER JOIN Activity_Type ON (Activity.Activity_Type_ID = Activity_Type.Activity_Type_ID) ' .
-                'WHERE (Congress_ID = 1 AND (Activity_Type_Name= :nom)) ORDER BY (Activity_Date);';
+                'WHERE (Congress_ID ='.congressID.' AND (Activity_Type_Name= :nom)) ORDER BY (Activity_Date);';
 
         $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
 
@@ -66,7 +67,7 @@ function afficheExcursions($bdd, $idco) {
         /* Préparation de la requête */
         $sql = 'SELECT Activity_Name, Activity_Date, Activity_Price1, Activity_Price2, Activity_Capacity FROM Activity ' .
                 'INNER JOIN Activity_Type ON (Activity.Activity_Type_ID = Activity_Type.Activity_Type_ID) ' .
-                'WHERE (Congress_ID = 1 AND (Activity_Type_Name= :nom)) ORDER BY (Activity_Date);';
+                'WHERE (Congress_ID = '.congressID.' AND (Activity_Type_Name= :nom)) ORDER BY (Activity_Date);';
 
         $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
 
@@ -229,11 +230,9 @@ function afficheActiviteComplete($nom, $date, $prix1, $prix2, $idco, $bdd) {
 /* * **************Affichage de tout l'agenda****************** */
 /* * ********************************************************** */
 
-function afficheAgenda($idco) {
+function afficheAgenda($idco,$bdd) {
 
-    /* Connexion à la base de données */
-    $bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', '');
-
+   
     /* Affichage des activités */
     echo'<html> <div class="row section-head">
         <div class="col full">
@@ -311,5 +310,5 @@ function compteurPanier($bdd, $idco) {
 
 /* Exécution */
 
-afficheAgenda($idco);
+afficheAgenda($idco, $bdd);
 ?> 

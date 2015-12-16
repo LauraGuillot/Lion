@@ -1,13 +1,13 @@
 <?php
 
 
-/* Connexion à la base de données */
-$bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', '');
+
+include "constantes.php";
 
 /* On sélectionne toutes les activités de la base */
 
 /* Préparation de la requête */
-$sql = 'SELECT Activity_Name FROM Activity WHERE (Congress_ID = 1 )';
+$sql = 'SELECT Activity_Name FROM Activity WHERE (Congress_ID ='.congressID.'  )';
 $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
 
 /* Exécution de la requête */
@@ -40,8 +40,10 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
         $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
         $basketID = $row["Basket_ID"];
         
-         /* On récupère son basket_ID */
-        $sql3 = 'SELECT Activity_ID, Activity_Type_Name FROM Activity INNER JOIN Activity_Type ON (Activity.Activity_Type_ID = Activity_Type.Activity_Type_ID) INNER JOIN Congress ON (Activity.Congress_ID = Congress.Congress_ID) WHERE (Activity_Name = :nom AND Activity.Congress_ID =1)';
+         /* On récupère les données relatives à l'activité */
+        $sql3 = 'SELECT Activity_ID, Activity_Type_Name FROM Activity '
+                . ' INNER JOIN Activity_Type ON (Activity.Activity_Type_ID = Activity_Type.Activity_Type_ID) '
+                . ' WHERE (Activity_Name = :nom AND Congress_ID = '.congressID.' )';
         $stmt = $bdd->prepare($sql3, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
         $stmt->execute(array('nom' => "$nom"));
         $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
@@ -67,8 +69,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
         /*On commence par récupérer les totaux qui nous interessent*/
         if(strcmp($type , "Repas")==0){
             $sql5 = 'SELECT Basket_Meal_Total, Basket_Total FROM Basket '
-                 . ' INNER JOIN Congress ON (Congress.Congress_ID = Basket.Congress_ID) '
-                 . ' WHERE (Congress.Congress_ID = 1 AND Basket_ID = :id )';
+                 . ' WHERE (Basket_ID = :id )';
         $stmt = $bdd->prepare($sql5, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
         $stmt->execute(array('id' => "$basketID"));
         $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
@@ -77,8 +78,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
               
         }else{
              $sql5 = 'SELECT Basket_Trip_Total, Basket_Total FROM Basket'
-                 . ' INNER JOIN Congress ON (Congress.Congress_ID = Basket.Congress_ID)'
-                 . ' WHERE (Congress.Congress_ID = 1 AND Basket_ID = :id )';
+                 . ' WHERE ( Basket_ID = :id )';
         $stmt = $bdd->prepare($sql5, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
         $stmt->execute(array('id' => "$basketID"));
         $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
@@ -92,16 +92,16 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
         $soustotal2 = "$soustotal" - "$prix";
          
          if(strcmp($type , "Repas")==0){   
-        $sql6 = 'UPDATE Basket SET Basket_Meal_Total = :soustotal WHERE (Congress_ID =1 AND Basket_ID = :id)';
+        $sql6 = 'UPDATE Basket SET Basket_Meal_Total = :soustotal WHERE ( Basket_ID = :id)';
         $stmt = $bdd->prepare($sql6);
         $stmt->execute(array('soustotal' => "$soustotal2", 'id' => "$basketID"));         
         }else{
-        $sql6 = 'UPDATE Basket SET Basket_Trip_Total = :soustotal WHERE (Congress_ID =1 AND Basket_ID = :id)';
+        $sql6 = 'UPDATE Basket SET Basket_Trip_Total = :soustotal WHERE ( Basket_ID = :id)';
         $stmt = $bdd->prepare($sql6);
         $stmt->execute(array('soustotal' => "$soustotal2", 'id' => "$basketID"));            
         }
         
-        $sql6 = 'UPDATE Basket SET Basket_Total = :total WHERE (Congress_ID =1 AND Basket_ID = :id)';
+        $sql6 = 'UPDATE Basket SET Basket_Total = :total WHERE (Basket_ID = :id)';
         $stmt = $bdd->prepare($sql6);
         $stmt->execute(array('total' => "$total2", 'id' => "$basketID"));  
         

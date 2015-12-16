@@ -1,8 +1,7 @@
 <?php
 $idco = $_POST['idco'];
 
-/* Connexion à la base de données */
-$bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', '');
+include "constantes.php";
 
 /* Récupération des données personnelles du membre */
 $sql = 'SELECT Member_ID, Person_Lastname, Person_Firstname, Member_Title, Member_Status, District_Name, Club_Name, '
@@ -78,7 +77,7 @@ $dateauj = date("d-m-Y");
 /* * ********************************************** */
 
 /* Récupération du basketID et des totaux */
-$sql = 'SELECT Basket_ID, Basket_Total, Basket_Trip_Total, Basket_Meal_Total FROM Basket WHERE (Member_ID = :id AND Congress_ID = 1)';
+$sql = 'SELECT Basket_ID, Basket_Total, Basket_Trip_Total, Basket_Meal_Total FROM Basket WHERE (Member_ID = :id)';
 $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
 $stmt->execute(array(':id' => "$memberID"));
 $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
@@ -91,7 +90,7 @@ $totalmeal = $row["Basket_Meal_Total"];
 $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
         . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
         . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
-        . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL AND Activity_Type_Name = "Repas")';
+        . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL AND Activity_Type_Name = "Repas" AND Congress_ID = '.congressID.')';
 $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
 $stmt->execute(array(':id' => "$basketID"));
 $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
@@ -103,7 +102,7 @@ if ($cpt != 0) {
     $sql = 'SELECT  Activity_Name, Activity_Date, Belong_Price FROM Activity '
             . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
             . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
-            . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL AND Activity_Type_Name = "Repas") ORDER BY (Activity_Date)';
+            . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL AND Activity_Type_Name = "Repas" AND Congress_ID = '.congressID.') ORDER BY (Activity_Date)';
 
     $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $stmt->execute(array(':id' => "$basketID"));
@@ -147,7 +146,7 @@ $excursion = ' ';
 $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
         . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
         . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
-        . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL AND Activity_Type_Name = "Excursion")';
+        . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL AND Activity_Type_Name = "Excursion" AND Congress_ID = '.congressID.')';
 $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
 $stmt->execute(array(':id' => "$basketID"));
 $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
@@ -158,7 +157,7 @@ if ($cpt2 != 0) {
     $sql = 'SELECT  Activity_Name, Activity_Date, Belong_Price FROM Activity '
             . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
             . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
-            . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL AND Activity_Type_Name = "Excursion") ORDER BY (Activity_Date)';
+            . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL AND Activity_Type_Name = "Excursion" AND Congress_ID = '.congressID.') ORDER BY (Activity_Date)';
 
     $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $stmt->execute(array(':id' => "$basketID"));
