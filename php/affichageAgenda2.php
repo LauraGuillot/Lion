@@ -259,7 +259,7 @@ function compteurPanier($bdd, $idco) {
     $memberID = $row["Member_ID"];
 
     /* Récupération du basket id */
-    $sql = 'SELECT Basket_ID FROM Basket WHERE (Member_ID = :id AND Congress_ID = 1)';
+    $sql = 'SELECT Basket_ID FROM Basket WHERE (Member_ID = :id )';
     $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $stmt->execute(array(':id' => "$memberID"));
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
@@ -268,7 +268,7 @@ function compteurPanier($bdd, $idco) {
     /* Récupération du nombre d'activités dans le panier */
     $sql = 'SELECT Count(Activity.Activity_ID) FROM Activity '
             . 'INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
-            . ' WHERE (Basket_ID = :id AND Belong_Paid = 0) ';
+            . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Congress_ID ='.congressID.' ) ';
     $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $stmt->execute(array(':id' => "$basketID"));
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
