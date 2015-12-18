@@ -42,7 +42,7 @@ function paiementCB($bdd, $valid, $idco) {
         $stmt->execute(array('id' => "$basketID"));
 
         $sql6 = 'UPDATE Basket SET Basket_Meal_Total = 0 WHERE (Basket_ID = :id)';
-        $stmt = $bdd->prepare(6);
+        $stmt = $bdd->prepare($sql6);
         $stmt->execute(array('id' => "$basketID"));
 
         /* On redirige l'utilisateur vers ses achats */
@@ -375,6 +375,10 @@ function paiementCH($bdd, $idco) {
     $stmt = $bdd->prepare($sql3);
     $stmt->execute(array('id' => "$basketID"));
 
+    $sql3 = 'UPDATE Belong SET Belong_Date = NOW() WHERE (Basket_ID = :id AND Belong_Paid =0)';
+    $stmt = $bdd->prepare($sql3);
+    $stmt->execute(array('id' => "$basketID"));
+
     /* On remet à 0 tous les totaux du panier */
     $sql5 = 'UPDATE Basket SET Basket_Total = 0 WHERE (Basket_ID = :id)';
     $stmt = $bdd->prepare($sql5);
@@ -386,7 +390,7 @@ function paiementCH($bdd, $idco) {
     $stmt->execute(array('id' => "$basketID"));
 
     $sql6 = 'UPDATE Basket SET Basket_Meal_Total = 0 WHERE (Basket_ID = :id)';
-    $stmt = $bdd->prepare(6);
+    $stmt = $bdd->prepare($sql6);
     $stmt->execute(array('id' => "$basketID"));
 
     /* Afficher un message indiquant la démarche à suivre à l'utilisateur */
@@ -473,18 +477,22 @@ function paiementCH($bdd, $idco) {
         <div class="row section-head">
         <div class="col full">
         <br></br>
+
+            <h2 style = "color :#70F861; margin : 65px; text-align : center"> Commande enregistrée <br></br>
+             
+            <center><FONT size="3.5pt " style = "color :#F0FFFF ;font-weight:normal"> Merci d\'imprimer votre bon de commande ci-dessous et de l\'envoyer avec le chèque à l\'adresse : <br>38, rue Albert Dory - 44300 NANTES - FRANCE </center></FONT></h2>
+            
+        
+            <center><FONT size="3.5pt " style = "color :#9F9898 ;font-weight:normal"> Vous pouvez consulter vos commandes dans Mes Commandes de l\'onglet Mon Compte. A la réception de votre chèque, votre réservation apparaitra dans la rubrique Mes Achats.  </center></FONT></h2>
         <br></br>
-            <span><h2 style = "color :#70F861; margin : 65px; text-align : center"> Commande enregistrée <br></br>
-           <center><FONT size="3.5pt " style = "color :#F0FFFF ;font-weight:normal"> Merci d\'imprimer votre bon de commande ci-dessous et de l\'envoyer avec le chèque à l\adresse :  </center></FONT></h2><span>
-        <center><FONT size="3.5pt " style = "color :#F0FFFF ;font-weight:normal"> A la réception de votre chèque, votre réservation apparaitra dans la rubrique Mes Achats de l\'onglet Mon compte.  </center></FONT></h2><span>
-        <br></br>
-        <br></br>
-        <br></br>
+     
 </div>';
 
-    /* Générer un pdf "Bon de commande" pour  l'utilisateur via un bouton */
-
-    /* Redirection vers Mes Commandes à l'aide d'un bouton en bas de page */
+    echo'<form name="bonDeCommande" id="contactForm" method="post"  action="bonDeCommande.php">
+            <div align="center">
+                <input type="submit" name="v" value="Imprimer mon bon de commande">
+                 <input type="hidden"  name="idco" value="' . $idco . '">
+            </div>';
 
 
     echo' <!-- Message Section End-->
@@ -990,7 +998,7 @@ function compteurPanier($bdd, $idco) {
     /* Récupération du nombre d'activités dans le panier */
     $sql = 'SELECT Count(Activity.Activity_ID) FROM Activity '
             . 'INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
-            . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Congress_ID =' . congressID . ' ) ';
+            . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL AND Congress_ID =' . congressID . ' ) ';
     $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $stmt->execute(array(':id' => "$basketID"));
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
@@ -1581,7 +1589,7 @@ function afficheBoutonValider($basketID, $bdd, $idco) {
 
 function afficheRecap($bdd, $idco) {
     /* Récupération des données personnelles du membre */
-    $sql = 'SELECT Member_ID, Person_Lastname, Person_Firstname, Member_Title, Member_Status, District_Name, Club_Name, '
+    $sql = 'SELECT Member.Member_ID, Person_Lastname, Person_Firstname, Member_Title, Member_Status, District_Name, Club_Name, '
             . ' Member_Num, Member_Additional_Adress, Member_Street, Member_City, Member_Postal_Code, Member_Phone, '
             . ' Member_Mobile, Member_EMail, Member_Position_Club, Member_Position_District, Member_By_Train, Member_Date_Train '
             . ' FROM Member '
@@ -2210,7 +2218,7 @@ function afficheHeader() {
     </html>';
     }
 
-    if (strcmp($file, 'initMdp.php') == 0 || strcmp($file, 'perteMdpNew.php') == 0 || strcmp($file, 'perteMdp.php') == 0 || strcmp($file, 'verif2bis.php') == 0 || strcmp($file, 'verifConnexion.php') == 0 || strcmp($file, 'verif1.php') == 0 || strcmp($file, 'verif3.php') == 0 || strcmp($file, 'verif2.php') == 0 || strcmp($file, 'inscription.php') == 0 || strcmp($file, 'inscription2.php') == 0 || strcmp($file, 'inscription3.php') == 0 ) {
+    if (strcmp($file, 'initMdp.php') == 0 || strcmp($file, 'perteMdpNew.php') == 0 || strcmp($file, 'perteMdp.php') == 0 || strcmp($file, 'verif2bis.php') == 0 || strcmp($file, 'verifConnexion.php') == 0 || strcmp($file, 'verif1.php') == 0 || strcmp($file, 'verif3.php') == 0 || strcmp($file, 'verif2.php') == 0 || strcmp($file, 'inscription.php') == 0 || strcmp($file, 'inscription2.php') == 0 || strcmp($file, 'inscription3.php') == 0) {
         echo' 
     <html>
          <header class="mobile">
@@ -2281,7 +2289,7 @@ function initMDP($email, $mdp, $mdp2, $bdd) {
 
 function afficheRecapPDF($bdd, $idco) {
     /* Récupération des données personnelles du membre */
-    $sql = 'SELECT Member_ID, Person_Lastname, Person_Firstname, Member_Title, Member_Status, District_Name, Club_Name, '
+    $sql = 'SELECT Member.Member_ID, Person_Lastname, Person_Firstname, Member_Title, Member_Status, District_Name, Club_Name, '
             . ' Member_Num, Member_Additional_Adress, Member_Street, Member_City, Member_Postal_Code, Member_Phone, '
             . ' Member_Mobile, Member_EMail, Member_Position_Club, Member_Position_District, Member_By_Train, Member_Date_Train '
             . ' FROM Member '
@@ -3164,4 +3172,174 @@ function majConnexion($bdd, $idco) {
     $req9 = $bdd->prepare("UPDATE Connexion SET Last_Connexion= NOW() WHERE (Connexion_ID =:idco)");
     $req9->execute(array(
         'idco' => "$idco"));
+}
+
+/* ----------------------------------------------------------------------------------------------- */
+/*                                BON DE COMMANDE PDF                                    */
+/* ----------------------------------------------------------------------------------------------- */
+
+function bonDeCommande($bdd, $idco) {
+    /* On récupère le nom, le prénom et les coordonnées du client */
+
+    $sql = 'SELECT Member.Member_ID, Person_Lastname, Person_Firstname, Member_Title, '
+            . ' Member_Num, Member_Additional_Adress, Member_Street, Member_City, Member_Postal_Code, Member_Phone, '
+            . ' Member_Mobile, Member_EMail '
+            . ' FROM Member '
+            . ' INNER JOIN Connexion ON (Connexion.Member_ID = Member.Member_ID) '
+            . ' INNER JOIN Person ON (Person.Person_ID = Member.Person_ID) '
+            . ' WHERE (Connexion_ID = :id)';
+
+    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $stmt->execute(array('id' => "$idco"));
+
+    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $memberID = $row["Member_ID"];
+    $nom = $row["Person_Lastname"];
+    $prenom = $row["Person_Firstname"];
+    $titre = $row["Member_Title"];
+    $num = $row["Member_Num"];
+    $adressesup = $row["Member_Additional_Adress"];
+    $rue = $row["Member_Street"];
+    $ville = $row["Member_City"];
+    $cp = $row["Member_Postal_Code"];
+    $tel = $row["Member_Phone"];
+    $mobile = $row["Member_Mobile"];
+    $mail = $row["Member_EMail"];
+
+
+    /* On récupère les activités commandées */
+
+
+    /* Récupération du basketID et des totaux */
+    $sql = 'SELECT Basket_ID FROM Basket WHERE (Member_ID = :id)';
+    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $stmt->execute(array(':id' => "$memberID"));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $basketID = $row["Basket_ID"];
+
+
+    /* Récupération des activités */
+
+    /* On récupère la date du dernier panier */
+    $sql = 'SELECT Belong_Date FROM Activity '
+            . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
+            . ' WHERE (Basket_ID = :id  AND Belong_Payement_Way="CH" AND Congress_ID = ' . congressID . ') ORDER BY (Belong_Date)';
+    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $stmt->execute(array(':id' => "$basketID"));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $belongdate = $row["Belong_Date"];
+
+    /* On récupère toutes les activités */
+    $sql = 'SELECT  Activity.Activity_ID, Activity_Name, Activity_Date, Belong_Price FROM Activity '
+            . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
+            . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
+            . ' WHERE (Basket_ID = :id  AND Belong_Payement_Way ="CH" AND Congress_ID = ' . congressID . ' AND Belong_Date = :date ) ORDER BY ( Activity_Date)';
+
+    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $stmt->execute(array(':id' => "$basketID", ':date' => "$belongdate"));
+
+    $numCommande = "";
+
+    $activite = ' 
+<div>
+    <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 100%; margin-left : 0;border-collapse: collapse;">             
+         <TR class="row" >
+                        <Td class ="col" width=100 style="border:1px solid black; background-color : #C9D2D7;text-align : center;"><FONT size="5" > <b> Date </b></FONT></Td>
+                        <td class ="col" width=320 style="border:1px solid black; background-color : #C9D2D7; text-align : center;"> <FONT size="5" > <b> Intitulé </b></FONT></td>
+                        <td class ="col" width=140 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Tarif </b> </FONT></td>
+        </TR> ';
+    $total = 0;
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
+
+        $numCommande = $numCommande . ".". $row["Activity_ID"] ;
+        $nom = $row["Activity_Name"];
+        $date = $row["Activity_Date"];
+        $prix = $row["Belong_Price"];
+        $total = $total + $prix;
+
+
+        $activite = $activite . '<TR class="row" >
+           <Td class ="col"  width=100 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $date . '</FONT> </Td>
+           <td class ="col" width=320 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $nom . '</FONT> </td>
+           <td class ="col" width=140 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $prix . ' €</FONT> </td>
+         </TR> ';
+    } 
+    
+ $activite = $activite . ' </TABLE>
+             </div>';
+
+    $dateauj = date("d-m-Y");
+    $numCommande = $memberID."-".$numCommande  ;
+    ob_start();
+    ?>
+
+    <page backtop="15mm" backbottom="15mm" backleft="10mm" backright="10mm">
+        <div class="logo">
+            <a href="" style="top : 4px"><img alt="" src="images/logo.png" style="height:  50px; width: 55px; top: 4px"></a>
+        </div>
+        <div class="col full">
+            <h2 style="margin : 65px ; color : #252E43; text-align : center"> <FONT size="6"> Bon de commande n° <?php echo"$numCommande"; ?> - <?php echo"$dateauj" ?> </FONT></h2>
+
+        </div>
+
+        <div class="row section-head">      
+            <h2 style="color : #11ABB0;" > <FONT size="5">INFORMATIONS PERSONNELLES </FONT></h2>
+        </div>
+
+        <div>
+            <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Civilité</u> : <?php echo"$titre"; ?></FONT> </div> 
+
+            <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Nom</u> :  <?php echo"$nom"; ?> </FONT></div> 
+
+            <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Prenom</u> : <?php echo"$prenom"; ?></FONT></div> 
+
+        </div>
+
+
+        <div>
+            <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" >  <u>Adresse</u> : <?php echo"$num $rue ($adressesup) $cp $ville"; ?></FONT> </div> 
+
+            <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" >  <u>Téléphone</u> : <?php echo"$tel"; ?></FONT> </div> 
+
+            <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Mobile</u> : <?php echo"$mobile"; ?> </FONT></div> 
+
+            <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Mail</u> : <?php echo"$mail"; ?></FONT></div> 
+        </div>
+
+        <div class="row section-head">
+            <h2 style="color : #11ABB0;" > <FONT size="5">ACTIVITES RESERVEES</FONT></h2> 
+        </div>
+
+    <?php echo"$activite"; ?>
+
+        <div class="row section-head">
+            <h2 style="color : #11ABB0;" > <FONT size="5">TOTAL</FONT></h2> 
+        </div>
+
+        <div>
+            <TABLE id="tableau" border width=50% cols="2" style="border:1px solid black;width : 40%; margin-left : 0; border-collapse: collapse;" >
+                <TR class="row" >
+                    <Td class ="col"  width=300 height = 35  style="border:1px solid black;text-align : center;background-color : #C9D2D7;"><FONT size="4" > <b> Total </b> </FONT></Td>
+                    <Td class ="col" width=101 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color:#BA052C"><?php echo"$total" ?> € </FONT></Td>
+                </TR>
+            </TABLE>
+        </div>
+        
+        <page_footer backtop="5mm" backbottom="10mm" backleft="10mm" backright="10mm">
+            <div  style="text-align:center"> <FONT size="3.5" style="font-weight:normal;color : #252E43; text-align:center" ><i>Page 1/1</i> </FONT></div>
+        </page_footer>
+    </page>
+
+
+    <?php
+    $content = ob_get_clean();
+    require('html2pdf/html2pdf.class.php');
+
+    try {
+        $pdf = new HTML2PDF('P', 'A4', 'fr');
+        $pdf->writeHTML($content);
+        $pdf->Output('recapitulatif.pdf');
+    } catch (HTML2PDF_exception $ex) {
+        die($ex);
+    }
 }
