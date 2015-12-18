@@ -37,7 +37,9 @@
 
         <!-- Header
         ================================================== -->
-        <?php include("header1.php"); ?>
+        <?php include "fonctions.php";
+        afficheHeader();
+        ?>
         <!-- Header End -->
 
         <!-- Inscription Section
@@ -51,41 +53,41 @@
                     </div>
 
                 </div>
-                
-                 <h7 style="color : #FF0000;"> ERREUR DE SAISIE OU EMAIL INCONNU</h7>
-                 
-                    <!-- form -->
-                    <form name="initMdp" id="initMdp" method="post"  action="initMdp.php">
-                        <fieldset >
 
-                            <div>
-                                <label for="contactEmail">Adresse email <span class="required">*</span></label>
-                                <input name="mail" type="mail" id="mail" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
+                <h7 style="color : #FF0000;"> ERREUR DE SAISIE OU EMAIL INCONNU</h7>
 
-                            </div>
+                <!-- form -->
+                <form name="initMdp" id="initMdp" method="post"  action="initMdp.php">
+                    <fieldset >
 
-                            <div>
-                                <label for="contactSubject">Mot de passe<span class="required">*</span></label>
-                                <input name="mdp" type="password" id="mdp" size="35" value="" />
-                            </div>
+                        <div>
+                            <label for="contactEmail">Adresse email <span class="required">*</span></label>
+                            <input name="mail" type="mail" id="mail" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
 
-                            <div>
-                                <label for="contactSubject">Confirmation du mot de passe<span class="required">*</span></label>
-                                <input name="cmdp" type="password" id="cmdp" size="35" value="" />
-                            </div>
-                            <div>
-                                <input type="submit" name="v" value="Valider">
-                            </div>
+                        </div>
 
-                        </fieldset>
-                    </form> 
-                </div>
+                        <div>
+                            <label for="contactSubject">Mot de passe<span class="required">*</span></label>
+                            <input name="mdp" type="password" id="mdp" size="35" value="" />
+                        </div>
+
+                        <div>
+                            <label for="contactSubject">Confirmation du mot de passe<span class="required">*</span></label>
+                            <input name="cmdp" type="password" id="cmdp" size="35" value="" />
+                        </div>
+                        <div>
+                            <input type="submit" name="v" value="Valider">
+                        </div>
+
+                    </fieldset>
+                </form> 
+            </div>
         </section> <!-- Inscription Section End-->
 
         <!-- footer
         ================================================== -->
         <br>
-        <?php include("footer.php"); ?>
+<?php affichefooter(); ?>
         <!-- Footer End-->
 
         <!-- Java Script

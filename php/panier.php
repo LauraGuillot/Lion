@@ -84,11 +84,15 @@
                 <h2 style="margin : 65px ; color : #11ABB0; text-align : center"> Activités choisies </h2>
 
             </div>
-            <?php include("affichePanier.php"); ?>
+            <?php
+            $idco = $_GET['idco'];
+            include "fonctions.php";
+            affichePanier($bdd, $idco);
+            ?>
 
         </div>
 
-         
+
 
 
         <!-- Section End-->
@@ -96,7 +100,7 @@
 
         <!-- footer
         ================================================== -->
-        <?php include("footer.php"); ?>
+        <?php affichefooter(); ?>
         <!-- Footer End-->
 
         <!-- Java Script

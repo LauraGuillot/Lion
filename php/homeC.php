@@ -161,7 +161,8 @@ print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\
 
         <!-- footer
         ================================================== -->
-        <?php include("footer.php"); ?>
+        <?php include "fonctions.php";
+affichefooter(); ?>
         <!-- Footer End-->
 
         <!-- Java Script

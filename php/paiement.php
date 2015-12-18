@@ -89,14 +89,14 @@
         <form name="PaiementForm" id="PaiementForm" method="post" action="choixpaiement.php">
             <fieldset>
                 <div style="color:#3d4145; font : 20px/30px opensans-bold, sans-serif; margin : 12px 0">
-                    
-                        <INPUT width=450px type="radio" name="choix" value="1" checked> Carte bleue <br></br>        
-                        <INPUT width=450px type="radio" name="choix" value="2"> Chèque
+
+                    <INPUT width=450px type="radio" name="choix" value="1" checked> Carte bleue <br></br>        
+                    <INPUT width=450px type="radio" name="choix" value="2"> Chèque
                 </div>
 
 
-                 <input type="hidden"  name="idco" value="<?php echo"$idco";?>">
-          
+                <input type="hidden"  name="idco" value="<?php echo"$idco"; ?>">
+
                 <br></br>
                 <input type="submit" name="valid" value="Valider">
 
@@ -110,7 +110,10 @@
 
     <!-- footer
     ================================================== -->
-    <?php include("footer.php"); ?>
+    <?php include "fonctions.php";
+
+    affichefooter();
+    ?>
     <!-- Footer End-->
 
     <!-- Java Script

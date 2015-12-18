@@ -30,7 +30,8 @@
              ================================================== -->
         <link rel="shortcut icon" href="logo.png" >
 
-        <?php include("header1.php"); ?>
+        <?php include "fonctions.php";
+            afficheHeader(); ?>
     </head>
 
 
@@ -76,43 +77,6 @@
                     </div>
 
                     <?php
-                    /************************************************* */
-                    /* Fontion pour afficher les clubs en fonction du district choisi */
-                    /************************************************ */
-                    include "constantes.php";
-
-                    function afficheClub($bdd, $district) {
-                        try {
-
-                            /* Préparation de la requête */
-                            $sql = 'SELECT Club_Name FROM Club ' .
-                                    'INNER JOIN District ON (District.District_ID = Club.District_ID) ' .
-                                    'WHERE (District_Name = :district) ORDER BY (Club_Name);';
-
-                            $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-
-                            /* Exécution de la requête */
-                            $stmt->execute(array(':district' => "$district"));
-
-                            /* Exploitation des résultats */
-                            print("<div>");
-                            print("<SELECT id=\"club\" name=\"club\">");
-                            /* Affichage des activités */
-                            echo '<OPTION value ="Choisissez votre club">Choisissez votre club</OPTION>';
-                            while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
-                                $nom = $row["Club_Name"];
-                                echo '<OPTION value ="' . $nom . '">' . $nom . '</OPTION>';
-                            }
-
-                            print("</SELECT>");
-                            print("</div>");
-                        } catch (PDOException $e) {
-                            echo 'Connexion échouée : ' . $e->getMessage();
-                        }
-                    }
-
-                    /* Connexion à la base de données */
-                    $bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', '');
                     afficheClub($bdd, $district);
                     ?>  
 
@@ -175,7 +139,7 @@
     <!-- footer
     ================================================== -->
 
-<?php include("footer.php"); ?>
+<?php affichefooter(); ?>
     <!-- Footer End-->
 
     <!-- Java Script

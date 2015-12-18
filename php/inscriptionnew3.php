@@ -37,7 +37,9 @@
 
         <!-- Header
         ================================================== -->
-       <?php include("header1.php"); ?>
+        <?php include "fonctions.php";
+        afficheHeader();
+        ?>
         <!-- Header End -->
 
 
@@ -56,49 +58,48 @@
 
             <div class="col g-7"style="top: 80px">
 
-              <h7 style="color : #FF0000;"> ERREUR ! SAISIR A NOUVEAU LES INFORMATIONS</h7>
+                <h7 style="color : #FF0000;"> ERREUR ! SAISIR A NOUVEAU LES INFORMATIONS</h7>
                 <!-- form -->
                 <form name="contactForm" id="contactForm" method="post" action="verif3.php" style = "width : 1000px">
                     <fieldset>
-  <?php
-$email = $_POST['email'];
-$mdp = $_POST['mdp'];
-$mdp2 = $_POST['mdp2'];
-$civilite = $_POST['civilite'];
-$nom = $_POST['nom'];
-$prenom = $_POST['prenom'];
-$titre = $_POST['titre'];
-$district = $_POST['district'];
-$club = $_POST['club'];
-$rue = $_POST['rue'];
-$num = $_POST['num'];
-$cadr= $_POST['cadr'];
-$cp = $_POST['cp'];
-$ville = $_POST['ville'];
-$pays = $_POST['pays'];
-$tel = $_POST['tel'];
-$portable = $_POST['portable'];
+                        <?php
+                        $email = $_POST['email'];
+                        $mdp = $_POST['mdp'];
+                        $mdp2 = $_POST['mdp2'];
+                        $civilite = $_POST['civilite'];
+                        $nom = $_POST['nom'];
+                        $prenom = $_POST['prenom'];
+                        $titre = $_POST['titre'];
+                        $district = $_POST['district'];
+                        $club = $_POST['club'];
+                        $rue = $_POST['rue'];
+                        $num = $_POST['num'];
+                        $cadr = $_POST['cadr'];
+                        $cp = $_POST['cp'];
+                        $ville = $_POST['ville'];
+                        $pays = $_POST['pays'];
+                        $tel = $_POST['tel'];
+                        $portable = $_POST['portable'];
 
 
-print("<input type=\"hidden\" name=\"email\" value=\"$email\"/>");
-print("<input type=\"hidden\" name=\"mdp\" value=\"$mdp\"/>");
-print("<input type=\"hidden\" name=\"mdp2\" value=\"$mdp2\"/>");
-print("<input type=\"hidden\" name=\"civilite\" value=\"$civilite\"/>");
-print("<input type=\"hidden\" name=\"nom\" value=\"$nom\"/>");
-print("<input type=\"hidden\" name=\"prenom\" value=\"$prenom\"/>");
-print("<input type=\"hidden\" name=\"titre\" value=\"$titre\"/>");
-print("<input type=\"hidden\" name=\"district\" value=\"$district\"/>");
-print("<input type=\"hidden\" name=\"club\" value=\"$club\"/>");
-print("<input type=\"hidden\" name=\"rue\" value=\"$rue\"/>");
-print("<input type=\"hidden\" name=\"num\" value=\"$num\"/>");
-print("<input type=\"hidden\" name=\"cadr\" value=\"$cadr\"/>");
-print("<input type=\"hidden\" name=\"cp\" value=\"$cp\"/>");
-print("<input type=\"hidden\" name=\"ville\" value=\"$ville\"/>");
-print("<input type=\"hidden\" name=\"pays\" value=\"$pays\"/>");
-print("<input type=\"hidden\" name=\"tel\" value=\"$tel\"/>");
-print("<input type=\"hidden\" name=\"portable\" value=\"$portable\"/>");
-
-?>
+                        print("<input type=\"hidden\" name=\"email\" value=\"$email\"/>");
+                        print("<input type=\"hidden\" name=\"mdp\" value=\"$mdp\"/>");
+                        print("<input type=\"hidden\" name=\"mdp2\" value=\"$mdp2\"/>");
+                        print("<input type=\"hidden\" name=\"civilite\" value=\"$civilite\"/>");
+                        print("<input type=\"hidden\" name=\"nom\" value=\"$nom\"/>");
+                        print("<input type=\"hidden\" name=\"prenom\" value=\"$prenom\"/>");
+                        print("<input type=\"hidden\" name=\"titre\" value=\"$titre\"/>");
+                        print("<input type=\"hidden\" name=\"district\" value=\"$district\"/>");
+                        print("<input type=\"hidden\" name=\"club\" value=\"$club\"/>");
+                        print("<input type=\"hidden\" name=\"rue\" value=\"$rue\"/>");
+                        print("<input type=\"hidden\" name=\"num\" value=\"$num\"/>");
+                        print("<input type=\"hidden\" name=\"cadr\" value=\"$cadr\"/>");
+                        print("<input type=\"hidden\" name=\"cp\" value=\"$cp\"/>");
+                        print("<input type=\"hidden\" name=\"ville\" value=\"$ville\"/>");
+                        print("<input type=\"hidden\" name=\"pays\" value=\"$pays\"/>");
+                        print("<input type=\"hidden\" name=\"tel\" value=\"$tel\"/>");
+                        print("<input type=\"hidden\" name=\"portable\" value=\"$portable\"/>");
+                        ?>
                         <div class="row section-head">
 
                             <h2 >Fonction</h2>
@@ -133,8 +134,8 @@ print("<input type=\"hidden\" name=\"portable\" value=\"$portable\"/>");
                         </div>
 
                         <div style="color:#3d4145; font : 18px/28px opensans-bold, sans-serif; margin : 12px 0">
-  
-                                <INPUT type="checkbox" name="train" value="1"> Arrivée en train (Des navettes seront disponibles pour rejoindre votre hôtel)
+
+                            <INPUT type="checkbox" name="train" value="1"> Arrivée en train (Des navettes seront disponibles pour rejoindre votre hôtel)
 
                         </div>
 
@@ -159,7 +160,7 @@ print("<input type=\"hidden\" name=\"portable\" value=\"$portable\"/>");
 
                 <!-- Form End -->
 
-               
+
 
             </div>
 
@@ -173,7 +174,7 @@ print("<input type=\"hidden\" name=\"portable\" value=\"$portable\"/>");
     <!-- footer
     ================================================== -->
     <br></br>
-        <?php include("footer.php"); ?>
+    <?php affichefooter(); ?>
     <!-- Footer End-->
 
     <!-- Java Script

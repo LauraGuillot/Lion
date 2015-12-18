@@ -40,7 +40,7 @@
 
         <!-- Header
           ================================================== -->
-        <?php
+        <?php include "fonctions.php";
         $idco = $_GET['idco'];
 
         echo' <header class="mobile">';
@@ -111,7 +111,7 @@
 
     <!-- footer
     ================================================== -->
-    <?php include("footer.php"); ?>
+    <?php affichefooter(); ?>
     <!-- Footer End-->
 
     <!-- Java Script

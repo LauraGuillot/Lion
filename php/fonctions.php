@@ -5,7 +5,7 @@ include "constantes.php";
 /*----------------------------------------------------------------------------------------------------*/
 /*                            PAIEMENT PAR CB                                                         */
 /*----------------------------------------------------------------------------------------------------*/
-function paiementCB ($bdd , $valid){
+function paiementCB ($bdd , $valid, $idco){
 if ($valid) {
     
     /* On récupère son member_ID */
@@ -160,7 +160,7 @@ if ($valid) {
                 <h2 style="margin : 65px ; color : #11ABB0; text-align : center"> Vos achats </h2>
 
             </div>';
-    include("afficheAchats.php");
+    afficheAchats($bdd, $idco);
     echo' </div>
 
         
@@ -171,9 +171,9 @@ if ($valid) {
 
 
         <!-- footer
-        ================================================== -->
-        <?php include("footer.php"); ?>
-        <!-- Footer End-->
+        ================================================== -->';
+    afficheFooter();
+       echo' <!-- Footer End-->
 
         <!-- Java Script
         ================================================== -->
@@ -351,7 +351,7 @@ if ($valid) {
 /*----------------------------------------------------------------------------------------------------*/
 /*                            PAIEMENT PAR CH                                                        */
 /*----------------------------------------------------------------------------------------------------*/
-function paiementCH ($bdd){
+function paiementCH ($bdd, $idco){
 
 /*Ajouter le mode de paiement aux activités réservées */
   /* On récupère son member_ID */
@@ -490,7 +490,7 @@ print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\
     <!-- footer
     ================================================== -->
     ';
-            include("footer.php");
+    afficheFooter();
 
             echo '
     <!-- Footer End-->
@@ -579,7 +579,7 @@ function deconnexion ($idco, $bdd){
     $stmt = $bdd->prepare($sql);
     $stmt->execute(array(':id' => "$basketID"));
 
-    include "home.php";
+    header("Location: http://Localhost/lion/Lion/php/home.php");
 }
 
 /*----------------------------------------------------------------------------------------------------*/
@@ -958,8 +958,8 @@ function afficheAgenda2($idco,$bdd) {
         </html>';
 
     compteurPanier($bdd, $idco);
-    afficheRepas($bdd, $idco);
-    afficheExcursions($bdd, $idco);
+    afficheRepas2($bdd, $idco);
+    afficheExcursions2($bdd, $idco);
     echo'<html> </div></html>';
 }
 
@@ -2201,7 +2201,7 @@ function afficheHeader() {
     </html>';
     }
     
-    if (strcmp($file , 'initMdp.php') == 0 ||strcmp($file , 'perteMdp.php') == 0 ||strcmp($file , 'verif2bis.php') == 0 ||strcmp($file , 'verifConnexion.php') == 0 ||strcmp($file , 'verif1.php') == 0 || strcmp($file , 'verif3.php') == 0 || strcmp($file , 'verif2.php') == 0 || strcmp($file , 'inscription.php') == 0 || strcmp($file, 'inscription2.php' )==0 || strcmp($file , 'inscription3.php')==0 || strcmp($file , 'inscriptionnew2.php')==0 || strcmp($file , 'inscriptionnew3.php')==0 || strcmp($file , 'inscriptionnew.php')==0) {
+    if (strcmp($file , 'initMdp.php') == 0 ||strcmp($file , 'perteMdpNew.php') == 0 ||strcmp($file , 'perteMdp.php') == 0 ||strcmp($file , 'verif2bis.php') == 0 ||strcmp($file , 'verifConnexion.php') == 0 ||strcmp($file , 'verif1.php') == 0 || strcmp($file , 'verif3.php') == 0 || strcmp($file , 'verif2.php') == 0 || strcmp($file , 'inscription.php') == 0 || strcmp($file, 'inscription2.php' )==0 || strcmp($file , 'inscription3.php')==0 || strcmp($file , 'inscriptionnew2.php')==0 || strcmp($file , 'inscriptionnew3.php')==0 || strcmp($file , 'inscriptionnew.php')==0) {
         echo' 
     <html>
          <header class="mobile">
@@ -2245,7 +2245,7 @@ $cpt = $row["Count(Member_ID)"];
 
 if ($cpt = 0 or empty($mdp) or $mdp != $mdp2 or ! preg_match('#^[\w.-]+@[\w.-]+\.[a-z]{2,6}$#i', $email)) {
 
-    include ("perteMdpNew.php");
+    header( "Location: http://localhost/lion/lion/php/perteMdpNew.php");
 } else {
     /* On récupère l'ID du membre pour mettre à jour en toute sécurité */
     $sql = 'SELECT Member_ID FROM Member WHERE (Member_EMail = :mail)';
@@ -2261,7 +2261,7 @@ if ($cpt = 0 or empty($mdp) or $mdp != $mdp2 or ! preg_match('#^[\w.-]+@[\w.-]+\
 
 
     /* Redirection vers la page d'inscription */
-    include ("inscription.php");
+    header( "Location: http://localhost/lion/lion/php/inscription.php");
 }}
 
  /*----------------------------------------------------------------------------------------------------*/
@@ -2748,7 +2748,7 @@ function testConnexion($bdd, $mail, $mdp) {
 
         <!-- Header
         ================================================== -->';
-            include("header1.php");
+            afficheHeader();
 
             echo'<!-- Header End -->
 
@@ -2854,7 +2854,7 @@ function testConnexion($bdd, $mail, $mdp) {
     <!-- footer
     ================================================== -->
     <br>';
-            include("footer.php");
+            afficheFooter();
 
             echo '
     <!-- Footer End-->
@@ -2987,7 +2987,7 @@ print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\
     <!-- footer
     ================================================== -->
     ';
-            include("footer.php");
+            afficheFooter();
 
             echo '
     <!-- Footer End-->
@@ -3016,4 +3016,35 @@ print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\
     }
 }
 
+ /*----------------------------------------------------------------------------------------------------*/
+/*                        SELECTION DES CLUBS D'UN DISTRICT                                                  */
+/*----------------------------------------------------------------------------------------------------*/
+function afficheClub($bdd, $district) {
+                        try {
 
+                            /* Préparation de la requête */
+                            $sql = 'SELECT Club_Name FROM Club ' .
+                                    'INNER JOIN District ON (District.District_ID = Club.District_ID) ' .
+                                    'WHERE (District_Name = :district) ORDER BY (Club_Name);';
+
+                            $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+
+                            /* Exécution de la requête */
+                            $stmt->execute(array(':district' => "$district"));
+
+                            /* Exploitation des résultats */
+                            print("<div>");
+                            print("<SELECT id=\"club\" name=\"club\">");
+                            /* Affichage des activités */
+                            echo '<OPTION value ="Choisissez votre club">Choisissez votre club</OPTION>';
+                            while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
+                                $nom = $row["Club_Name"];
+                                echo '<OPTION value ="' . $nom . '">' . $nom . '</OPTION>';
+                            }
+
+                            print("</SELECT>");
+                            print("</div>");
+                        } catch (PDOException $e) {
+                            echo 'Connexion échouée : ' . $e->getMessage();
+                        }
+                    }

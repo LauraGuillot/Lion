@@ -38,7 +38,7 @@
 
         <!-- Header
         ================================================== -->
-            <?php
+        <?php
         $idco = $_GET['idco'];
 
         echo' <header class="mobile">';
@@ -64,7 +64,7 @@
 
         print(" <li><a href=\"http://localhost/lion/Lion/php/panier.php?idco=$idco\"> Panier</a></li>");
         print(" <li><a href=\"http://localhost/lion/Lion/php/moncompte.php?idco=$idco\" > Mon compte</a></li>");
-print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\" >Se déconnecter</a></li>");
+        print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\" >Se déconnecter</a></li>");
         echo'  </ul>
                     </nav>
                 </div>
@@ -76,21 +76,27 @@ print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\
 
         <!-- Planning Section
           ================================================== -->
-       
-   <?php include("affichageAgenda2.php"); ?>
-    
-                   
+
+        <?php
+        $idco = $_GET['idco'];
+
+        include "fonctions.php";
+
+        afficheAgenda2($idco, $bdd);
+        ?>
+
+
         <!-- Section End -->
 
-                    <!-- footer
-                    ================================================== -->
-                    <?php include("footer.php"); ?>
-                    <!-- Footer End-->
+        <!-- footer
+        ================================================== -->
+<?php affichefooter(); ?>
+        <!-- Footer End-->
 
 
 
 
 
-                    </body>
+    </body>
 
-                    </html>
+</html>

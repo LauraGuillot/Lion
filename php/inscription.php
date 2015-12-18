@@ -37,7 +37,8 @@
 
         <!-- Header
         ================================================== -->
-        <?php include("header1.php"); ?>
+        <?php include "fonctions.php";
+        afficheHeader(); ?>
         <!-- Header End -->
 
         <!-- Inscription Section
@@ -127,7 +128,7 @@
     <!-- footer
     ================================================== -->
     <br>
-    <?php include("footer.php"); ?>
+    <?php affichefooter(); ?>
     <!-- Footer End-->
 
     <!-- Java Script

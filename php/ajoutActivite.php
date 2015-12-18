@@ -1,9 +1,5 @@
 <?php
-
 include "fonctions.php";
-
-
-
 /* On sélectionne toutes les activités de la base */
 
 /* Préparation de la requête */

@@ -116,7 +116,11 @@
                 <h2 style="margin : 65px ; color : #11ABB0; text-align : center"> Vos commandes en cours </h2>
 
             </div>
-            <?php include("afficheCommande.php"); ?>
+            <?php
+            $idco = $_GET['idco'];
+            include "fonctions.php";
+            afficheCommandes($bdd, $idco);
+            ?>
         </div>
 
 
@@ -128,7 +132,7 @@
 
         <!-- footer
         ================================================== -->
-        <?php include("footer.php"); ?>
+<?php affichefooter(); ?>
         <!-- Footer End-->
 
         <!-- Java Script

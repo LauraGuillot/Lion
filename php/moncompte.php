@@ -65,18 +65,18 @@
 
         print(" <li ><a href=\"http://localhost/lion/Lion/php/panier.php?idco=$idco\" > Panier</a>");
         print(" <li   class=\"active\"><a href=\"http://localhost/lion/Lion/php/moncompte.php?idco=$idco\" > Mon compte</a></li>");
- print("</li>");
-        
-        
+        print("</li>");
+
+
         print(" <li ><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\" > Se déconnecter</a></li>");
-       
+
         echo'  </ul>
                     </nav>
                 </div>
             </div>';
 
-       /* Sous onglets */
-      echo'<div class="row">
+        /* Sous onglets */
+        echo'<div class="row">
 
         <div class="col full">
 
@@ -112,13 +112,17 @@
                 <br></br>
                 <h2 style="margin : 65px ; color : #11ABB0; text-align : center"> Vos informations personnelles </h2>
             </div>
-            
-        <?php include("afficheInfoPerso.php");?>
+
+            <?php
+            $idco = $_GET['idco'];
+            include "fonctions.php";
+            afficheInfos($bdd, $idco);
+            ?>
         </div>
 
-        
-        
-        
+
+
+
         <!-- Section End-->
 
 
@@ -126,7 +130,7 @@
 
         <!-- footer
         ================================================== -->
-        <?php include("footer.php"); ?>
+<?php affichefooter(); ?>
         <!-- Footer End-->
 
         <!-- Java Script

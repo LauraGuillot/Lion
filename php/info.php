@@ -37,7 +37,10 @@
 
         <!-- Header
         ================================================== -->
-       <?php include("header1.php"); ?>
+        <?php
+        include "fonctions.php";
+        afficheHeader();
+        ?>
         <!-- Header End -->
 
         <!-- Info section
@@ -89,7 +92,7 @@
 
                         <!-- footer
                         ================================================== -->
-                         <?php include("footer.php"); ?>
+                        <?php affichefooter(); ?>
                         <!-- Footer End-->
 
                         <!-- Java Script

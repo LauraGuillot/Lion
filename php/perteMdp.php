@@ -37,7 +37,9 @@
 
         <!-- Header
         ================================================== -->
-        <?php include("header1.php"); ?>
+        <?php include "fonctions.php";
+        afficheHeader();
+        ?>
         <!-- Header End -->
 
         <!-- Inscription Section
@@ -51,36 +53,36 @@
                     </div>
 
                 </div>
-                    <!-- form -->
-                    <form name="initMdp" id="initMdp" method="post"  action="initMdp.php">
-                        <fieldset >
-                            <div>
-                                <label for="contactSubject"> Adresse Mail <span class="required">*</span></label>
-                                <input name="mail" type="text" id="mail" size="35" value="" />
-                            </div>
+                <!-- form -->
+                <form name="initMdp" id="initMdp" method="post"  action="initMdp.php">
+                    <fieldset >
+                        <div>
+                            <label for="contactSubject"> Adresse Mail <span class="required">*</span></label>
+                            <input name="mail" type="text" id="mail" size="35" value="" />
+                        </div>
 
-                            <div>
-                                <label for="contactSubject">Mot de passe<span class="required">*</span></label>
-                                <input name="mdp" type="password" id="mdp" size="35" value="" />
-                            </div>
+                        <div>
+                            <label for="contactSubject">Mot de passe<span class="required">*</span></label>
+                            <input name="mdp" type="password" id="mdp" size="35" value="" />
+                        </div>
 
-                            <div>
-                                <label for="contactSubject">Confirmation du mot de passe<span class="required">*</span></label>
-                                <input name="cmdp" type="password" id="cmdp" size="35" value="" />
-                            </div>
-                            <div>
-                                <input type="submit" name="v" value="Valider">
-                            </div>
+                        <div>
+                            <label for="contactSubject">Confirmation du mot de passe<span class="required">*</span></label>
+                            <input name="cmdp" type="password" id="cmdp" size="35" value="" />
+                        </div>
+                        <div>
+                            <input type="submit" name="v" value="Valider">
+                        </div>
 
-                        </fieldset>
-                    </form> 
-                </div>
+                    </fieldset>
+                </form> 
+            </div>
         </section> <!-- Inscription Section End-->
 
         <!-- footer
         ================================================== -->
         <br>
-        <?php include("footer.php"); ?>
+<?php affichefooter(); ?>
         <!-- Footer End-->
 
         <!-- Java Script

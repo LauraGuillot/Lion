@@ -38,7 +38,9 @@
 
         <!-- Header
         ================================================== -->
-        <?php include("header1.php"); ?>
+        <?php include "fonctions.php";
+        afficheHeader();
+        ?>
         <!-- Header End -->
 
 
@@ -56,7 +58,7 @@
         <div class="row">
 
             <div class="col g-7"style="top: 80px">
-<h7 style="color : #FF0000;"> ERREUR ! SAISIR A NOUVEAU LES INFORMATIONS</h7>
+                <h7 style="color : #FF0000;"> ERREUR ! SAISIR A NOUVEAU LES INFORMATIONS</h7>
                 <!-- form -->
                 <form name="contactForm" id="contactForm" method="post" action="verif2.php">
                     <fieldset>
@@ -158,7 +160,7 @@
         <!-- footer
         ================================================== -->
 
-<?php include("footer.php"); ?>
+<?php affichefooter(); ?>
         <!-- Footer End-->
 
         <!-- Java Script

@@ -84,11 +84,15 @@
                 <h2 style="margin : 65px ; color : #11ABB0; text-align : center"> <FONT size="6"> RECAPITULATIF </FONT></h2>
 
             </div>
-           <?php include("afficheRecap.php"); ?>
+            <?php
+            $idco = $_POST['idco'];
+            include "fonctions.php";
+            afficheRecap($bdd, $idco);
+            ?>
 
         </div>
 
-         
+
 
 
         <!-- Section End-->
@@ -96,7 +100,7 @@
 
         <!-- footer
         ================================================== -->
-        <?php include("footer.php"); ?>
+<?php affichefooter(); ?>
         <!-- Footer End-->
 
         <!-- Java Script

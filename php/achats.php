@@ -113,7 +113,8 @@
             </div>
             <?php
         $idco = $_GET['idco'];
-        include("afficheAchats.php");
+        include "fonctions.php";
+        afficheAchats ($bdd, $idco);
         ?>
         </div>
 
@@ -126,7 +127,7 @@
 
         <!-- footer
         ================================================== -->
-        <?php include("footer.php"); ?>
+        <?php affichefooter(); ?>
         <!-- Footer End-->
 
         <!-- Java Script

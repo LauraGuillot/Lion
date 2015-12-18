@@ -38,25 +38,28 @@
 
         <!-- Header
         ================================================== -->
-       <?php include("header1.php"); ?>
+        <?php
+        include "fonctions.php";
+        afficheHeader();
+        ?>
         <!-- Header End -->
 
         <!-- Planning Section
           ================================================== -->
-       
-   <?php include("affichageAgenda1.php"); ?>
-        
-                    <!-- Section End -->
 
-                    <!-- footer
-                    ================================================== -->
-                    <?php include("footer.php"); ?>
-                    <!-- Footer End-->
+<?php afficheAgenda($bdd); ?>
 
+        <!-- Section End -->
 
+        <!-- footer
+        ================================================== -->
+<?php affichefooter(); ?>
+        <!-- Footer End-->
 
 
 
-                    </body>
 
-                    </html>
+
+    </body>
+
+</html>

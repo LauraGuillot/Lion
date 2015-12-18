@@ -37,7 +37,8 @@
 
         <!-- Header
         ================================================== -->
-        <?php include("header1.php"); ?>
+        <?php include "fonctions.php";
+           afficheHeader(); ?>
         <!-- Header End -->
 
         <!-- Inscription Section
@@ -52,7 +53,7 @@
                         <h2 style="color : #11ABB0;"> S'inscrire</h2> 
                     </div>
                 </div>
-<h7 style="color : #FF0000;"> <?php echo"$erreur"; ?></h7>
+                <h7 style="color : #FF0000;"> <?php echo"$erreur"; ?></h7>
 
 
                 <!-- form -->
@@ -129,7 +130,7 @@
     <!-- footer
     ================================================== -->
     <br>
-    <?php include("footer.php"); ?>
+    <?php affichefooter(); ?>
     <!-- Footer End-->
 
     <!-- Java Script
