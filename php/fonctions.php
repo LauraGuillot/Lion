@@ -9,7 +9,7 @@ function paiementCB ($bdd , $valid, $idco){
 if ($valid) {
     
     /* On récupère son member_ID */
-    $sql1 = 'SELECT Member_ID FROM Member WHERE (Connexion_ID = :idco )';
+    $sql1 = 'SELECT Member_ID FROM Connexion WHERE (Connexion_ID = :idco )';
     $stmt = $bdd->prepare($sql1, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $stmt->execute(array('idco' => "$idco"));
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
@@ -355,7 +355,7 @@ function paiementCH ($bdd, $idco){
 
 /*Ajouter le mode de paiement aux activités réservées */
   /* On récupère son member_ID */
-    $sql1 = 'SELECT Member_ID FROM Member WHERE (Connexion_ID = :idco )';
+    $sql1 = 'SELECT Member_ID FROM Connexion WHERE (Connexion_ID = :idco )';
     $stmt = $bdd->prepare($sql1, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $stmt->execute(array('idco' => "$idco"));
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
@@ -839,7 +839,7 @@ function afficheActiviteLibre2($nom, $date, $prix1, $prix2, $idco, $bdd) {
 
     /* On teste si l'utilisateur a déjà réseré cette activité ou non */
     /* On récupère l'id du membre */
-    $sql1 = 'SELECT Member_ID FROM Member WHERE (Connexion_ID = :idco )';
+    $sql1 = 'SELECT Member_ID FROM Connexion WHERE (Connexion_ID = :idco )';
     $stmt = $bdd->prepare($sql1, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $stmt->execute(array('idco' => "$idco"));
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
@@ -897,7 +897,7 @@ function afficheActiviteLibre2($nom, $date, $prix1, $prix2, $idco, $bdd) {
 function afficheActiviteComplete2($nom, $date, $prix1, $prix2, $idco, $bdd) {
     /* On teste si l'utilisateur a déjà réseré cette activité ou non */
     /* On récupère l'id du membre */
-    $sql1 = 'SELECT Member_ID FROM Member WHERE (Connexion_ID = :idco )';
+    $sql1 = 'SELECT Member_ID FROM Connexion WHERE (Connexion_ID = :idco )';
     $stmt = $bdd->prepare($sql1, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $stmt->execute(array('idco' => "$idco"));
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
@@ -967,7 +967,7 @@ function afficheAgenda2($idco,$bdd) {
 /* * ************** Compteur pour le panier ****************** */
 function compteurPanier($bdd, $idco) {
     /* Récupération du membre id */
-    $sql = 'SELECT Member_ID FROM Member WHERE (Connexion_ID = :idco)';
+    $sql = 'SELECT Member_ID FROM Connexion WHERE (Connexion_ID = :idco)';
     $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $stmt->execute(array(':idco' => "$idco"));
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
@@ -1028,7 +1028,7 @@ function compteurPanier($bdd, $idco) {
 /*----------------------------------------------------------------------------------------------------*/
 function afficheAchats ($bdd, $idco){
 /* Récupération du membreID */
-$sql = 'SELECT Member_ID FROM Member  WHERE (Connexion_ID = :id)';
+$sql = 'SELECT Member_ID FROM Connexion  WHERE (Connexion_ID = :id)';
 $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
 $stmt->execute(array('id' => "$idco"));
 $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
@@ -1199,7 +1199,7 @@ echo'
 /*----------------------------------------------------------------------------------------------------*/
 function afficheCommandes($bdd, $idco){
 /* Récupération du membreID */
-$sql = 'SELECT Member_ID FROM Member  WHERE (Connexion_ID = :id)';
+$sql = 'SELECT Member_ID FROM Connexion  WHERE (Connexion_ID = :id)';
 $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
 $stmt->execute(array('id' => "$idco"));
 $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
@@ -1374,7 +1374,8 @@ function afficheInfos ($bdd, $idco){
 $sql = 'SELECT Member_ID, Person_Lastname, Person_Firstname, Member_Title, Member_Status, District_Name, Club_Name, '
         . ' Member_Num, Member_Additional_Adress, Member_Street, Member_City, Member_Postal_Code, Member_Phone, '
         . ' Member_Mobile, Member_EMail, Member_Position_Club, Member_Position_District, Member_By_Train, Member_Date_Train '
-        . ' FROM Member '
+        . ' FROM Member'
+        . ' INNER JOIN Connexion ON (Connexion.Member_ID = Member.Member_ID)  '
         . ' INNER JOIN Person ON (Person.Person_ID = Member.Person_ID) '
         . ' INNER JOIN Club ON (Club.Club_ID = Member.Club_ID) '
         . ' INNER JOIN District ON (District.District_ID = Member.District_ID) '
@@ -1430,7 +1431,7 @@ function affichePanier($bdd, $idco) {
     try {
 
         /* Récupération du membre id */
-        $sql = 'SELECT Member_ID FROM Member WHERE (Connexion_ID = :idco)';
+        $sql = 'SELECT Member_ID FROM Connexion WHERE (Connexion_ID = :idco)';
         $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
         $stmt->execute(array(':idco' => "$idco"));
         $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
@@ -1573,6 +1574,7 @@ $sql = 'SELECT Member_ID, Person_Lastname, Person_Firstname, Member_Title, Membe
         . ' Member_Num, Member_Additional_Adress, Member_Street, Member_City, Member_Postal_Code, Member_Phone, '
         . ' Member_Mobile, Member_EMail, Member_Position_Club, Member_Position_District, Member_By_Train, Member_Date_Train '
         . ' FROM Member '
+        . ' INNER JOIN Connexion ON (Connexion.Member_ID = Member.Member_ID) '
         . ' INNER JOIN Person ON (Person.Person_ID = Member.Person_ID) '
         . ' INNER JOIN Club ON (Club.Club_ID = Member.Club_ID) '
         . ' INNER JOIN District ON (District.District_ID = Member.District_ID) '
@@ -1912,7 +1914,7 @@ echo'
 /*----------------------------------------------------------------------------------------------------*/
   function addAct($bdd, $idco, $nom){
         /* On récupère son member_ID */
-        $sql1 = 'SELECT Member_ID FROM Member WHERE (Connexion_ID = :idco )';
+        $sql1 = 'SELECT Member_ID FROM Connexion WHERE (Connexion_ID = :idco )';
         $stmt = $bdd->prepare($sql1, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
         $stmt->execute(array('idco' => "$idco"));
         $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
@@ -2274,6 +2276,7 @@ $sql = 'SELECT Member_ID, Person_Lastname, Person_Firstname, Member_Title, Membe
         . ' Member_Num, Member_Additional_Adress, Member_Street, Member_City, Member_Postal_Code, Member_Phone, '
         . ' Member_Mobile, Member_EMail, Member_Position_Club, Member_Position_District, Member_By_Train, Member_Date_Train '
         . ' FROM Member '
+        . ' INNER JOIN Connexion ON (Connexion.Member_ID = Member.Member_ID) '
         . ' INNER JOIN Person ON (Person.Person_ID = Member.Person_ID) '
         . ' INNER JOIN Club ON (Club.Club_ID = Member.Club_ID) '
         . ' INNER JOIN District ON (District.District_ID = Member.District_ID) '
@@ -2591,7 +2594,7 @@ try {
 /*----------------------------------------------------------------------------------------------------*/
 function suppAct($bdd, $idco, $nom){
         /* On récupère son member_ID */
-        $sql1 = 'SELECT Member_ID FROM Member WHERE (Connexion_ID = :idco )';
+        $sql1 = 'SELECT Member_ID FROM Connexion WHERE (Connexion_ID = :idco )';
         $stmt = $bdd->prepare($sql1, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
         $stmt->execute(array('idco' => "$idco"));
         $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
