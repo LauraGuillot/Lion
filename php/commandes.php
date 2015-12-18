@@ -120,6 +120,7 @@
             $idco = $_GET['idco'];
             include "fonctions.php";
             afficheCommandes($bdd, $idco);
+            majConnexion($bdd, $idco);
             ?>
         </div>
 

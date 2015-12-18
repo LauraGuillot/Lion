@@ -115,6 +115,7 @@
         $idco = $_GET['idco'];
         include "fonctions.php";
         afficheAchats ($bdd, $idco);
+        majConnexion($bdd, $idco);
         ?>
         </div>
 

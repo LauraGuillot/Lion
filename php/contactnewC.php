@@ -162,7 +162,7 @@
     ================================================== -->
     <?php include "fonctions.php";
     affichefooter();
-    ?>
+    majConnexion($bdd, $idco);?>
     <!-- Footer End-->
 
     <!-- Java Script

@@ -83,6 +83,7 @@
         include "fonctions.php";
 
         afficheAgenda2($idco, $bdd);
+        majConnexion($bdd, $idco);
         ?>
 
 

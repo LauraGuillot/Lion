@@ -1,8 +1,7 @@
 <?php
 
 
-/* Définition de la connexion à la base de données*/
-$bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', '');
+include "fonctions.php";
 
 $email = $_POST['email'];
 $mdp = $_POST['mdp'];
@@ -57,18 +56,17 @@ if ($titre == 1) {
 }
 
 //Générer une chaine de caractère unique et aléatoire
-function random($car) {
+function random($n) {
     $string = "";
     $chaine = "abcdefghijklmnpqrstuvwxy";
     srand((double) microtime() * 1000000);
-    for ($i = 0; $i < $car; $i++) {
+    for ($i = 0; $i < $n; $i++) {
         $string .= $chaine[rand() % strlen($chaine)];
     }
     return $string;
 }
 
-// APPEL
-// Génère une chaine de longueur 20
+// Génère une chaine de longueur 70
 $chaine = random(70);
 
 
@@ -136,14 +134,10 @@ if (empty($fClub) or empty($fDistrict)) {
 
     $connexion = $chaine . $day . $mois . $annee . $heure . $min . $sec;
 
-    //Insertion dans la table connexion
-    $req9 = $bdd->prepare('INSERT INTO Connexion (Connexion_ID, First_Connexion, Connexion_Activ ) VALUE (:chaine,:Last_Connexion, 1)');
-    $req9->execute(array(
-        'chaine' => "$connexion",
-        'Last_Connexion' => "$day.'.'$mois.'.'.$annee.'.'.$heure.'.'.$min.'.'.$sec"));
+   
 
     /* On ajoute le membre */
-    $req11 = $bdd->prepare('INSERT INTO Member (Member_Title, Member_Status, District_ID, Club_ID, Member_Num, Member_Additional_Adress, Member_Postal_Code, Member_Street, Member_City, Member_Phone, Member_Mobile, Member_Email, Member_Position_Club, Member_Position_District, Member_By_Train, Member_Date_Train, Connexion_ID,Person_ID, Member_Password ) VALUES (:civilite,:titre,:districtID,:clubID,:num,:supad,:cp,:rue,:ville,:phone,:mobile,:email,:pclub,:pdistrict,:btrain,:htrain,:connexion,:personID,:mdp)');
+    $req11 = $bdd->prepare('INSERT INTO Member (Member_Title, Member_Status, District_ID, Club_ID, Member_Num, Member_Additional_Adress, Member_Postal_Code, Member_Street, Member_City, Member_Phone, Member_Mobile, Member_Email, Member_Position_Club, Member_Position_District, Member_By_Train, Member_Date_Train, Person_ID, Member_Password ) VALUES (:civilite,:titre,:districtID,:clubID,:num,:supad,:cp,:rue,:ville,:phone,:mobile,:email,:pclub,:pdistrict,:btrain,:htrain,:personID,:mdp)');
     $req11->execute(array(
         'civilite' => $civilite,
         'titre' => $titre,
@@ -161,7 +155,6 @@ if (empty($fClub) or empty($fDistrict)) {
         'pdistrict' => $fDistrict,
         'btrain' => $train,
         'htrain' => $traindate,
-        'connexion' => $connexion,
         'personID' => $personID,
         'mdp' => $mdp));
 
@@ -170,6 +163,12 @@ if (empty($fClub) or empty($fDistrict)) {
     $req->execute(array('mail' => "$email"));
     $row = $req->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $memberID = $row["Member_ID"];
+    
+     //Insertion dans la table connexion
+    $req9 = $bdd->prepare('INSERT INTO Connexion (Connexion_ID, Last_Connexion, Member_ID ) VALUE (:chaine, NOW() , :id)');
+    $req9->execute(array(
+        'chaine' => "$connexion",
+        'id' => "$memberID"));
 
     /* Si il a un follower, on l'ajoute */
     if (!(empty($nomAcc) && empty($prenomAcc))) {
@@ -192,12 +191,7 @@ if (empty($fClub) or empty($fDistrict)) {
     }
 
     /* On lui crée un panier */
-    $req13 = $bdd->prepare("SELECT Member_ID FROM Member WHERE (Person_ID = :id)", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $req13->execute(array('id' => "$personID"));
-    $row = $req13->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $memberID = $row["Member_ID"];
-
-    $req12 = $bdd->prepare('INSERT INTO Basket (Basket_Total, Basket_Meal_Total, Basket_Trip_Total, Member_ID, Congress_ID) VALUE (0,0,0,:id,1)');
+        $req12 = $bdd->prepare('INSERT INTO Basket (Basket_Total, Basket_Meal_Total, Basket_Trip_Total, Member_ID) VALUE (0,0,0,:id)');
     $req12->execute(array(
         'id' => "$memberID"));
 
@@ -300,7 +294,7 @@ if (empty($fClub) or empty($fDistrict)) {
     <!-- footer
     ================================================== -->
     ';
-    include("footer.php");
+    afficheFooter();
 
     echo '
     <!-- Footer End-->

@@ -117,6 +117,7 @@
             $idco = $_GET['idco'];
             include "fonctions.php";
             afficheInfos($bdd, $idco);
+            majConnexion($bdd, $idco);
             ?>
         </div>
 

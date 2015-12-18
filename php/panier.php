@@ -88,7 +88,7 @@
             $idco = $_GET['idco'];
             include "fonctions.php";
             affichePanier($bdd, $idco);
-            ?>
+           majConnexion($bdd, $idco); ?>
 
         </div>
 

@@ -88,6 +88,7 @@
             $idco = $_POST['idco'];
             include "fonctions.php";
             afficheRecap($bdd, $idco);
+            majConnexion($bdd, $idco);
             ?>
 
         </div>
