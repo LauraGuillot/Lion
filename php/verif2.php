@@ -8,7 +8,7 @@ $titre = $_POST['titre'];
 $district = $_POST['district'];
 
 if (empty($civilite) or empty($nom) or empty($prenom)) {
-    include ("inscriptionnew2.php");
+    include ("inscription2.php");
 } else {
 
     include ("inscription2bis.php");

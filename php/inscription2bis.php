@@ -31,7 +31,8 @@
         <link rel="shortcut icon" href="logo.png" >
 
         <?php include "fonctions.php";
-            afficheHeader(); ?>
+        afficheHeader();
+        ?>
     </head>
 
 
@@ -48,6 +49,15 @@
         <div class="row">
 
             <div class="col g-7"style="top: 80px">
+
+
+                <?php
+                $path = $_SERVER['PHP_SELF'];
+                $file = basename($path);
+                if (strcmp($file, 'verif2bis.php') == 0) {
+                    echo'<h7 style="color : #FF0000;">ERREUR ! SAISIR A NOUVEAU LES INFORMATIONS </h7>';
+                }
+                ?>
 
                 <form name="contactForm" id="contactForm" method="post" action="verif2bis.php">
 

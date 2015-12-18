@@ -2142,7 +2142,7 @@ function afficheHeader() {
     </html>';
     }
 
-    if (strcmp($file, 'contact.php') == 0 || strcmp($file, 'contactnew.php') == 0) {
+    if (strcmp($file, 'contact.php') == 0 || strcmp($file, 'verifContact.php') == 0) {
         echo' 
     <html>
          <header class="mobile">
@@ -2210,7 +2210,7 @@ function afficheHeader() {
     </html>';
     }
 
-    if (strcmp($file, 'initMdp.php') == 0 || strcmp($file, 'perteMdpNew.php') == 0 || strcmp($file, 'perteMdp.php') == 0 || strcmp($file, 'verif2bis.php') == 0 || strcmp($file, 'verifConnexion.php') == 0 || strcmp($file, 'verif1.php') == 0 || strcmp($file, 'verif3.php') == 0 || strcmp($file, 'verif2.php') == 0 || strcmp($file, 'inscription.php') == 0 || strcmp($file, 'inscription2.php') == 0 || strcmp($file, 'inscription3.php') == 0 || strcmp($file, 'inscriptionnew2.php') == 0 || strcmp($file, 'inscriptionnew3.php') == 0 || strcmp($file, 'inscriptionnew.php') == 0) {
+    if (strcmp($file, 'initMdp.php') == 0 || strcmp($file, 'perteMdpNew.php') == 0 || strcmp($file, 'perteMdp.php') == 0 || strcmp($file, 'verif2bis.php') == 0 || strcmp($file, 'verifConnexion.php') == 0 || strcmp($file, 'verif1.php') == 0 || strcmp($file, 'verif3.php') == 0 || strcmp($file, 'verif2.php') == 0 || strcmp($file, 'inscription.php') == 0 || strcmp($file, 'inscription2.php') == 0 || strcmp($file, 'inscription3.php') == 0 ) {
         echo' 
     <html>
          <header class="mobile">

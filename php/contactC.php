@@ -88,7 +88,13 @@ print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\
         <div class="row">
 
             <div class="col g-7">
-
+<?php
+                $path = $_SERVER['PHP_SELF'];
+                $file = basename($path);
+                if (strcmp($file, 'verifContactC.php') == 0) {
+                    echo'<h7 style="color : #FF0000;">ERREUR ! SAISIR A NOUVEAU LES INFORMATIONS </h7>';
+                }
+                ?>
                 <!-- form -->
                 <form name="contactForm" id="contactForm" method="post" action="verifContactC.php">
                     <fieldset>

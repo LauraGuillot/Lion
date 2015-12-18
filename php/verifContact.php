@@ -7,7 +7,7 @@ function verifContact() {
     $message = $_POST['contactMessage'];
 
     if (empty($nom) or empty($message) or ! preg_match('#^[\w.-]+@[\w.-]+\.[a-z]{2,6}$#i', $mail)) {
-        header('Location: contactnew.php');
+        include("contact.php");
     } else {
 // Message envoyé
     }

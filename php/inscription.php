@@ -38,113 +38,121 @@
         <!-- Header
         ================================================== -->
         <?php include "fonctions.php";
-        afficheHeader(); ?>
+        afficheHeader();
+        ?>
         <!-- Header End -->
 
         <!-- Inscription Section
           ================================================== -->
         <section>
-        <div class="row">
+            <div class="row">
 
-            <div class="col g-7" style="top: 80px">
+                <div class="col g-7" style="top: 80px">
 
-                <div class="row section-head">
-                    <div class="col full" >
-                        <h2 style="color : #11ABB0;"> S'inscrire</h2> 
+                    <div class="row section-head">
+                        <div class="col full" >
+                            <h2 style="color : #11ABB0;"> S'inscrire</h2> 
+                        </div>
                     </div>
+
+                    <?php
+                    $path = $_SERVER['PHP_SELF'];
+                    $file = basename($path);
+                    if (strcmp($file, 'verif1.php') == 0) {
+                        echo'<h7 style="color : #FF0000;">' . $erreur . '</h7>';
+                    }
+                    ?>
+                    <!-- form -->
+                    <form name="contactForm" id="contactForm" method="post"  action="verif1.php">
+                        <fieldset >
+
+                            <div>
+                                <label for="contactEmail">Adresse email <span class="required">*</span></label>
+                                <input name="email" type="mail" id="mail" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
+
+                            </div>
+
+                            <div>
+                                <label for="contactSubject">Mot de passe<span class="required">*</span></label>
+                                <input name="mdp" type="password" id="mdp" size="35" value="" />
+                            </div>
+
+                            <div>
+                                <label for="contactSubject">Confirmation du mot de passe<span class="required">*</span></label>
+                                <input name="cmdp" type="password" id="cmdp" size="35" value="" />
+                            </div>
+
+
+
+                            <div>
+                                <input type="submit" name="v1" value="Valider">
+                            </div>
+
+                        </fieldset>
+                    </form> 
                 </div>
 
-                <!-- form -->
-                <form name="contactForm" id="contactForm" method="post"  action="verif1.php">
-                    <fieldset >
 
-                        <div>
-                            <label for="contactEmail">Adresse email <span class="required">*</span></label>
-                            <input name="email" type="mail" id="mail" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
+                <aside class="col g-5" style="top: 80px">
 
+                    <div class="row section-head">
+                        <div class="col full" >
+                            <h2 style="color : #11ABB0;"> Se connecter</h2> 
                         </div>
+                    </div>
 
-                        <div>
-                            <label for="contactSubject">Mot de passe<span class="required">*</span></label>
-                            <input name="mdp" type="password" id="mdp" size="35" value="" />
-                        </div>
+                    <!-- form -->
+                    <form name="contactForm" id="contactForm" method="post" action="verifConnexion.php" >
+                        <fieldset >
 
-                        <div>
-                            <label for="contactSubject">Confirmation du mot de passe<span class="required">*</span></label>
-                            <input name="cmdp" type="password" id="cmdp" size="35" value="" />
-                        </div>
+                            <div>
+                                <label for="mail">Adresse e-mail <span class="required">*</span></label>
+                                <input name="mail" type="mail" id="mail" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
+                            </div>
 
+                            <div>
+                                <label for="mdp">Mot de passe<span class="required">*</span></label>
+                                <input name="mdp" type="password" id="mdp" size="35" value="" />
+                            </div>
 
+                            <div>
+                                <a href="perteMdp.php"  title="perte de mot de passe">Si vous avez perdu votre mot de passe, cliquez ici</a> 
 
-                        <div>
-                            <input type="submit" name="v1" value="Valider">
-                        </div>
+                            </div>
 
-                    </fieldset>
-                </form> 
+                            <div>
+                                <br>
+                                <button name="v1" id="v1" class="submit">Valider</button>
+                            </div>
+
+                        </fieldset>
+                    </form> 
+                </aside>
+
             </div>
 
+        </section> <!-- Inscription Section End-->
 
-            <aside class="col g-5" style="top: 80px">
+        <!-- footer
+        ================================================== -->
+        <br>
+<?php affichefooter(); ?>
+        <!-- Footer End-->
 
-                <div class="row section-head">
-                    <div class="col full" >
-                        <h2 style="color : #11ABB0;"> Se connecter</h2> 
-                    </div>
-                </div>
+        <!-- Java Script
+        ================================================== -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/jquery-1.10.2.min.js"><\/script>')</script>
+        <script type="text/javascript" src="js/jquery-migrate-1.2.1.min.js"></script>
 
-                <!-- form -->
-                <form name="contactForm" id="contactForm" method="post" action="verifConnexion.php" >
-                    <fieldset >
+        <script src="js/scrollspy.js"></script>
+        <script src="js/jquery.flexslider.js"></script>
+        <script src="js/jquery.reveal.js"></script>
+        <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
+        <script src="js/gmaps.js"></script>
+        <script src="js/init.js"></script>
+        <script src="js/smoothscrolling.js"></script>
 
-                        <div>
-                            <label for="mail">Adresse e-mail <span class="required">*</span></label>
-                            <input name="mail" type="mail" id="mail" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
-                        </div>
-
-                        <div>
-                            <label for="mdp">Mot de passe<span class="required">*</span></label>
-                            <input name="mdp" type="password" id="mdp" size="35" value="" />
-                        </div>
-
-                        <div>
-                            <a href="perteMdp.php"  title="perte de mot de passe">Si vous avez perdu votre mot de passe, cliquez ici</a> 
-                            
-                        </div>
-
-                        <div>
-                            <br>
-                            <button name="v1" id="v1" class="submit">Valider</button>
-                        </div>
-
-                    </fieldset>
-                </form> 
-            </aside>
-
-        </div>
-
-    </section> <!-- Inscription Section End-->
-
-    <!-- footer
-    ================================================== -->
-    <br>
-    <?php affichefooter(); ?>
-    <!-- Footer End-->
-
-    <!-- Java Script
-    ================================================== -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/jquery-1.10.2.min.js"><\/script>')</script>
-    <script type="text/javascript" src="js/jquery-migrate-1.2.1.min.js"></script>
-
-    <script src="js/scrollspy.js"></script>
-    <script src="js/jquery.flexslider.js"></script>
-    <script src="js/jquery.reveal.js"></script>
-    <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
-    <script src="js/gmaps.js"></script>
-    <script src="js/init.js"></script>
-    <script src="js/smoothscrolling.js"></script>
-
-</body>
+    </body>
 
 </html>

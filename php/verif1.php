@@ -21,12 +21,12 @@ $cpt = $row["Count(Member_ID)"];
 
 if (empty($mdp) or $mdp != $mdp2 or ! preg_match('#^[\w.-]+@[\w.-]+\.[a-z]{2,6}$#i', $email)) {
     $erreur = "ERREUR DE SAISIE! SAISIR A NOUVEAU LES INFORMATIONS";
-    include ("inscriptionnew.php");
+    include ("inscription.php");
 }
 
 if ($cpt != 0) {
     $erreur = "ADRESSE MAIL DEJA UTILISEE";
-    include ("inscriptionnew.php");
+    include ("inscription.php");
 } else {
     include("inscription2.php");
 }

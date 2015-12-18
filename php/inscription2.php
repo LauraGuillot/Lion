@@ -39,7 +39,8 @@
         <!-- Header
         ================================================== -->
         <?php include "fonctions.php";
-            afficheHeader(); ?>
+        afficheHeader();
+        ?>
         <!-- Header End -->
 
 
@@ -57,7 +58,13 @@
         <div class="row">
 
             <div class="col g-7"style="top: 80px">
-
+                <?php
+                $path = $_SERVER['PHP_SELF'];
+                $file = basename($path);
+                if (strcmp($file, 'verif2.php') == 0) {
+                    echo'<h7 style="color : #FF0000;">ERREUR ! SAISIR A NOUVEAU LES INFORMATIONS </h7>';
+                }
+                ?>
                 <!-- form -->
                 <form name="contactForm" id="contactForm" method="post" action="verif2.php">
                     <fieldset>
@@ -65,7 +72,7 @@
                         <?php
                         $email = $_POST['email'];
                         $mdp = $_POST['mdp'];
-                        $mdp2 = $_POST['cmdp'];
+                        $mdp2 = $_POST['mdp2'];
 
                         print("<input type=\"hidden\" name=\"email\" value=\"$email\"/>");
                         print("<input type=\"hidden\" name=\"mdp\" value=\"$mdp\"/>");

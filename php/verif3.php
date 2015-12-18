@@ -1,7 +1,7 @@
 <?php
 
 
-include "fonctions.php";
+
 
 $email = $_POST['email'];
 $mdp = $_POST['mdp'];
@@ -72,10 +72,10 @@ $chaine = random(70);
 
 
 if (empty($fClub) or empty($fDistrict)) {
-    include("inscriptionnew3.php");
+    include("inscription3.php");
 } else {
     
-
+include ("fonctions.php");
     /* Insertion du membre dans la table personne */
     $req0 = $bdd->prepare('INSERT INTO Person (Person_Lastname, Person_Firstname) VALUES (:nom,:prenom)');
     $req0->execute(array(

@@ -37,7 +37,8 @@
 
         <!-- Header
         ================================================== -->
-        <?php include "fonctions.php";
+        <?php
+        include "fonctions.php";
         afficheHeader();
         ?>
         <!-- Header End -->
@@ -58,7 +59,13 @@
 
             <div class="col g-7"style="top: 80px">
 
-
+                <?php
+                $path = $_SERVER['PHP_SELF'];
+                $file = basename($path);
+                if (strcmp($file, 'verif3.php') == 0) {
+                    echo'<h7 style="color : #FF0000;">ERREUR ! SAISIR A NOUVEAU LES INFORMATIONS </h7>';
+                }
+                ?>
                 <!-- form -->
                 <form name="contactForm" id="contactForm" method="post" action="verif3.php" style = "width : 1000px">
                     <fieldset>
@@ -174,7 +181,7 @@
     <!-- footer
     ================================================== -->
     <br></br>
-    <?php affichefooter(); ?>
+<?php affichefooter(); ?>
     <!-- Footer End-->
 
     <!-- Java Script
