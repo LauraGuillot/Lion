@@ -1322,7 +1322,7 @@ footer .social-links li:first-child { margin-left: 0; }
    .mobile #nav-wrap > a:after { top: 60%; }
 
    /* toggle buttons */
-	.mobile #nav-wrap:not( :target ) > a:first-of-type,
+	.mobile #nav-wrap:not(:target) > a:first-of-type,
 	.mobile #nav-wrap:target > a:last-of-type  {
 	   display: block;
 	}
