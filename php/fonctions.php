@@ -23,11 +23,11 @@ function paiementCB($bdd, $valid, $idco) {
         $basketID = $row["Basket_ID"];
 
         /* On met à jour les activités payées */
-        $sql3 = 'UPDATE Belong SET Belong_Payement_Way = "CB" WHERE (Basket_ID = :id AND Belong_Paid =0)';
+        $sql3 = 'UPDATE Belong SET Belong_Payement_Way = "CB" WHERE (Basket_ID = :id AND Belong_Paid =0 AND Belong_Payement_Way IS NULL)';
         $stmt = $bdd->prepare($sql3);
         $stmt->execute(array('id' => "$basketID"));
 
-        $sql4 = 'UPDATE Belong SET Belong_Paid = 1 WHERE (Basket_ID = :id AND Belong_Payement_Way="CB")';
+        $sql4 = 'UPDATE Belong SET Belong_Paid = 1 WHERE (Basket_ID = :id AND Belong_Payement_Way LIKE "CB")';
         $stmt = $bdd->prepare($sql4);
         $stmt->execute(array('id' => "$basketID"));
 
