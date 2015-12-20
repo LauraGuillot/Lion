@@ -1638,10 +1638,9 @@ function afficheRecap($bdd, $idco) {
 
 
     /* Récupération du follower */
-    $sql = 'SELECT Person_Lastname, Person_Firstname '
+        $sql = 'SELECT Person_Lastname, Person_Firstname '
             . 'FROM Follower '
             . ' INNER JOIN Person ON (Person.Person_ID = Follower.Person_ID) '
-            . ' INNER JOIN Member ON (Member.Member_ID = Follower.Member_ID)'
             . ' WHERE (Member_ID = :id)';
     $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $stmt->execute(array(':id' => "$memberID"));
@@ -2353,7 +2352,6 @@ function afficheRecapPDF($bdd, $idco) {
     $sql = 'SELECT Person_Lastname, Person_Firstname '
             . 'FROM Follower '
             . ' INNER JOIN Person ON (Person.Person_ID = Follower.Person_ID) '
-            . ' INNER JOIN Member ON (Member.Member_ID = Follower.Member_ID)'
             . ' WHERE (Member_ID = :id)';
     $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $stmt->execute(array(':id' => "$memberID"));
