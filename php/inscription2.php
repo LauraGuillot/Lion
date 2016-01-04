@@ -76,11 +76,8 @@
                         
                         $email = $_POST['email'];
                         $mdp = $_POST['mdp'];
-                        $mdp2 = $_POST['mdp2'];
+                        $mdp2 = $_POST['cmdp'];
                      
-                        $nom = $_POST['nom'];
-                        $prenom = $_POST['prenom'];
-
                         print("<input type=\"hidden\" name=\"email\" value=\"$email\"/>");
                         print("<input type=\"hidden\" name=\"mdp\" value=\"$mdp\"/>");
                         print("<input type=\"hidden\" name=\"mdp2\" value=\"$mdp2\"/>");

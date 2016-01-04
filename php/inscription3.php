@@ -90,10 +90,7 @@
                         $tel = $_POST['tel'];
                         $portable = $_POST['portable'];
                         
-                        $fClub = $_POST['fClub'];
-                        $fDistrict = $_POST['fDistrict'];
-                        $prenomAcc = $_POST['prenomAcc'];
-                        $nomAcc = $_POST['nomAcc'];
+                       
 
 
                         print("<input type=\"hidden\" name=\"email\" value=\"$email\"/>");
