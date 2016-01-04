@@ -1402,7 +1402,7 @@ function afficheCommandes($bdd, $idco) {
 function afficheInfos($bdd, $idco) {
 
     /* Récupération des données personnelles du membre */
-    $sql = 'SELECT Member_ID, Person_Lastname, Person_Firstname, Member_Title, Member_Status, District_Name, Club_Name, '
+    $sql = 'SELECT Member.Member_ID, Person_Lastname, Person_Firstname, Member_Title, Member_Status, District_Name, Club_Name, '
             . ' Member_Num, Member_Additional_Adress, Member_Street, Member_City, Member_Postal_Code, Member_Phone, '
             . ' Member_Mobile, Member_EMail, Member_Position_Club, Member_Position_District, Member_By_Train, Member_Date_Train '
             . ' FROM Member'
@@ -1450,6 +1450,71 @@ function afficheInfos($bdd, $idco) {
     $fprenom = $row["Person_Firstname"];
 
     /* Affichage des données personnelles avec possibilité de modification */
+    echo'
+        <div class="row section-head">
+            
+            <h2 style="color : #11ABB0;" > <FONT size="5"> Vos informations personnelles <FONT></h2>
+            
+        </div>
+        
+        <div>
+             <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > <u>Civilité</u> : ' . $titre . '</h2> 
+        </div>
+        <div>
+            <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > <u>Nom</u> : ' . $nom . '</h2> 
+        </div>
+        <div>
+             <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > <u>Prenom</u> : ' . $prenom . '</h2> 
+        </div>
+        
+        <div class="row section-head">
+            <h2 style="color : #8BB24C;" > <FONT size="5">Coordonnées <FONT></h2>
+         </div>
+         
+        <div>
+            <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" >  <u>Adresse</u> : ' . $num . ' ' . $rue . ' (' . $adressesup . ') ' . $cp . ' ' . $ville . '</h2> 
+        </div>
+        <div>
+            <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" >  <u>Téléphone</u> : ' . $tel . '</h2> 
+        </div>
+        <div>
+            <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > <u>Mobile</u> : ' . $mobile . '</h2> 
+        </div>
+        <div>
+            <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > <u>Mail</u> : ' . $mail . '</h2> 
+        </div>
+        
+        <div class="row section-head">
+            <h2 style="color : #8BB24C;"> <FONT size="5">Position dans le Lions Clubs <FONT></h2>
+         </div>';
+
+    if ($status == 1) {
+        echo'<div>
+             <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > <u>Satut</u> : Lion </h2> 
+        </div>';
+    } else {
+        echo'<div>
+           <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" >  <u>Satut</u> : Leo </h2> 
+        </div>';
+    }
+
+    echo'   <div>
+            <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > <u>District</u> : ' . $district . '</h2> 
+        </div>
+        <div>
+           <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > <u>Position au sein du district</u> : ' . $positiondistrict . '</h2> 
+        </div>
+        <div>
+            <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" >  <u>Club</u> : ' . $club . '</h2> 
+        </div>
+        <div>
+            <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > <u>Position au sein du club</u> : ' . $positionclub . '</h2> 
+        </div>
+        
+';
+      
+        
+         
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -3147,9 +3212,9 @@ function gereConnexion($bdd) {
     $stmt->execute(array());
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $now = $row['NOW()'];
-
+   
     $date1 = new DateTime($now);
-
+    
 
     /* On récupère toutes les connexions */
     $sql = 'SELECT Connexion_ID, Last_Connexion FROM Connexion ';
@@ -3173,7 +3238,7 @@ function gereConnexion($bdd) {
     }
 }
 
-gereConnexion($bdd);
+// gereConnexion($bdd);
 
 /* ----------------------------------------------------------------------------------------------- */
 /*                                MISE A JOUR DE LAST CONNEXION                                     */
@@ -3701,6 +3766,114 @@ function pdfCommandes($bdd, $idco) {
     } else {
         $texte = $texte . '  <div style="" > <FONT size="3.5" style="font-weight:normal;color : #707B82;" > Aucun repas commandé</FONT></div>';
     }
+    
+    
+/* ---------------------------------------------------------------------------------------------------- */
+/*                           AFFICHAGE DES INFORMATIONS PERSONNELLES DANS MON COMPTE                                                     */
+/* ---------------------------------------------------------------------------------------------------- */
+
+/* Fontion pour afficher le tableau des repas */
+
+function afficheRepas($bdd) {
+    try {
+
+        /* Préparation de la requête */
+        $sql = 'SELECT Activity_Name, Activity_Date, Activity_Price1, Activity_Price2, Activity_Capacity FROM Activity ' .
+                'INNER JOIN Activity_Type ON (Activity.Activity_Type_ID = Activity_Type.Activity_Type_ID) ' .
+                'WHERE (Congress_ID =' . congressID . ' AND (Activity_Type_Name= :nom)) ORDER BY (Activity_Date);';
+
+        $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+
+        /* Exécution de la requête */
+        $stmt->execute(array(':nom' => 'Repas'));
+
+        /* Exploitation des résultats */
+
+        /* Création du tableau */
+        echo'
+    <html>
+         <div>
+               <center><TABLE id="tableau" cols="3" style="border:1px solid black">
+                    <CAPTION> <h2>Repas<br></br></h2> </CAPTION>
+
+                    <TR class="row" >
+                        <TH class ="col" height=60 width=20% style="border:1px solid black;">Date</TH>
+                        <TH class ="col" height=60 width=30% style="border:1px solid black;">Intitulé </TH>
+                        <th class ="col" height=60 width=20% style="border:1px solid black">Tarif privilège <br>(jusqu\'au 31/03)  </th>
+                        <th class ="col" height=60 width=20% style="border:1px solid black">Tarif plein <br>(à compter du 01/04)  </th>
+                        <th class ="col" height=60 width=100.65 width=10% style="border:1px solid black"> <FONT size="2.5pt">Places restantes </FONT></th>
+                     </TR>';
+
+        /* Affichage des activités */
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
+
+            if ($row["Activity_Capacity"] > 0) {
+                afficheActiviteLibre($row["Activity_Name"], $row["Activity_Date"], $row["Activity_Price1"], $row["Activity_Price2"], $row["Activity_Capacity"]);
+            } else {
+                afficheActiviteComplete($row["Activity_Name"], $row["Activity_Date"], $row["Activity_Price1"], $row["Activity_Price2"]);
+            }
+        }
+
+        /* Fermeture du tableau */
+        echo'</TABLE></center>
+                        </div>
+                        <br></br></html>';
+    } catch (PDOException $e) {
+        echo 'Connexion échouée : ' . $e->getMessage();
+    }
+}
+
+/* Fontion pour afficher le tableau des excursions */
+
+function afficheExcursions($bdd) {
+    try {
+
+        /* Préparation de la requête */
+        $sql = 'SELECT Activity_Name, Activity_Date, Activity_Price1, Activity_Price2, Activity_Capacity FROM Activity ' .
+                'INNER JOIN Activity_Type ON (Activity.Activity_Type_ID = Activity_Type.Activity_Type_ID) ' .
+                'WHERE (Congress_ID =' . congressID . ' AND (Activity_Type_Name= :nom)) ORDER BY (Activity_Date);';
+
+        $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+
+        /* Exécution de la requête */
+        $stmt->execute(array(':nom' => 'Excursion'));
+
+        /* Exploitation des résultats */
+
+        /* Création du tableau */
+        echo'
+    <html>
+         <div>
+               <center><TABLE id="tableau" cols="3" style="border:1px solid black">
+                    <CAPTION> <h2>Excursions<br></br></h2> </CAPTION>
+
+                    <TR class="row" >
+                        <TH class ="col" height=60 width=20% style="border:1px solid black;">Date</TH>
+                        <TH class ="col" height=60 width=30% style="border:1px solid black;">Intitulé </TH>
+                        <th class ="col" height=60 width=20% style="border:1px solid black">Tarif privilège <br>(jusqu\'au 31/03)  </th>
+                        <th class ="col" height=60 width=20% style="border:1px solid black">Tarif plein <br>(à compter du 01/04)  </th>
+                        <th class ="col" height=60 width=100.65 width=10% style="border:1px solid black"> <FONT size="2.5pt">Places restantes </FONT></th>
+                     </TR>';
+
+        /* Affichage des activités */
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
+
+            if ($row["Activity_Capacity"] > 0) {
+                afficheActiviteLibre($row["Activity_Name"], $row["Activity_Date"], $row["Activity_Price1"], $row["Activity_Price2"], $row["Activity_Capacity"]);
+            } else {
+                afficheActiviteComplete($row["Activity_Name"], $row["Activity_Date"], $row["Activity_Price1"], $row["Activity_Price2"]);
+            }
+        }
+
+        /* Fermeture du tableau */
+        echo'</TABLE></center>
+                        </div>
+                        <br></br></html>';
+    } catch (PDOException $e) {
+        echo 'Connexion échouée : ' . $e->getMessage();
+    }
+}
+
 
     /*     * ****************************************************** */
     /* Récupération des excursions payées et affichage */

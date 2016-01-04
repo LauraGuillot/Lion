@@ -86,7 +86,7 @@
                         <a class="mobile-btn" href="#" title="Hide navigation">Hide navigation</a>
 
                         <ul id="nav" class="nav" >';
-        print(" <li  class=\"active\"><a href=\"http://localhost/lion/Lion/php/monCompte.php?idco=$idco\"> Informations personnelles</a></li>");
+        print(" <li  class=\"active\"><a href=\"http://localhost/lion/Lion/php/infoperso.php?idco=$idco\"> Informations personnelles</a></li>");
         print(" <li><a href=\"http://localhost/lion/Lion/php/achats.php?idco=$idco\"> Mes achats</a></li>");
         print(" <li   ><a href=\"http://localhost/lion/Lion/php/commandes.php?idco=$idco\"> Mes commandes</a></li>");
         echo' 
@@ -119,9 +119,22 @@
             afficheInfos($bdd, $idco);
             majConnexion($bdd, $idco);
             ?>
+     
+
+     
+        <form name="modifinfo" id="mod" method="post"  action="infopersomodif.php">
+        <div>
+            <br></br>
+            
+            <input type="submit" name="boutonmodif" value="Modifier mes informations">
+            <?php
+            
+            print("<input type=\"hidden\"  name=\"idco\" value=\"$idco\">");
+               ?>
+               </div>
         </div>
-
-
+        </form>
+        </div>
 
 
         <!-- Section End-->

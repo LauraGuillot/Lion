@@ -59,9 +59,12 @@
                 }
                 ?>
 
-                <form name="contactForm" id="contactForm" method="post" action="verif2bis.php">
+                <?php
+                if(strcmp($file, 'verif2.php')==0){
+                echo'
+                <form name="contactForm" id="contactForm" method="post" action="verif2bis.php">';
 
-                    <?php
+                
                     $email = $_POST['email'];
                     $mdp = $_POST['mdp'];
                     $mdp2 = $_POST['mdp2'];
@@ -70,6 +73,15 @@
                     $prenom = $_POST['prenom'];
                     $titre = $_POST['titre'];
                     $district = $_POST['district'];
+                    
+                    
+                    $rue = $_POST['rue'];
+                    $num = $_POST['num'];
+                    $cp = $_POST['cp'];
+                    $ville = $_POST['ville'];
+                    $pays = $_POST['pays'];
+                    $tel = $_POST['tel'];
+                   
 
                     print("<input type=\"hidden\" name=\"email\" value=\"$email\"/>");
                     print("<input type=\"hidden\" name=\"mdp\" value=\"$mdp\"/>");
@@ -79,17 +91,17 @@
                     print("<input type=\"hidden\" name=\"prenom\" value=\"$prenom\"/>");
                     print("<input type=\"hidden\" name=\"titre\" value=\"$titre\"/>");
                     print("<input type=\"hidden\" name=\"district\" value=\"$district\"/>");
-                    ?> 
+                    
 
-
+echo'
                     <div style="color:#3d4145; font : 14px/24px opensans-bold, sans-serif; margin : 12px 0;">
                         <p></br> Club<span class="required" style="color:#8B9798">*</span></p>
-                    </div>
+                    </div>';
 
-                    <?php
+                  
                     afficheClub($bdd, $district);
-                    ?>  
-
+                     
+echo'
                     <div class="row section-head">
                         <h2 >Coordonnées</h2>
                     </div>
@@ -104,7 +116,7 @@
                     </div>
 
                     <div>
-                        <label for="contactSubject">Complément d'adresse</label>
+                        <label for="contactSubject">Complément d\'adresse</label>
                         <input name="cadr" type="text" id="cadr" size="5" value="" />
                     </div>
 
@@ -142,7 +154,103 @@
 
         </form>
 
-    </div>    
+                </div>';}
+                else{
+                    echo'
+                <form name="contactForm" id="contactForm" method="post" action="verif2bis.php">';
+
+                
+                    $email = $_POST['email'];
+                    $mdp = $_POST['mdp'];
+                    $mdp2 = $_POST['mdp2'];
+                    $civilite = $_POST['civilite'];
+                    $nom = $_POST['nom'];
+                    $prenom = $_POST['prenom'];
+                    $titre = $_POST['titre'];
+                    $district = $_POST['district'];
+                    
+                    
+                    $rue = $_POST['rue'];
+                    $num = $_POST['num'];
+                    $cp = $_POST['cp'];
+                    $ville = $_POST['ville'];
+                    $pays = $_POST['pays'];
+                    $tel = $_POST['tel'];
+                   
+
+                    print("<input type=\"hidden\" name=\"email\" value=\"$email\"/>");
+                    print("<input type=\"hidden\" name=\"mdp\" value=\"$mdp\"/>");
+                    print("<input type=\"hidden\" name=\"mdp2\" value=\"$mdp2\"/>");
+                    print("<input type=\"hidden\" name=\"civilite\" value=\"$civilite\"/>");
+                    print("<input type=\"hidden\" name=\"nom\" value=\"$nom\"/>");
+                    print("<input type=\"hidden\" name=\"prenom\" value=\"$prenom\"/>");
+                    print("<input type=\"hidden\" name=\"titre\" value=\"$titre\"/>");
+                    print("<input type=\"hidden\" name=\"district\" value=\"$district\"/>");
+                    
+
+echo'
+                    <div style="color:#3d4145; font : 14px/24px opensans-bold, sans-serif; margin : 12px 0;">
+                        <p></br> Club<span class="required" style="color:#8B9798">*</span></p>
+                    </div>';
+
+                    
+                    afficheClub($bdd, $district);
+                     
+echo'
+                    <div class="row section-head">
+                        <h2 >Coordonnées</h2>
+                    </div>
+
+                    <div>
+                        <label for="contactSubject">N°<span class="required">*</span></label>
+                        <input name="num" type="text" id="num" size="35" value='.$num.' />
+                    </div>
+                    <div>
+                        <label for="contactSubject">Rue<span class="required">*</span></label>
+                        <input name="rue" type="text" id="rue" size="35" value='.$rue.' />
+                    </div>
+
+                    <div>
+                        <label for="contactSubject">Complément d\'adresse</label>
+                        <input name="cadr" type="text" id="cadr" size="5" value="" />
+                    </div>
+
+
+                    <div>
+                        <label for="contactSubject">Code Postal<span class="required">*</span></label>
+                        <input name="cp" type="text" id="cp" size="5" value='.$cp.' />
+                    </div>
+
+                    <div>
+                        <label for="contactSubject">Ville<span class="required">*</span></label>
+                        <input name="ville" type="text" id="ville" size="35" value='.$ville.'/>
+                    </div>
+
+                    <div>
+                        <label for="contactSubject">Pays<span class="required">*</span></label>
+                        <input name="pays" type="text" id="pays" size="35" value='.$pays.' />
+                    </div>
+
+                    <div>
+                        <label for="contactSubject">Téléphone<span class="required">*</span></label>
+                        <input name="tel" type="tel" id="tel" size="35" value='.$tel.' style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
+                    </div>
+                    <div>
+                        <label for="contactSubject">Portable</label>
+                        <input name="portable" type="tel" id="portable" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0"/>
+                    </div>
+
+
+                    <input type="submit" name="v2bis" value="Valider">
+                    <br></br>
+                    <br></br>
+
+            </div>
+
+        </form>';
+                        
+                }
+?>
 
     <!-- Contact Section End-->
 

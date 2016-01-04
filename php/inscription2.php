@@ -66,21 +66,28 @@
                 }
                 ?>
                 <!-- form -->
-                <form name="contactForm" id="contactForm" method="post" action="verif2.php">
-                    <fieldset>
+                <?php
+                if(strcmp($file, 'verif1.php')==0){
+                    
+                
+                echo'<form name="contactForm" id="contactForm" method="post" action="verif2.php">
+                    <fieldset>';
 
-                        <?php
+                        
                         $email = $_POST['email'];
                         $mdp = $_POST['mdp'];
                         $mdp2 = $_POST['mdp2'];
+                     
+                        $nom = $_POST['nom'];
+                        $prenom = $_POST['prenom'];
 
                         print("<input type=\"hidden\" name=\"email\" value=\"$email\"/>");
                         print("<input type=\"hidden\" name=\"mdp\" value=\"$mdp\"/>");
                         print("<input type=\"hidden\" name=\"mdp2\" value=\"$mdp2\"/>");
-                        ?>                 
+                                       
 
 
-                        <div class="row section-head">
+                       echo' <div class="row section-head">
                             <h2 >Civilité</h2>
                         </div>
 
@@ -94,12 +101,12 @@
 
                         <div>
                             <label for="contactSubject">Prénom<span class="required">*</span></label>
-                            <input name="prenom" type="text" id="prenom" size="35" value="" />
+                            <input name="prenom" type="text" id="prenom" size="35" value=""/>
                         </div>
 
                         <div>
                             <label for="contactSubject">Nom<span class="required">*</span></label>
-                            <input name="nom" type="text" id="nom" size="35" value="" />
+                            <input name="nom" type="text" id="nom" size="35" value=""/>
                         </div>
 
 
@@ -125,7 +132,7 @@
                                 <OPTION value ="CENTRE-EST"> CENTRE-EST  </OPTION>
                                 <OPTION value ="CENTRE-OUEST"> CENTRE-OUEST  </OPTION>
                                 <OPTION value ="CENTRE-SUD"> CENTRE-SUD  </OPTION>
-                                <OPTION value ="COTE D'AZUR-CORSE"> COTE D'AZUR-CORSE </OPTION>
+                                <OPTION value ="COTE D\'AZUR-CORSE"> COTE D\'AZUR-CORSE </OPTION>
                                 <OPTION value ="EST"> EST  </OPTION>
                                 <OPTION value ="ILE DE FRANCE"> ILE DE FRANCE-EST  </OPTION>
                                 <OPTION value ="ILE DE FRANCE-OUEST"> ILE DE FRANCE-OUEST  </OPTION>
@@ -140,10 +147,7 @@
                             </SELECT>
 
                         </div>                       
-
-
-
-                        <div>
+                            <div>
                             <input type="submit" name="v2" value="Valider">
                             <br></br>
                             <br></br>
@@ -151,8 +155,100 @@
                         </div>
 
                     </fieldset>
-                </form> 
+                </form>'; 
+                }
+                else{
+                 
+                 
+                echo'<form name="contactForm2" id="contactForm2" method="post" action="verif2.php">
+                    <fieldset>';
 
+                        
+                        $email = $_POST['email'];
+                        $mdp = $_POST['mdp'];
+                        $mdp2 = $_POST['mdp2'];
+                     
+                        $nom = $_POST['nom'];
+                        $prenom = $_POST['prenom'];
+
+                        print("<input type=\"hidden\" name=\"email\" value=\"$email\"/>");
+                        print("<input type=\"hidden\" name=\"mdp\" value=\"$mdp\"/>");
+                        print("<input type=\"hidden\" name=\"mdp2\" value=\"$mdp2\"/>");
+                                       
+
+
+                       echo' <div class="row section-head">
+                            <h2 >Civilité</h2>
+                        </div>
+
+                        <div style="color:#3d4145; font : 14px/24px opensans-bold, sans-serif; margin : 12px 0">
+
+                            <INPUT type="radio" name="civilite" value="1"> Mlle
+                            <INPUT type="radio" name="civilite" value="2"> Mme
+                            <INPUT type="radio" name="civilite" value="3" checked> M.
+
+                        </div>
+
+                        <div>
+                            <label for="contactSubject">Prénom<span class="required">*</span></label>
+                            <input name="prenom" type="text" id="prenom" size="35" value='.$prenom.' />
+                        </div>
+
+                        <div>
+                            <label for="contactSubject">Nom<span class="required">*</span></label>
+                            <input name="nom" type="text" id="nom" size="35" value='.$nom.' />
+                        </div>
+
+
+                        <div class="row section-head">
+                            <h2 >Statut dans le club</h2>
+                        </div>
+
+                        <div style="color:#3d4145; font : 14px/24px opensans-bold, sans-serif; margin : 12px 0">
+
+                            <INPUT type="radio" name="titre" value="1" checked> Lion
+                            <INPUT type="radio" name="titre" value="2" > Leo
+
+                        </div>
+
+                        <div style="color:#3d4145; font : 14px/24px opensans-bold, sans-serif; margin : 12px 0;">
+                            <p></br> District<span class="required" style="color:#8B9798">*</span></p>
+                        </div>
+
+                        <div>
+                            <SELECT id="district" name="district">
+                                <OPTION> Choisissez votre district </OPTION>
+                                <OPTION value ="CENTRE"> CENTRE </OPTION>
+                                <OPTION value ="CENTRE-EST"> CENTRE-EST  </OPTION>
+                                <OPTION value ="CENTRE-OUEST"> CENTRE-OUEST  </OPTION>
+                                <OPTION value ="CENTRE-SUD"> CENTRE-SUD  </OPTION>
+                                <OPTION value ="COTE D\'AZUR-CORSE"> COTE D\'AZUR-CORSE </OPTION>
+                                <OPTION value ="EST"> EST  </OPTION>
+                                <OPTION value ="ILE DE FRANCE"> ILE DE FRANCE-EST  </OPTION>
+                                <OPTION value ="ILE DE FRANCE-OUEST"> ILE DE FRANCE-OUEST  </OPTION>
+                                <OPTION value ="ILE DE FRANCE-PARIS"> ILE DE FRANCE-PARIS  </OPTION>
+                                <OPTION value="NORD"> NORD </OPTION> 
+                                <OPTION value ="NORMANDIE"> NORMANDIE  </OPTION>
+                                <OPTION value ="OUEST"> OUEST  </OPTION>
+                                <OPTION value ="SUD"> SUD  </OPTION>
+                                <OPTION value ="SUD-EST"> SUD-EST  </OPTION>
+                                <OPTION value="SUD-OUEST"> SUD-OUEST  </OPTION>
+                                <OPTION value="AUTRE"> AUTRE  </OPTION>
+                            </SELECT>
+
+                        </div>                       
+                            <div>
+                            <input type="submit" name="v2" value="Valider">
+                            <br></br>
+                            <br></br>
+
+                        </div>
+
+                    </fieldset>
+                </form>';
+                }
+               
+                ?>
                 <!-- Form End -->
 
             </div>

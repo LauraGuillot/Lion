@@ -67,9 +67,11 @@
                 }
                 ?>
                 <!-- form -->
-                <form name="contactForm" id="contactForm" method="post" action="verif3.php" style = "width : 1000px">
-                    <fieldset>
-                        <?php
+                <?php
+                if(strcmp($file, 'verif2bis.php')==0){
+                echo'<form name="contactForm" id="contactForm" method="post" action="verif3.php" style = "width : 1000px">
+                    <fieldset>';
+                        
                         $email = $_POST['email'];
                         $mdp = $_POST['mdp'];
                         $mdp2 = $_POST['mdp2'];
@@ -87,6 +89,11 @@
                         $pays = $_POST['pays'];
                         $tel = $_POST['tel'];
                         $portable = $_POST['portable'];
+                        
+                        $fClub = $_POST['fClub'];
+                        $fDistrict = $_POST['fDistrict'];
+                        $prenomAcc = $_POST['prenomAcc'];
+                        $nomAcc = $_POST['nomAcc'];
 
 
                         print("<input type=\"hidden\" name=\"email\" value=\"$email\"/>");
@@ -106,8 +113,8 @@
                         print("<input type=\"hidden\" name=\"pays\" value=\"$pays\"/>");
                         print("<input type=\"hidden\" name=\"tel\" value=\"$tel\"/>");
                         print("<input type=\"hidden\" name=\"portable\" value=\"$portable\"/>");
-                        ?>
-                        <div class="row section-head">
+                       
+                        echo'<div class="row section-head">
 
                             <h2 >Fonction</h2>
                         </div>
@@ -147,7 +154,7 @@
                         </div>
 
                         <div style="color:#3d4145; font : 18px/28px opensans-bold, sans-serif; margin : 12px 0">
-                            <p></br> Merci de préciser votre date et heure d'arrivée : </p>
+                            <p></br> Merci de préciser votre date et heure d\'arrivée : </p>
                         </div>
                         <div>
                             <label for="contactSubject">Date</label>
@@ -176,7 +183,121 @@
 
         </div>
 
-    </section> <!-- Contact Section End-->
+                </section>';}
+                else{
+                   echo'<form name="contactForm" id="contactForm" method="post" action="verif3.php" style = "width : 1000px">
+                    <fieldset>';
+                        
+                        $email = $_POST['email'];
+                        $mdp = $_POST['mdp'];
+                        $mdp2 = $_POST['mdp2'];
+                        $civilite = $_POST['civilite'];
+                        $nom = $_POST['nom'];
+                        $prenom = $_POST['prenom'];
+                        $titre = $_POST['titre'];
+                        $district = $_POST['district'];
+                        $club = $_POST['club'];
+                        $rue = $_POST['rue'];
+                        $num = $_POST['num'];
+                        $cadr = $_POST['cadr'];
+                        $cp = $_POST['cp'];
+                        $ville = $_POST['ville'];
+                        $pays = $_POST['pays'];
+                        $tel = $_POST['tel'];
+                        $portable = $_POST['portable'];
+                        
+                        $fClub = $_POST['fClub'];
+                        $fDistrict = $_POST['fDistrict'];
+                        $prenomAcc = $_POST['prenomAcc'];
+                        $nomAcc = $_POST['nomAcc'];
+
+
+                        print("<input type=\"hidden\" name=\"email\" value=\"$email\"/>");
+                        print("<input type=\"hidden\" name=\"mdp\" value=\"$mdp\"/>");
+                        print("<input type=\"hidden\" name=\"mdp2\" value=\"$mdp2\"/>");
+                        print("<input type=\"hidden\" name=\"civilite\" value=\"$civilite\"/>");
+                        print("<input type=\"hidden\" name=\"nom\" value=\"$nom\"/>");
+                        print("<input type=\"hidden\" name=\"prenom\" value=\"$prenom\"/>");
+                        print("<input type=\"hidden\" name=\"titre\" value=\"$titre\"/>");
+                        print("<input type=\"hidden\" name=\"district\" value=\"$district\"/>");
+                        print("<input type=\"hidden\" name=\"club\" value=\"$club\"/>");
+                        print("<input type=\"hidden\" name=\"rue\" value=\"$rue\"/>");
+                        print("<input type=\"hidden\" name=\"num\" value=\"$num\"/>");
+                        print("<input type=\"hidden\" name=\"cadr\" value=\"$cadr\"/>");
+                        print("<input type=\"hidden\" name=\"cp\" value=\"$cp\"/>");
+                        print("<input type=\"hidden\" name=\"ville\" value=\"$ville\"/>");
+                        print("<input type=\"hidden\" name=\"pays\" value=\"$pays\"/>");
+                        print("<input type=\"hidden\" name=\"tel\" value=\"$tel\"/>");
+                        print("<input type=\"hidden\" name=\"portable\" value=\"$portable\"/>");
+                       
+                        echo'<div class="row section-head">
+
+                            <h2 >Fonction</h2>
+                        </div>
+                        <div>
+                            <label for="contactSubject">Au niveau club<span class="required">*</span></label>
+                            <input name="fClub" type="text" id="fClub" size="35" value='.$fClub.' />
+                        </div>
+
+                        <div>
+                            <label for="contactSubject">Au niveau district<span class="required">*</span></label>
+                            <input name="fDistrict" type="text" id="fDistrict" size="35" value='.$fDistrict.' />
+                        </div>
+
+                        <div class="row section-head">
+
+                            <h2 >Accompagnant (non-Lion)</h2>
+                        </div>
+
+                        <div>
+                            <label for="contactSubject">Prénom</label>
+                            <input name="prenomAcc" type="text" id="prenomAcc" size="35" value='.$prenomAcc.' />
+                        </div>
+
+                        <div>
+                            <label for="contactSubject">Nom</label>
+                            <input name="nomAcc" type="text" id="nomAcc" size="35" value='.$nomAcc.' />
+                        </div>
+                        <div class="row section-head">
+
+                            <h2 >Accueil</h2>
+                        </div>
+
+                        <div style="color:#3d4145; font : 18px/28px opensans-bold, sans-serif; margin : 12px 0">
+
+                            <INPUT type="checkbox" name="train" value="1"> Arrivée en train (Des navettes seront disponibles pour rejoindre votre hôtel)
+
+                        </div>
+
+                        <div style="color:#3d4145; font : 18px/28px opensans-bold, sans-serif; margin : 12px 0">
+                            <p></br> Merci de préciser votre date et heure d\'arrivée : </p>
+                        </div>
+                        <div>
+                            <label for="contactSubject">Date</label>
+                            <input name="traindate" type="date" id="trainDate" size="35" value="" style = "padding: 18px 18px; margin : 0 0 15px 0; color : #738182; background : #CFD4D5; border : 0"/>
+                        </div>
+
+                        <div>
+                            <label for="contactSubject">Heure</label>
+                            <input name="trainheure" type="time" id="trainHeure" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0"/>
+                        </div>
+
+                        <input type="submit" name="v3" value="Valider">
+                        </div>
+
+                    </fieldset>
+                </form> 
+
+                <!-- Form End -->
+
+            </div>
+
+        </div>
+
+                </section>'; 
+                }
+    ?>
+<!-- Contact Section End-->
 
     <!-- footer
     ================================================== -->
