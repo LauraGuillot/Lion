@@ -76,7 +76,7 @@
                         
                         $email = $_POST['email'];
                         $mdp = $_POST['mdp'];
-                        $cmdp = $_POST['mdp2'];
+                        $mdp2 = $_POST['cmdp'];
                      
                         
 

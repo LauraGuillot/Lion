@@ -375,7 +375,7 @@ function paiementCH($bdd, $idco) {
     $stmt = $bdd->prepare($sql3);
     $stmt->execute(array('id' => "$basketID"));
 
-    $sql3 = 'UPDATE Belong SET Belong_Date = NOW() WHERE (Basket_ID = :id AND Belong_Paid =0)';
+    $sql3 = 'UPDATE Belong SET Belong_Date = NOW() WHERE (Basket_ID = :id AND Belong_Paid =0 AND Belong_Date IS NULL)';
     $stmt = $bdd->prepare($sql3);
     $stmt->execute(array('id' => "$basketID"));
 
@@ -480,7 +480,7 @@ function paiementCH($bdd, $idco) {
 
             <h2 style = "color :#70F861; margin : 65px; text-align : center"> Commande enregistrée <br></br>
              
-            <center><FONT size="3.5pt " style = "color :#F0FFFF ;font-weight:normal"> Merci d\'imprimer votre bon de commande ci-dessous et de l\'envoyer avec le chèque à l\'adresse : <br>38, rue Albert Dory - 44300 NANTES - FRANCE </center></FONT></h2>
+            <center><FONT size="3.5pt " style = "color :#F0FFFF ;font-weight:normal"> Merci d\'imprimer votre bon de commande ci-dessous et de l\'envoyer avec un chèque <br> à l\'ordre du Lions Clubs, du montant indiqué sur le bon de commande à l\'adresse : <br>38, rue Albert Dory - 44300 NANTES - FRANCE </center></FONT></h2>
             
         
             <center><FONT size="3.5pt " style = "color :#9F9898 ;font-weight:normal"> Vous pouvez consulter vos commandes dans Mes Commandes de l\'onglet Mon Compte. A la réception de votre chèque, votre réservation apparaitra dans la rubrique Mes Achats.  </center></FONT></h2>
@@ -3299,7 +3299,7 @@ function bonDeCommande($bdd, $idco) {
     /* On récupère la date du dernier panier */
     $sql = 'SELECT Belong_Date FROM Activity '
             . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
-            . ' WHERE (Basket_ID = :id  AND Belong_Payement_Way="CH" AND Congress_ID = ' . congressID . ') ORDER BY (Belong_Date)';
+            . ' WHERE (Basket_ID = :id  AND Belong_Payement_Way="CH" AND Congress_ID = ' . congressID . ') ORDER BY (Belong_Date) DESC';
     $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $stmt->execute(array(':id' => "$basketID"));
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
@@ -3328,7 +3328,7 @@ function bonDeCommande($bdd, $idco) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
 
         $numCommande = $numCommande . "." . $row["Activity_ID"];
-        $nom = $row["Activity_Name"];
+        $act = $row["Activity_Name"];
         $date = $row["Activity_Date"];
         $prix = $row["Belong_Price"];
         $total = $total + $prix;
@@ -3336,7 +3336,7 @@ function bonDeCommande($bdd, $idco) {
 
         $activite = $activite . '<TR class="row" >
            <Td class ="col"  width=100 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $date . '</FONT> </Td>
-           <td class ="col" width=320 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $nom . '</FONT> </td>
+           <td class ="col" width=320 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $act . '</FONT> </td>
            <td class ="col" width=140 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $prix . ' €</FONT> </td>
          </TR> ';
     }
