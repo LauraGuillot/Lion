@@ -75,12 +75,7 @@
                     $district = $_POST['district'];
                     
                     
-                    $rue = $_POST['rue'];
-                    $num = $_POST['num'];
-                    $cp = $_POST['cp'];
-                    $ville = $_POST['ville'];
-                    $pays = $_POST['pays'];
-                    $tel = $_POST['tel'];
+                    
                    
 
                     print("<input type=\"hidden\" name=\"email\" value=\"$email\"/>");

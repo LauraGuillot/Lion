@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if lt IE 8 ]><html class="ie ie7" lang="en"> <![endif]-->
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
 <!--[if (gte IE 8)|!(IE)]><!--><html lang="fr"> <!--<![endif]-->
@@ -43,7 +43,6 @@
         ?>
         <!-- Header End -->
         <?php
-        include "fonctions.php";
         $idco = $_POST['idco'];
         /* Récupération des données personnelles du membre */
         $sql = 'SELECT Member.Member_ID, Person_Lastname, Person_Firstname, Member_Title, Member_Status, District_Name, Club_Name, '
@@ -86,65 +85,69 @@
 
                             <div>
                                 <label for="contactEmail">Adresse email <span class="required">*</span></label>
-                                <input name="email" type="mail" id="mail" size="35" value='.$mail.' style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
+                                <input name="email" type="mail" id="mail" size="35" value=' . $mail . ' style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
 
                             </div>
                            
                         <div>
                             <label for="contactSubject">Prénom<span class="required">*</span></label>
-                            <input name="prenom" type="text" id="prenom" size="35" value='.$prenom.'/>
+                            <input name="prenom" type="text" id="prenom" size="35" value=' . $prenom . '/>
                         </div>
 
                         <div>
                             <label for="contactSubject">Nom<span class="required">*</span></label>
-                            <input name="nom" type="text" id="nom" size="35" value='.$prenom.'/>
+                            <input name="nom" type="text" id="nom" size="35" value=' . $nom . '/>
                         </div>
                         
                      <div>
                         <label for="contactSubject">N°<span class="required">*</span></label>
-                        <input name="num" type="text" id="num" size="35" value='.$num.' />
+                        <input name="num" type="text" id="num" size="35" value=' . $num . ' />
                     </div>
                     
                     <div>
                         <label for="contactSubject">Rue<span class="required">*</span></label>
-                        <input name="rue" type="text" id="rue" size="35" value='.$rue.' />
+                        <input name="rue" type="text" id="rue" size="35" value=' . $rue . ' />
                     </div>
 
                     <div>
                         <label for="contactSubject">Complément d\'adresse</label>
-                        <input name="cadr" type="text" id="cadr" size="5" value='.$adressesup.' />
+                        <input name="cadr" type="text" id="cadr" size="5" value=' . $adressesup . ' />
                     </div>
 
 
                     <div>
                         <label for="contactSubject">Code Postal<span class="required">*</span></label>
-                        <input name="cp" type="text" id="cp" size="5" value='.$cp.' />
+                        <input name="cp" type="text" id="cp" size="5" value=' . $cp . ' />
                     </div>
 
                     <div>
                         <label for="contactSubject">Ville<span class="required">*</span></label>
-                        <input name="ville" type="text" id="ville" size="35" value='.$ville.' />
+                        <input name="ville" type="text" id="ville" size="35" value=' . $ville . ' />
                     </div>
 
-                    <div>
-                        <label for="contactSubject">Pays<span class="required">*</span></label>
-                        <input name="pays" type="text" id="pays" size="35" value='.$pays.' />
-                    </div>
-
+                    
                     <div>
                         <label for="contactSubject">Téléphone<span class="required">*</span></label>
-                        <input name="tel" type="tel" id="tel" size="35" value='.$tel.' style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
+                        <input name="tel" type="tel" id="tel" size="35" value=' . $tel . ' style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
                     </div>
                     
                     <div>
                         <label for="contactSubject">Portable</label>
-                        <input name="portable" type="tel" id="portable" size="35" value='.$mobile.' style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0"/>
+                        <input name="portable" type="tel" id="portable" size="35" value=' . $mobile . ' style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0"/>
                     </div>
                     
+<br></br>
+
+                            <div>
+                                <input type="submit" name="v1" value="Valider mes modifications">
+                            </div>
+
+                        </fieldset>
+                         </form> 
                     ';
         ?>
 
-<?php affichefooter(); ?>
+        <?php affichefooter(); ?>
         <!-- Footer End-->
 
         <!-- Java Script
