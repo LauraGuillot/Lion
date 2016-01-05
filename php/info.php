@@ -52,7 +52,7 @@
                         </div>
 
                         <div class="col one-third">
-                            <h2> Dates du colloque</h2>        
+                            <h2> <FONT style="color :#CAD1D5">Dates du colloque </FONT></h2>        
                         </div>
 
                         <div class="col two-thirds">
@@ -66,7 +66,7 @@
                         </div>
 
                         <div class="col one-third">       
-                            <h2> Adresse </h2>      
+                            <h2> <FONT style="color :#CAD1D5">Adresse </FONT></h2>      
                             <p> (Voir plan ci-dessous) </p>
                         </div>
 

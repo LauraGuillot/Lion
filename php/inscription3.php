@@ -95,53 +95,53 @@
                        
                         echo'<div class="row section-head">
 
-                            <h2 >Fonction</h2>
+                            <h2 ><FONT style="color :#727374">Fonction</h2>
                         </div>
                         <div>
-                            <label for="contactSubject">Au niveau club<span class="required">*</span></label>
+                            <label for="contactSubject"><FONT style="color :#BEBEBE">Au niveau club<span class="required">*</span></label>
                             <input name="fClub" type="text" id="fClub" size="35" value="" />
                         </div>
 
                         <div>
-                            <label for="contactSubject">Au niveau district<span class="required">*</span></label>
+                            <label for="contactSubject"><FONT style="color :#BEBEBE">Au niveau district<span class="required">*</span></label>
                             <input name="fDistrict" type="text" id="fDistrict" size="35" value="" />
                         </div>
 
                         <div class="row section-head">
 
-                            <h2 >Accompagnant (non-Lion)</h2>
+                            <h2 ><FONT style="color :#727374">Accompagnant (non-Lion)</h2>
                         </div>
 
                         <div>
-                            <label for="contactSubject">Prénom</label>
+                            <label for="contactSubject"><FONT style="color :#BEBEBE">Prénom</label>
                             <input name="prenomAcc" type="text" id="prenomAcc" size="35" value="" />
                         </div>
 
                         <div>
-                            <label for="contactSubject">Nom</label>
+                            <label for="contactSubject"><FONT style="color :#BEBEBE">Nom</label>
                             <input name="nomAcc" type="text" id="nomAcc" size="35" value="" />
                         </div>
                         <div class="row section-head">
 
-                            <h2 >Accueil</h2>
+                            <h2 ><FONT style="color :#727374">Accueil</h2>
                         </div>
 
                         <div style="color:#3d4145; font : 18px/28px opensans-bold, sans-serif; margin : 12px 0">
 
-                            <INPUT type="checkbox" name="train" value="1"> Arrivée en train (Des navettes seront disponibles pour rejoindre votre hôtel)
+                            <INPUT type="checkbox" name="train" value="1"> <FONT style="color :#BEBEBE">Arrivée en train (Des navettes seront disponibles pour rejoindre votre hôtel)
 
                         </div>
 
                         <div style="color:#3d4145; font : 18px/28px opensans-bold, sans-serif; margin : 12px 0">
-                            <p></br> Merci de préciser votre date et heure d\'arrivée : </p>
+                            <p></br> <FONT style="color :#BEBEBE">Merci de préciser votre date et heure d\'arrivée : </p>
                         </div>
                         <div>
-                            <label for="contactSubject">Date</label>
+                            <label for="contactSubject"><FONT style="color :#BEBEBE">Date</label>
                             <input name="traindate" type="date" id="trainDate" size="35" value="" style = "padding: 18px 18px; margin : 0 0 15px 0; color : #738182; background : #CFD4D5; border : 0"/>
                         </div>
 
                         <div>
-                            <label for="contactSubject">Heure</label>
+                            <label for="contactSubject"><FONT style="color :#BEBEBE">Heure</label>
                             <input name="trainheure" type="time" id="trainHeure" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0"/>
                         </div>
 
@@ -211,53 +211,53 @@
                        
                         echo'<div class="row section-head">
 
-                            <h2 >Fonction</h2>
+                            <h2 ><FONT style="color :#727374">Fonction</h2>
                         </div>
                         <div>
-                            <label for="contactSubject">Au niveau club<span class="required">*</span></label>
+                            <label for="contactSubject"><FONT style="color :#BEBEBE">Au niveau club<span class="required">*</span></label>
                             <input name="fClub" type="text" id="fClub" size="35" value='.$fClub.' />
                         </div>
 
                         <div>
-                            <label for="contactSubject">Au niveau district<span class="required">*</span></label>
+                            <label for="contactSubject"><FONT style="color :#BEBEBE">Au niveau district<span class="required">*</span></label>
                             <input name="fDistrict" type="text" id="fDistrict" size="35" value='.$fDistrict.' />
                         </div>
 
                         <div class="row section-head">
 
-                            <h2 >Accompagnant (non-Lion)</h2>
+                            <h2 ><FONT style="color :#727374">Accompagnant (non-Lion)</h2>
                         </div>
 
                         <div>
-                            <label for="contactSubject">Prénom</label>
+                            <label for="contactSubject"><FONT style="color :#BEBEBE">Prénom</label>
                             <input name="prenomAcc" type="text" id="prenomAcc" size="35" value='.$prenomAcc.' />
                         </div>
 
                         <div>
-                            <label for="contactSubject">Nom</label>
+                            <label for="contactSubject"><FONT style="color :#BEBEBE">Nom</label>
                             <input name="nomAcc" type="text" id="nomAcc" size="35" value='.$nomAcc.' />
                         </div>
                         <div class="row section-head">
 
-                            <h2 >Accueil</h2>
+                            <h2 ><FONT style="color :#727374">Accueil</h2>
                         </div>
 
                         <div style="color:#3d4145; font : 18px/28px opensans-bold, sans-serif; margin : 12px 0">
 
-                            <INPUT type="checkbox" name="train" value="1"> Arrivée en train (Des navettes seront disponibles pour rejoindre votre hôtel)
+                            <INPUT type="checkbox" name="train" value="1"><FONT style="color :#BEBEBE"> Arrivée en train (Des navettes seront disponibles pour rejoindre votre hôtel)
 
                         </div>
 
                         <div style="color:#3d4145; font : 18px/28px opensans-bold, sans-serif; margin : 12px 0">
-                            <p></br> Merci de préciser votre date et heure d\'arrivée : </p>
+                            <p></br><FONT style="color :#BEBEBE"> Merci de préciser votre date et heure d\'arrivée : </p>
                         </div>
                         <div>
-                            <label for="contactSubject">Date</label>
+                            <label for="contactSubject"><FONT style="color :#BEBEBE">Date</label>
                             <input name="traindate" type="date" id="trainDate" size="35" value="" style = "padding: 18px 18px; margin : 0 0 15px 0; color : #738182; background : #CFD4D5; border : 0"/>
                         </div>
 
                         <div>
-                            <label for="contactSubject">Heure</label>
+                            <label for="contactSubject"><FONT style="color :#BEBEBE">Heure</label>
                             <input name="trainheure" type="time" id="trainHeure" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0"/>
                         </div>
 

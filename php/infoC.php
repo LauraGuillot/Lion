@@ -82,7 +82,7 @@ print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\
                         </div>
 
                         <div class="col one-third">
-                            <h2> Dates du colloque</h2>        
+                            <h2> <FONT style="color :#CAD1D5">Dates du colloque</h2>        
                         </div>
 
                         <div class="col two-thirds">
@@ -96,7 +96,7 @@ print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\
                         </div>
 
                         <div class="col one-third">       
-                            <h2> Adresse </h2>      
+                            <h2><FONT style="color :#CAD1D5"> Adresse </h2>      
                             <p> (Voir plan ci-dessous) </p>
                         </div>
 

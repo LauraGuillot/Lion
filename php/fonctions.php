@@ -620,7 +620,7 @@ function afficheRepas1($bdd) {
     <html>
          <div>
                <center><TABLE id="tableau" cols="3" style="border:1px solid black">
-                    <CAPTION> <h2>Repas<br></br></h2> </CAPTION>
+                    <CAPTION> <h2><FONT style="color :#CAD1D5">Repas</FONT><br></br></h2> </CAPTION>
 
                     <TR class="row" >
                         <TH class ="col" height=60 width=20% style="border:1px solid black;">Date</TH>
@@ -671,7 +671,7 @@ function afficheExcursions1($bdd) {
     <html>
          <div>
                <center><TABLE id="tableau" cols="3" style="border:1px solid black">
-                    <CAPTION> <h2>Excursions<br></br></h2> </CAPTION>
+                    <CAPTION> <h2><FONT style="color :#CAD1D5">Excursions</FONT><br></br></h2> </CAPTION>
 
                     <TR class="row" >
                         <TH class ="col" height=60 width=20% style="border:1px solid black;">Date</TH>
@@ -768,7 +768,7 @@ function afficheRepas2($bdd, $idco) {
     <html>
          <div>
                <center><TABLE id="tableau" cols="3" style="border:1px solid black">
-                    <CAPTION> <h2>Repas<br></br></h2> </CAPTION>
+                    <CAPTION> <h2><FONT style="color :#CAD1D5">Repas</FONT><br></br></h2> </CAPTION>
 
                     <TR class="row" >
                         <TH class ="col"  height=60 width=20% style="border:1px solid black;">Date</TH>
@@ -819,7 +819,7 @@ function afficheExcursions2($bdd, $idco) {
     <html>
          <div>
                <center><TABLE id="tableau" cols="3" style="border:1px solid black">
-                    <CAPTION> <h2>Excursions<br></br></h2> </CAPTION>
+                    <CAPTION> <h2><FONT style="color :#CAD1D5">Excursions</FONT><br></br></h2> </CAPTION>
 
                     <TR class="row" >
                         <TH class ="col" height=60 width=20% style="border:1px solid black;">Date</TH>
@@ -1650,7 +1650,7 @@ function affichePanier($bdd, $idco) {
          <div align="right">
                <TABLE id="tableau" border width=50% cols="2" style="border:1px solid black;width : 40%; margin-left : 0" >
                  
-                 <CAPTION> <h2>Récapitulatif <br></h2> </CAPTION>
+                 <CAPTION> <h2><FONT style="color :#CAD1D5">Récapitulatif </FONT><br></h2> </CAPTION>
                     <TR class="row" >
                         <TH class ="col"   width=300 style="border:1px solid black; text-align : center;"> Total des repas </TH>
                         <Td class ="col"  width=101 style="border:1px solid black; text-align : center;"> <FONT style="color : #F0FFFF">' . $totalrepas . ' € </FONT></TH>

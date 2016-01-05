@@ -147,7 +147,7 @@ print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\
 
             <aside class="col g-5">
 
-                <h3>Contactez-nous en utilisant le formulaire ci-contre ou bien à l'adresse ci-dessous.</br></h3>
+                <h3><FONT style="color :#949596">Contactez-nous en utilisant le formulaire ci-contre ou bien à l'adresse ci-dessous.</br></h3>
 
                 <p> </p>
 

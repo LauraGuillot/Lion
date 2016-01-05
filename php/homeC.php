@@ -132,20 +132,20 @@ print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\
                 <div class="col two-thirds">
 
                     <div class="intro" style="text-align:justify; text-indent: 50px;">
-                        <p>Sans considération d’ethnie, de religion ou de politique, les Lions interviennent aux niveaux local, régional, national et international afin d’apporter des solutions concrètes à des problématiques sociales, médicales, éducatives et environnementales. </br>
+                        <p><FONT style="color :#F0FFFF">Sans considération d’ethnie, de religion ou de politique, les Lions interviennent aux niveaux local, régional, national et international afin d’apporter des solutions concrètes à des problématiques sociales, médicales, éducatives et environnementales. </br>
                         </p>
                     </div>	
 
                     <div class="intro" style="text-align:justify; text-indent: 50px;">
-                        <p>Les campagnes de collecte de fonds permettent, grâce à l’engagement des Lions, de lancer des programmes de grande envergure. Des causes qui font sens mobilisent ses membres qui organisent, promeuvent et animent les 5 000 manifestations annuelles proposées dans l’Hexagone. </p>
+                        <p><FONT style="color :#F0FFFF">Les campagnes de collecte de fonds permettent, grâce à l’engagement des Lions, de lancer des programmes de grande envergure. Des causes qui font sens mobilisent ses membres qui organisent, promeuvent et animent les 5 000 manifestations annuelles proposées dans l’Hexagone. </p>
                     </div>
 
                     <div class="intro" style="text-align:justify; text-indent: 50px;">
-                        <p>Ces actes concrets visent à apporter soutien et écoute aux plus démunis et à améliorer leur vie. </p>
+                        <p><FONT style="color :#F0FFFF">Ces actes concrets visent à apporter soutien et écoute aux plus démunis et à améliorer leur vie. </p>
                     </div>
 
                     <div class="intro" style="text-align:justify; text-indent: 50px;">
-                        <p>Encourager le civisme, la compréhension entre les peuples, être fidèle au code de déontologie du club, participer à une plate-forme de libre discussion sur tous les sujets d’intérêt commun, favoriser la fraternisation et la convivialité entre les clubs, telles sont les grandes missions que chaque Lion remplit afin d’être utile au plus grand nombre.</p> 
+                        <p><FONT style="color :#F0FFFF">Encourager le civisme, la compréhension entre les peuples, être fidèle au code de déontologie du club, participer à une plate-forme de libre discussion sur tous les sujets d’intérêt commun, favoriser la fraternisation et la convivialité entre les clubs, telles sont les grandes missions que chaque Lion remplit afin d’être utile au plus grand nombre.</p> 
                     </div> 
 
                 </div>
