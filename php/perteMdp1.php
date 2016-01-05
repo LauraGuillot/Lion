@@ -37,7 +37,8 @@
 
         <!-- Header
         ================================================== -->
-        <?php include "fonctions.php";
+        <?php
+        include "fonctions.php";
         afficheHeader();
         ?>
         <!-- Header End -->
@@ -49,15 +50,15 @@
                 <br><br><br>
                 <div class="row section-head">
                     <div class="col full" >
-                        <h2 style="color : #11ABB0;"> Nous allons vous envoyer un email pour réinitialiser votre mot de passe :</h2> 
-                    </div>
-
+                        <center>  <h2 style="color : #11ABB0;"><FONT size=5.5> Nous allons vous envoyer un email pour réinitialiser votre mot de passe </FONT></h2> 
+                        </center> </div>
+                    <br></br> <br></br>
                 </div>
                 <!-- form -->
-                <form name="initMdp" id="initMdp" method="post"  action="verifPerteMdp1.php">
+                <center><form name="initMdp" id="initMdp" method="post"  action="verifPerteMdp1.php">
                     <fieldset >
                         <div>
-                            <label for="contactSubject"> Adresse Mail <span class="required">*</span></label>
+                            <label for="contactSubject"><FONT style="color : #F2F2F2;" size=3> Adresse Mail </FONT><span class="required">*</span></label>
                             <input name="mail" type="text" id="mail" size="35" value="" />
                         </div>
 
@@ -66,7 +67,7 @@
                         </div>
 
                     </fieldset>
-                </form> 
+                    </form> </center>
             </div>
         </section> <!-- Inscription Section End-->
 
