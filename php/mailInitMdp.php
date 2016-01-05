@@ -1,4 +1,63 @@
-<!DOCTYPE html>
+<?php
+
+if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $mail)) // On filtre les serveurs qui rencontrent des bogues.
+{
+	$passage_ligne = "\r\n";
+}
+else
+{
+	$passage_ligne = "\n";
+}
+//=====Déclaration des messages au format texte et au format HTML.
+$message_txt = "Bonjour,
+Vous avez oublié votre mot de passe et vous voulez le réinitialiser ?
+Rendez-vous sur le lien ci-dessous pour entrer un nouveau mot de passe : http://localhost/lion/Lion/php/perteMdp.php";
+//==========
+ 
+//=====Création de la boundary
+$boundary = "-----=".md5(rand());
+//==========
+ 
+//=====Définition du sujet.
+$sujet = "Réinitialisation du mot de passe - Lions Clubs";
+//=========
+ 
+//=====Création du header de l'e-mail.
+$header = "From: \"Laura \"<lolo-guillot@hotmail.fr>".$passage_ligne;
+$header.= "Reply-to: \"Laura\" <lolo-guillot@hotmail.fr>".$passage_ligne; 
+$header.= "MIME-Version: 1.0".$passage_ligne;
+$header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
+//==========
+ 
+//=====Création du message.
+$message = $passage_ligne."--".$boundary.$passage_ligne;
+//=====Ajout du message au format texte.
+$message.= "Content-Type: text/plain; charset=\"ISO-8859-1\"".$passage_ligne;
+$message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
+$message.= $passage_ligne.$message_txt.$passage_ligne;
+//==========
+$message.= $passage_ligne."--".$boundary.$passage_ligne;
+//=====Ajout du message au format HTML
+$message.= "Content-Type: text/html; charset=\"ISO-8859-1\"".$passage_ligne;
+$message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
+
+//==========
+$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
+$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
+//==========
+ 
+//=====Envoi de l'e-mail.
+mail($mail,$sujet,$message,$header);
+//==========
+
+
+
+
+//Retour sur la page de connexion
+
+echo' 
+    
+        <!DOCTYPE html>
 <!--[if lt IE 8 ]><html class="ie ie7" lang="en"> <![endif]-->
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
 <!--[if (gte IE 8)|!(IE)]><!--><html lang="fr"> <!--<![endif]-->
@@ -36,10 +95,10 @@
 
 
         <!-- Header
-        ================================================== -->
-        <?php include "fonctions.php";
+        ================================================== -->';
+        
         afficheHeader();
-        ?>
+       echo' 
         <!-- Header End -->
 
         <!-- Inscription Section
@@ -51,17 +110,17 @@
 
                     <div class="row section-head">
                         <div class="col full" >
-                            <h2 style="color : #11ABB0;"> S'inscrire</h2> 
+                            <h2 style="color : #11ABB0;"> S\'inscrire</h2> 
                         </div>
                     </div>
-
-                    <?php
+';
+                    
                     $path = $_SERVER['PHP_SELF'];
                     $file = basename($path);
                     if (strcmp($file, 'verif1.php') == 0) {
                         echo'<h7 style="color : #FF0000;">' . $erreur . '</h7>';
                     }
-                    ?>
+                   echo ' 
                     <!-- form -->
                     <form name="contactForm" id="contactForm" method="post"  action="verif1.php">
                         <fieldset >
@@ -135,14 +194,14 @@
 
         <!-- footer
         ================================================== -->
-        <br>
-<?php affichefooter(); ?>
-        <!-- Footer End-->
+        <br>';
+affichefooter(); 
+     echo'   <!-- Footer End-->
 
         <!-- Java Script
         ================================================== -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/jquery-1.10.2.min.js"><\/script>')</script>
+        <script>window.jQuery || document.write(\'<script src="js/jquery-1.10.2.min.js"><\/script>\')</script>
         <script type="text/javascript" src="js/jquery-migrate-1.2.1.min.js"></script>
 
         <script src="js/scrollspy.js"></script>
@@ -155,4 +214,6 @@
 
     </body>
 
-</html>
+</html>';
+?>
+

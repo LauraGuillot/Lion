@@ -2370,7 +2370,7 @@ function afficheHeader() {
     </html>';
     }
 
-    if (strcmp($file, 'initMdp.php') == 0 || strcmp($file, 'perteMdpNew.php') == 0 || strcmp($file, 'perteMdp.php') == 0 || strcmp($file, 'verif2bis.php') == 0 || strcmp($file, 'verifConnexion.php') == 0 || strcmp($file, 'verif1.php') == 0 || strcmp($file, 'verif3.php') == 0 || strcmp($file, 'verif2.php') == 0 || strcmp($file, 'inscription.php') == 0 || strcmp($file, 'inscription2.php') == 0 || strcmp($file, 'inscription3.php') == 0) {
+    if (strcmp($file, 'verifPerteMdp1.php') == 0 ||strcmp($file, 'perteMdp1.php') == 0 ||strcmp($file, 'initMdp.php') == 0 || strcmp($file, 'perteMdpNew.php') == 0 || strcmp($file, 'perteMdp.php') == 0 || strcmp($file, 'verif2bis.php') == 0 || strcmp($file, 'verifConnexion.php') == 0 || strcmp($file, 'verif1.php') == 0 || strcmp($file, 'verif3.php') == 0 || strcmp($file, 'verif2.php') == 0 || strcmp($file, 'inscription.php') == 0 || strcmp($file, 'inscription2.php') == 0 || strcmp($file, 'inscription3.php') == 0) {
         echo' 
     <html>
          <header class="mobile">
@@ -3001,7 +3001,11 @@ function testConnexion($bdd, $mail, $mdp) {
                             <label for="mdp">Mot de passe<span class="required">*</span></label>
                             <input name="mdp" type="password" id="mdp" size="35" value="" />
                         </div>
+ <div>
+                                <a href="perteMdp1.php"  title="perte de mot de passe">Si vous avez perdu votre mot de passe, cliquez ici</a> 
 
+                            </div>
+                            <br>
 
                         <div>
                             <button name="v1" id="v1" class="submit">Valider</button>
