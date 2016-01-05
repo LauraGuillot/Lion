@@ -600,7 +600,7 @@ function deconnexion($idco, $bdd) {
 
 /* Fontion pour afficher le tableau des repas */
 
-function afficheRepas($bdd) {
+function afficheRepas1($bdd) {
     try {
 
         /* Préparation de la requête */
@@ -651,7 +651,7 @@ function afficheRepas($bdd) {
 
 /* Fontion pour afficher le tableau des excursions */
 
-function afficheExcursions($bdd) {
+function afficheExcursions1($bdd) {
     try {
 
         /* Préparation de la requête */
@@ -737,8 +737,8 @@ function afficheAgenda($bdd) {
         </div>
         </html>';
 
-    afficheRepas($bdd);
-    afficheExcursions($bdd);
+    afficheRepas1($bdd);
+    afficheExcursions1($bdd);
     echo'</html> </div></html>';
 }
 
@@ -1056,6 +1056,23 @@ function afficheAchats($bdd, $idco) {
     $stmt->execute(array(':id' => "$memberID"));
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $basketID = $row["Basket_ID"];
+    
+      /* Récupération du follower */
+    $sql = 'SELECT Person_Lastname, Person_Firstname '
+            . 'FROM Follower '
+            . ' INNER JOIN Person ON (Person.Person_ID = Follower.Person_ID) '
+            . ' WHERE (Member_ID = :id)';
+    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $stmt->execute(array(':id' => "$memberID"));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $fnom = $row["Person_Lastname"];
+    $fprenom = $row["Person_Firstname"];
+
+   
+    $n = 1; /* nombre de personnes*/
+    if (!(empty($fnom) && empty($fprenom))) {
+        $n = $n + 1;
+    } 
 
     /*     * ************************************************** */
     /* Récupération des repas payés et affichage */
@@ -1091,11 +1108,12 @@ function afficheAchats($bdd, $idco) {
 
         echo'
 <div>
-    <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 70%; margin-left : 0">             
+    <TABLE id="tableau" border  cols="4" style="border:1px solid black;width : 80%; margin-left : 0">             
          <TR class="row" >
-                        <Td class ="col"  width=30% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
-                        <td class ="col" width=50% style="border:1px solid black; text-align : center;"> <FONT size="4" style="color : #52574B"> Intitulé </FONT></th>
-                        <td class ="col" width=140.62 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Tarif </FONT></th>
+                        <Td class ="col"  width=20% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
+                        <td class ="col" width=40% style="border:1px solid black; text-align : center;"> <FONT size="4" style="color : #52574B"> Intitulé </FONT></th>
+                        <td class ="col" width=10% style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Tarif </FONT></th>
+                         <td class ="col" width=241.23 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Nombre de personnes</FONT></th>
         </TR>';
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
@@ -1105,10 +1123,11 @@ function afficheAchats($bdd, $idco) {
             $prix = $row["Belong_Price"];
             $totalrepas = "$prix" + "$totalrepas";
             echo' <TR class="row" >
-           <Td class ="col"  width=30% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $date . '</FONT> </TH>
-           <td class ="col" width=50% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $activite . '</FONT> </th>
-           <td class ="col" width=140.62 style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $prix . ' € </FONT> </th>
-         </TR>';
+           <Td class ="col"  width=20% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $date . '</FONT> </TH>
+           <td class ="col" width=40% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $activite . '</FONT> </th>
+           <td class ="col" width=10% style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $prix . ' € </FONT> </th>
+         <td class ="col" width=241.23 style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $n . '  </FONT> </th>
+</TR>';
         } echo'</TABLE>
              </div>';
     } else {
@@ -1152,11 +1171,12 @@ function afficheAchats($bdd, $idco) {
 
         echo'
 <div>
-    <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 70%; margin-left : 0">             
+    <TABLE id="tableau" border  cols="4" style="border:1px solid black;width : 80%; margin-left : 0">             
          <TR class="row" >
-                        <Td class ="col"  width=30% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
-                        <td class ="col" width=50% style="border:1px solid black; text-align : center;"> <FONT size="4" style="color : #52574B"> Intitulé </FONT></th>
-                        <td class ="col" width=140.62 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Tarif </FONT></th>
+                         <Td class ="col"  width=20% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
+                        <td class ="col" width=40% style="border:1px solid black; text-align : center;"> <FONT size="4" style="color : #52574B"> Intitulé </FONT></th>
+                        <td class ="col" width=10% style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Tarif </FONT></th>
+                         <td class ="col" width=241.23 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Nombre de personnes</FONT></th>
         </TR>';
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
@@ -1167,10 +1187,11 @@ function afficheAchats($bdd, $idco) {
 
             $totalexcursions = $prix + $totalexcursions;
             echo' <TR class="row" >
-           <Td class ="col"  width=30% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $date . '</FONT> </TH>
-           <td class ="col" width=50% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $activite . '</FONT> </th>
-           <td class ="col" width=140.62 style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $prix . ' € </FONT> </th>
-         </TR>';
+           <Td class ="col"  width=20% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $date . '</FONT> </TH>
+           <td class ="col" width=40% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $activite . '</FONT> </th>
+           <td class ="col" width=10% style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $prix . ' € </FONT> </th>
+         <td class ="col" width=241.23 style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $n . '  </FONT> </th>
+</TR>';
         } echo'</TABLE>
              </div>';
     } else {
@@ -1182,6 +1203,8 @@ function afficheAchats($bdd, $idco) {
     /* Affichage des totaux */
     /*     * *********************** */
 
+    $totalrepas =$n*$totalrepas;
+    $totalexcursions=$n*$totalexcursions;
     $total = $totalrepas + $totalexcursions;
     echo'
 
@@ -1208,7 +1231,7 @@ function afficheAchats($bdd, $idco) {
                     </TABLE>
                         </div>
                         <br>';
-    if (  ($cpt + $cpt2 )!= 0) {
+    if (($cpt + $cpt2 ) != 0) {
         echo'<form name="imprimAchat" id="contactForm" method="post"  action="imprimAchats.php">
             <div align="center">
                 <input type="submit" name="v" value="Imprimer">
@@ -1235,7 +1258,24 @@ function afficheCommandes($bdd, $idco) {
     $stmt->execute(array(':id' => "$memberID"));
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $basketID = $row["Basket_ID"];
+    
+    /* Récupération du follower */
+    $sql = 'SELECT Person_Lastname, Person_Firstname '
+            . 'FROM Follower '
+            . ' INNER JOIN Person ON (Person.Person_ID = Follower.Person_ID) '
+            . ' WHERE (Member_ID = :id)';
+    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $stmt->execute(array(':id' => "$memberID"));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $fnom = $row["Person_Lastname"];
+    $fprenom = $row["Person_Firstname"];
 
+   
+    $n = 1; /* nombre de personnes*/
+    if (!(empty($fnom) && empty($fprenom))) {
+        $n = $n + 1;
+    } 
+    
     /*     * ************************************************** */
     /* Récupération des repas payés et affichage */
     /*     * **************************************************** */
@@ -1270,11 +1310,12 @@ function afficheCommandes($bdd, $idco) {
 
         echo'
 <div>
-    <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 70%; margin-left : 0">             
+    <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 80%; margin-left : 0">             
          <TR class="row" >
-                        <Td class ="col"  width=30% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
-                        <td class ="col" width=50% style="border:1px solid black; text-align : center;"> <FONT size="4" style="color : #52574B"> Intitulé </FONT></th>
-                        <td class ="col" width=140.62 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Tarif </FONT></th>
+                        <Td class ="col"  width=20% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
+                        <td class ="col" width=40% style="border:1px solid black; text-align : center;"> <FONT size="4" style="color : #52574B"> Intitulé </FONT></th>
+                        <td class ="col" width=10% style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Tarif </FONT></th>
+                         <td class ="col" width=241.23 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Nombre de personnes</FONT></th>
         </TR>';
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
@@ -1284,9 +1325,10 @@ function afficheCommandes($bdd, $idco) {
             $prix = $row["Belong_Price"];
             $totalrepas = "$prix" + "$totalrepas";
             echo' <TR class="row" >
-           <Td class ="col"  width=30% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $date . '</FONT> </TH>
-           <td class ="col" width=50% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $activite . '</FONT> </th>
-           <td class ="col" width=140.62 style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $prix . ' € </FONT> </th>
+           <Td class ="col"  width=20% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $date . '</FONT> </TH>
+           <td class ="col" width=40% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $activite . '</FONT> </th>
+           <td class ="col" width=10% style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $prix . ' € </FONT> </th>
+         <td class ="col" width=241.23 style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $n . '  </FONT> </th>
          </TR>';
         } echo'</TABLE>
              </div>';
@@ -1331,11 +1373,12 @@ function afficheCommandes($bdd, $idco) {
 
         echo'
 <div>
-    <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 70%; margin-left : 0">             
+    <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 80%; margin-left : 0">             
          <TR class="row" >
-                        <Td class ="col"  width=30% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
-                        <td class ="col" width=50% style="border:1px solid black; text-align : center;"> <FONT size="4" style="color : #52574B"> Intitulé </FONT></th>
-                        <td class ="col" width=140.62 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Tarif </FONT></th>
+                        <Td class ="col"  width=20% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
+                        <td class ="col" width=40% style="border:1px solid black; text-align : center;"> <FONT size="4" style="color : #52574B"> Intitulé </FONT></th>
+                        <td class ="col" width=10% style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Tarif </FONT></th>
+                         <td class ="col" width=241.23 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Nombre de personnes</FONT></th>
         </TR>';
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
@@ -1346,9 +1389,10 @@ function afficheCommandes($bdd, $idco) {
 
             $totalexcursions = $prix + $totalexcursions;
             echo' <TR class="row" >
-           <Td class ="col"  width=30% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $date . '</FONT> </TH>
-           <td class ="col" width=50% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $activite . '</FONT> </th>
-           <td class ="col" width=140.62 style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $prix . ' € </FONT> </th>
+            <Td class ="col"  width=20% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $date . '</FONT> </TH>
+           <td class ="col" width=40% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $activite . '</FONT> </th>
+           <td class ="col" width=10% style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $prix . ' € </FONT> </th>
+         <td class ="col" width=241.23 style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $n . '  </FONT> </th>
          </TR>';
         } echo'</TABLE>
              </div>';
@@ -1361,7 +1405,10 @@ function afficheCommandes($bdd, $idco) {
     /* Affichage des totaux */
     /*     * *********************** */
 
+    $totalrepas = $n*$totalrepas;
+    $totalexcursions = $n*$totalexcursions;
     $total = $totalrepas + $totalexcursions;
+   
     echo'
 
         <div class="row section-head">
@@ -1387,13 +1434,14 @@ function afficheCommandes($bdd, $idco) {
                     </TABLE>
                         </div>
 <br>';
-    if (  ($cpt + $cpt2 )!= 0) {
-    echo'<form name="imprimCommandes" id="contactForm" method="post"  action="imprimCommandes.php">
+    if (($cpt + $cpt2 ) != 0) {
+        echo'<form name="imprimCommandes" id="contactForm" method="post"  action="imprimCommandes.php">
             <div align="center">
                 <input type="submit" name="v" value="Imprimer">
                  <input type="hidden"  name="idco" value="' . $idco . '">
             </div>';
-}}
+    }
+}
 
 /* ---------------------------------------------------------------------------------------------------- */
 /*                           AFFICHAGE INFOS PERSO                                 */
@@ -1512,9 +1560,6 @@ function afficheInfos($bdd, $idco) {
         </div>
         
 ';
-      
-        
-         
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1541,6 +1586,15 @@ function affichePanier($bdd, $idco) {
         $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
         $basketID = $row["Basket_ID"];
 
+        /* Récupération du follower : si il y a un accompagnant les tarifs sont doublés */
+        $sql = 'SELECT count(Follower_ID) FROM Follower WHERE (Member_ID = :id)';
+        $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+        $stmt->execute(array(':id' => "$memberID"));
+        $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+        $n = $row["count(Follower_ID)"];
+
+        $n = $n + 1;
+
         /* Récupération des activités non payées */
         $sql = 'SELECT Activity_Type_Name, Activity_Name, Activity_Date, Belong_Price FROM Activity '
                 . 'INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
@@ -1559,17 +1613,18 @@ function affichePanier($bdd, $idco) {
                  
 
                     <TR class="row" >
-                        <TH class ="col"   width=20% style="border:1px solid black;">Type </TH>
-                        <TH class ="col"  width=20% style="border:1px solid black;"> Date </TH>
+                        <TH class ="col"   width=15% style="border:1px solid black;">Type </TH>
+                        <TH class ="col"  width=15% style="border:1px solid black;"> Date </TH>
                         <th class ="col" width=20% style="border:1px solid black"> Intitulé </th>
-                        <th class ="col" width=15% style="border:1px solid black">Tarif </th>
-                        <th class ="col"   width=25% style="border:1px solid black"> Supprimer du panier</th>
+                        <th class ="col" width= 8% style="border:1px solid black">Tarif </th>
+                        <th class ="col" width= 22% style="border:1px solid black"> Nombre de personnes </th>
+                        <th class ="col"   width=201.26 style="border:1px solid black"> Supprimer du panier</th>
                      </TR>';
 
         /* Affichage des activités */
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
 
-            afficheActivite($row["Activity_Type_Name"], $row["Activity_Name"], $row["Activity_Date"], $row["Belong_Price"], $idco, $bdd);
+            afficheActivite($row["Activity_Type_Name"], $row["Activity_Name"], $row["Activity_Date"], $row["Belong_Price"], $idco, $n, $bdd);
         }
 
         /* Fermeture du tableau */
@@ -1583,8 +1638,11 @@ function affichePanier($bdd, $idco) {
         $stmt->execute(array(':id' => "$basketID"));
         $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
         $totalrepas = $row["Basket_Meal_Total"];
+        $totalrepas = $totalrepas * $n;
         $totalexcursion = $row["Basket_Trip_Total"];
+        $totalexcursion = $totalexcursion * $n;
         $total = $row["Basket_Total"];
+        $total = $total * $n;
 
         /* Affichage des totaux */
         echo'
@@ -1619,14 +1677,15 @@ function affichePanier($bdd, $idco) {
 
 /* Fontion pour afficher d'une activité */
 
-function afficheActivite($type, $nom, $date, $prix, $idco, $bdd) {
+function afficheActivite($type, $nom, $date, $prix, $idco, $n, $bdd) {
 
     echo'<TR >
-                                        <Td class ="col" height=44.688  width=20% style="border:1px solid black; text-align : center;"> <FONT style="color : #F0FFFF">' . $type . '</FONT></Td>
-                                        <Td class ="col" height=44.688 width=20% style="border:1px solid black; text-align : center;"> <FONT style="color : #F0FFFF">' . $date . ' </FONT></Td>
+                                        <Td class ="col" height=44.688  width=15% style="border:1px solid black; text-align : center;"> <FONT style="color : #F0FFFF">' . $type . '</FONT></Td>
+                                        <Td class ="col" height=44.688 width=15% style="border:1px solid black; text-align : center;"> <FONT style="color : #F0FFFF">' . $date . ' </FONT></Td>
                                         <Td class ="col" height=44.688 width=20% style="border:1px solid black; text-align : center"> <FONT style="color : #F0FFFF"> ' . $nom . '  </FONT> </Td>
-                                        <Td class ="col" height=44.688 width=15% style="border:1px solid black;text-align : center"><FONT style="color : #F0FFFF"> ' . $prix . '€</FONT></Td>
-                                        <Td class ="col" width=100.65 style ="padding:9px 115px" height=44.688 width=25% style="border:1px solid black;text-align : center">  
+                                        <Td class ="col" height=44.688 width=8% style="border:1px solid black;text-align : center"><FONT style="color : #F0FFFF"> ' . $prix . ' €</FONT></Td>
+                                        <Td class ="col" height=44.688 width=22% style="border:1px solid black;text-align : center"><FONT style="color : #F0FFFF"> ' . $n . '</FONT></Td>
+                                        <Td class ="col" width=201.26  style ="padding:9px 85px" height=44.688 width=20% style="border:1px solid black;text-align : center">  
                                             <form action="suppActivite.php" method="post"> 
                                                 <input type="submit" style= "padding:0 ; margin-bottom : 0;margin-top : 9; height : 25px; width : 25px; background:#FF5E4D"   name="supp" value="-">
                                                  <input type="hidden"  name="activity" value="' . $nom . '">
@@ -1703,7 +1762,7 @@ function afficheRecap($bdd, $idco) {
 
 
     /* Récupération du follower */
-        $sql = 'SELECT Person_Lastname, Person_Firstname '
+    $sql = 'SELECT Person_Lastname, Person_Firstname '
             . 'FROM Follower '
             . ' INNER JOIN Person ON (Person.Person_ID = Follower.Person_ID) '
             . ' WHERE (Member_ID = :id)';
@@ -1712,6 +1771,14 @@ function afficheRecap($bdd, $idco) {
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $fnom = $row["Person_Lastname"];
     $fprenom = $row["Person_Firstname"];
+
+    /* Récupération du nombre de personnes réservant l'activité */
+    $n = 1;
+    if (!(empty($fom) && empty($fprenom))) {
+        $n = $n + 1;
+    }
+
+
 
     /* Affichage des informations personnelles */
 
@@ -1821,8 +1888,11 @@ function afficheRecap($bdd, $idco) {
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $basketID = $row["Basket_ID"];
     $total = $row["Basket_Total"];
+    $total = $n * $total;
     $totaltrip = $row["Basket_Trip_Total"];
+    $totaltrip = $n * $totaltrip;
     $totalmeal = $row["Basket_Meal_Total"];
+    $totalmeal = $n * $totalmeal;
 
     /*     * ************************************************** */
     /* Récupération des repas du panier et affichage */
@@ -1852,11 +1922,12 @@ function afficheRecap($bdd, $idco) {
 
         echo'
 <div>
-    <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 70%; margin-left : 0">             
+    <TABLE id="tableau" border  cols="4" style="border:1px solid black;width : 80%; margin-left : 0">             
          <TR class="row" >
-                        <Td class ="col"  width=30% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
-                        <td class ="col" width=50% style="border:1px solid black; text-align : center;"> <FONT size="4" style="color : #52574B"> Intitulé </FONT></th>
-                        <td class ="col" width=140.62 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Tarif </FONT></th>
+                        <Td class ="col"  width=20% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
+                        <td class ="col" width= 40% style="border:1px solid black; text-align : center;"> <FONT size="4" style="color : #52574B"> Intitulé </FONT></th>
+                        <td class ="col" width= 10% style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Tarif </FONT></th>
+                        <td class ="col" width=241.23 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Nombre de personnes </FONT></th>
         </TR>';
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
@@ -1865,10 +1936,12 @@ function afficheRecap($bdd, $idco) {
             $date = $row["Activity_Date"];
             $prix = $row["Belong_Price"];
 
+
             echo' <TR class="row" >
-           <Td class ="col"  width=30% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $date . '</FONT> </TH>
-           <td class ="col" width=50% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $activite . '</FONT> </th>
-           <td class ="col" width=140.62 style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $prix . ' € </FONT> </th>
+           <Td class ="col"  width=20% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $date . '</FONT> </TH>
+           <td class ="col" width=40% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $activite . '</FONT> </th>
+           <td class ="col" width=10% style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $prix . ' € </FONT> </th>
+          <td class ="col" width=241.23 style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $n . '  </FONT> </th>
          </TR>';
         } echo'</TABLE>
              </div>';
@@ -1914,11 +1987,12 @@ function afficheRecap($bdd, $idco) {
 
         echo'
 <div>
-    <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 70%; margin-left : 0">             
+    <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 80%; margin-left : 0">             
          <TR class="row" >
-                        <Td class ="col"  width=30% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
-                        <td class ="col" width=50% style="border:1px solid black; text-align : center;"> <FONT size="4" style="color : #52574B"> Intitulé </FONT></th>
-                        <td class ="col" width=140.62 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Tarif </FONT></th>
+                          <Td class ="col"  width=20% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
+                        <td class ="col" width= 40% style="border:1px solid black; text-align : center;"> <FONT size="4" style="color : #52574B"> Intitulé </FONT></th>
+                        <td class ="col" width= 10% style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Tarif </FONT></th>
+                        <td class ="col" width=241.23 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Nombre de personnes </FONT></th>
         </TR>';
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
@@ -1928,9 +2002,10 @@ function afficheRecap($bdd, $idco) {
             $prix = $row["Belong_Price"];
 
             echo' <TR class="row" >
-           <Td class ="col"  width=30% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $date . '</FONT> </TH>
-           <td class ="col" width=50% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $activite . '</FONT> </th>
-           <td class ="col" width=140.62 style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $prix . ' € </FONT> </th>
+          <Td class ="col"  width=20% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $date . '</FONT> </TH>
+           <td class ="col" width=40% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $activite . '</FONT> </th>
+           <td class ="col" width=10% style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $prix . ' € </FONT> </th>
+          <td class ="col" width=241.23 style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $n . '  </FONT> </th>
          </TR>';
         } echo'</TABLE>
              </div>';
@@ -1940,9 +2015,9 @@ function afficheRecap($bdd, $idco) {
         </div>';
     }
 
-    /*     * *************************** */
+    /*     * ************************** */
     /* Affichage des totaux */
-    /*     * *********************** */
+    /*     * ********************** */
     echo'
 
         <div class="row section-head">
@@ -1969,9 +2044,9 @@ function afficheRecap($bdd, $idco) {
                         </div>
                         <br>';
 
-    /*     * ******************************************** */
+    /*     * ******************************************* */
     /* BOUTONS */
-    /*     * ********************************************* */
+    /*     * ******************************************** */
 
     if (!($cpt = 0 && $cpt2 = 0)) {
         echo'
@@ -2425,18 +2500,19 @@ function afficheRecapPDF($bdd, $idco) {
     $fprenom = $row["Person_Firstname"];
 
     $accompagnant = "";
-
+    $n = 1; /* nombre de personnes*/
     if (!(empty($fnom) && empty($fprenom))) {
         $accompagnant = $fprenom . " " . $fnom;
+        $n = $n + 1;
     } else {
         $accompagnant = "Aucun";
     }
 
     $dateauj = date("d-m-Y");
 
-    /*     * ****************************************** */
+    /******************************************* */
     /* Récupération des activités du panier */
-    /*     * ********************************************** */
+    /*********************************************** */
 
     /* Récupération du basketID et des totaux */
     $sql = 'SELECT Basket_ID, Basket_Total, Basket_Trip_Total, Basket_Meal_Total FROM Basket WHERE (Member_ID = :id)';
@@ -2445,8 +2521,11 @@ function afficheRecapPDF($bdd, $idco) {
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $basketID = $row["Basket_ID"];
     $total = $row["Basket_Total"];
+    $total = $total*$n;
     $totaltrip = $row["Basket_Trip_Total"];
+    $totaltrip = $totaltrip*$n;
     $totalmeal = $row["Basket_Meal_Total"];
+    $totalmeal = $totalmeal*$n;
 
     /* Récupération du nombre de repas réservés */
     $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
@@ -2471,11 +2550,12 @@ function afficheRecapPDF($bdd, $idco) {
 
         $repas = $repas . ' 
 <div>
-    <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 100%; margin-left : 0;border-collapse: collapse;">             
+    <TABLE id="tableau" border  cols="4" style="border:1px solid black;width : 100%; margin-left : 0;border-collapse: collapse;">             
          <TR class="row" >
                         <Td class ="col" width=100 style="border:1px solid black; background-color : #C9D2D7;text-align : center;"><FONT size="5" > <b> Date </b></FONT></Td>
-                        <td class ="col" width=320 style="border:1px solid black; background-color : #C9D2D7; text-align : center;"> <FONT size="5" > <b> Intitulé </b></FONT></td>
-                        <td class ="col" width=140 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Tarif </b> </FONT></td>
+                        <td class ="col" width=280 style="border:1px solid black; background-color : #C9D2D7; text-align : center;"> <FONT size="5" > <b> Intitulé </b></FONT></td>
+                        <td class ="col" width=100 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Tarif </b> </FONT></td>
+                        <td class ="col" width=160 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Nombre de personnes </b> </FONT></td>
         </TR> ';
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
@@ -2486,9 +2566,11 @@ function afficheRecapPDF($bdd, $idco) {
 
             $repas = $repas . '<TR class="row" >
            <Td class ="col"  width=100 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $date . '</FONT> </Td>
-           <td class ="col" width=320 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $activite . '</FONT> </td>
-           <td class ="col" width=140 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $prix . ' €</FONT> </td>
-         </TR> ';
+           <td class ="col" width=280 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $activite . '</FONT> </td>
+           <td class ="col" width=100 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $prix . ' €</FONT> </td>
+           <td class ="col" width=160 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $n . ' </FONT> </td>
+        </TR> ';
+
         } $repas = $repas . ' </TABLE>
              </div>';
     } else {
@@ -2529,8 +2611,9 @@ function afficheRecapPDF($bdd, $idco) {
     <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 100%; margin-left : 0;border-collapse: collapse;">             
          <TR class="row" >
                         <Td class ="col" width=100 style="border:1px solid black; background-color : #C9D2D7;text-align : center;"><FONT size="5" > <b> Date </b></FONT></Td>
-                        <td class ="col" width=320 style="border:1px solid black; background-color : #C9D2D7; text-align : center;"> <FONT size="5" > <b> Intitulé </b></FONT></td>
-                        <td class ="col" width=140 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Tarif </b> </FONT></td>
+                        <td class ="col" width=280 style="border:1px solid black; background-color : #C9D2D7; text-align : center;"> <FONT size="5" > <b> Intitulé </b></FONT></td>
+                        <td class ="col" width=100 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Tarif </b> </FONT></td>
+                        <td class ="col" width=160 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Nombre de personnes </b> </FONT></td>
         </TR> ';
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
@@ -2541,9 +2624,10 @@ function afficheRecapPDF($bdd, $idco) {
 
             $excursion = $excursion . '  <TR class="row" >
            <Td class ="col"  width=100 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $date . '</FONT> </Td>
-           <td class ="col" width=320 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $activite . '</FONT> </td>
-           <td class ="col" width=140 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $prix . ' €</FONT> </td>
-         </TR> ';
+           <td class ="col" width=280 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $activite . '</FONT> </td>
+           <td class ="col" width=100 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $prix . ' €</FONT> </td>
+           <td class ="col" width=160 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $n . ' </FONT> </td>
+        </TR>  ';
         }$excursion = $excursion . ' </TABLE>
              </div>';
     } else {
@@ -2634,11 +2718,11 @@ function afficheRecapPDF($bdd, $idco) {
         <div class="row section-head">
             <h2 style="color : #8BB24C;"> <FONT size="5">Repas</FONT></h2>
         </div>
-    <?php echo"$repas" ?>
+        <?php echo"$repas" ?>
         <div class="row section-head">
             <h2 style="color : #8BB24C;"> <FONT size="5">Excursions</FONT></h2>
         </div>
-    <?php echo"$excursion" ?>
+        <?php echo"$excursion" ?>
 
 
         <div class="row section-head">
@@ -3212,9 +3296,9 @@ function gereConnexion($bdd) {
     $stmt->execute(array());
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $now = $row['NOW()'];
-   
+
     $date1 = new DateTime($now);
-    
+
 
     /* On récupère toutes les connexions */
     $sql = 'SELECT Connexion_ID, Last_Connexion FROM Connexion ';
@@ -3281,7 +3365,26 @@ function bonDeCommande($bdd, $idco) {
     $tel = $row["Member_Phone"];
     $mobile = $row["Member_Mobile"];
     $mail = $row["Member_EMail"];
+    
+    /* Récupération du follower */
+    $sql = 'SELECT Person_Lastname, Person_Firstname '
+            . 'FROM Follower '
+            . ' INNER JOIN Person ON (Person.Person_ID = Follower.Person_ID) '
+            . ' WHERE (Member_ID = :id)';
+    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $stmt->execute(array(':id' => "$memberID"));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $fnom = $row["Person_Lastname"];
+    $fprenom = $row["Person_Firstname"];
 
+    $accompagnant = "";
+    $n = 1; /* nombre de personnes*/
+    if (!(empty($fnom) && empty($fprenom))) {
+        $accompagnant = $fprenom . " " . $fnom;
+        $n = $n + 1;
+    } else {
+        $accompagnant = "Aucun";
+    }
 
     /* On récupère les activités commandées */
 
@@ -3321,8 +3424,9 @@ function bonDeCommande($bdd, $idco) {
     <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 100%; margin-left : 0;border-collapse: collapse;">             
          <TR class="row" >
                         <Td class ="col" width=100 style="border:1px solid black; background-color : #C9D2D7;text-align : center;"><FONT size="5" > <b> Date </b></FONT></Td>
-                        <td class ="col" width=320 style="border:1px solid black; background-color : #C9D2D7; text-align : center;"> <FONT size="5" > <b> Intitulé </b></FONT></td>
-                        <td class ="col" width=140 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Tarif </b> </FONT></td>
+                        <td class ="col" width=280 style="border:1px solid black; background-color : #C9D2D7; text-align : center;"> <FONT size="5" > <b> Intitulé </b></FONT></td>
+                        <td class ="col" width=100 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Tarif </b> </FONT></td>
+                        <td class ="col" width=160 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Nombre de personnes </b> </FONT></td>
         </TR> ';
     $total = 0;
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
@@ -3336,10 +3440,13 @@ function bonDeCommande($bdd, $idco) {
 
         $activite = $activite . '<TR class="row" >
            <Td class ="col"  width=100 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $date . '</FONT> </Td>
-           <td class ="col" width=320 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $act . '</FONT> </td>
-           <td class ="col" width=140 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $prix . ' €</FONT> </td>
+           <td class ="col" width=280 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $act . '</FONT> </td>
+           <td class ="col" width=100 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $prix . ' €</FONT> </td>
+         <td class ="col" width=160 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $n . ' </FONT> </td>
          </TR> ';
     }
+    
+    $total = $total*$n;
 
     $activite = $activite . ' </TABLE>
              </div>';
@@ -3380,13 +3487,14 @@ function bonDeCommande($bdd, $idco) {
             <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Mobile</u> : <?php echo"$mobile"; ?> </FONT></div> 
 
             <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Mail</u> : <?php echo"$mail"; ?></FONT></div> 
+            <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Accompagnant</u> : <?php echo"$accompagnant"; ?></FONT></div> 
         </div>
 
         <div class="row section-head">
             <h2 style="color : #11ABB0;" > <FONT size="5">ACTIVITES RESERVEES</FONT></h2> 
         </div>
 
-    <?php echo"$activite"; ?>
+        <?php echo"$activite"; ?>
 
         <div class="row section-head">
             <h2 style="color : #11ABB0;" > <FONT size="5">TOTAL</FONT></h2> 
@@ -3459,6 +3567,27 @@ function pdfAchats($bdd, $idco) {
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $basketID = $row["Basket_ID"];
 
+    
+    /* Récupération du follower */
+    $sql = 'SELECT Person_Lastname, Person_Firstname '
+            . 'FROM Follower '
+            . ' INNER JOIN Person ON (Person.Person_ID = Follower.Person_ID) '
+            . ' WHERE (Member_ID = :id)';
+    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $stmt->execute(array(':id' => "$memberID"));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $fnom = $row["Person_Lastname"];
+    $fprenom = $row["Person_Firstname"];
+
+    $accompagnant = "";
+    $n = 1; /* nombre de personnes*/
+    if (!(empty($fnom) && empty($fprenom))) {
+        $accompagnant = $fprenom . " " . $fnom;
+        $n = $n + 1;
+    } else {
+        $accompagnant = "Aucun";
+    }
+    
     /*     * ************************************************* */
     /* Récupération des repas payés et affichage */
     /*     * *************************************************** */
@@ -3496,8 +3625,9 @@ function pdfAchats($bdd, $idco) {
     <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 100%; margin-left : 0;border-collapse: collapse;">             
          <TR class="row" >
                         <Td class ="col" width=100 style="border:1px solid black; background-color : #C9D2D7;text-align : center;"><FONT size="5" > <b> Date </b></FONT></Td>
-                        <td class ="col" width=320 style="border:1px solid black; background-color : #C9D2D7; text-align : center;"> <FONT size="5" > <b> Intitulé </b></FONT></td>
-                        <td class ="col" width=140 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Tarif </b> </FONT></td>
+                        <td class ="col" width=280 style="border:1px solid black; background-color : #C9D2D7; text-align : center;"> <FONT size="5" > <b> Intitulé </b></FONT></td>
+                        <td class ="col" width=100 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Tarif </b> </FONT></td>
+                         <td class ="col" width=160 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Nombre de personnes </b> </FONT></td>
         </TR> ';
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
@@ -3508,8 +3638,9 @@ function pdfAchats($bdd, $idco) {
             $totalrepas = "$prix" + "$totalrepas";
             $texte = $texte . ' <TR class="row" >
            <Td class ="col"  width=100 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $date . '</FONT> </Td>
-           <td class ="col" width=320 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $activite . '</FONT> </td>
-           <td class ="col" width=140 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $prix . ' €</FONT> </td>
+           <td class ="col" width=280 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $activite . '</FONT> </td>
+           <td class ="col" width=100 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $prix . ' €</FONT> </td>
+         <td class ="col" width=160 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $n . ' </FONT> </td>
          </TR>';
         } $texte = $texte . ' </TABLE>
              </div>';
@@ -3555,8 +3686,9 @@ function pdfAchats($bdd, $idco) {
     <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 100%; margin-left : 0;border-collapse: collapse;">             
          <TR class="row" >
                         <Td class ="col" width=100 style="border:1px solid black; background-color : #C9D2D7;text-align : center;"><FONT size="5" > <b> Date </b></FONT></Td>
-                        <td class ="col" width=320 style="border:1px solid black; background-color : #C9D2D7; text-align : center;"> <FONT size="5" > <b> Intitulé </b></FONT></td>
-                        <td class ="col" width=140 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Tarif </b> </FONT></td>
+                        <td class ="col" width=280 style="border:1px solid black; background-color : #C9D2D7; text-align : center;"> <FONT size="5" > <b> Intitulé </b></FONT></td>
+                        <td class ="col" width=100 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Tarif </b> </FONT></td>
+                         <td class ="col" width=160 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Nombre de personnes </b> </FONT></td>
         </TR> ';
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
@@ -3568,8 +3700,9 @@ function pdfAchats($bdd, $idco) {
             $totalexcursions = $prix + $totalexcursions;
             $texte = $texte . ' <TR class="row" >
            <Td class ="col"  width=100 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $date . '</FONT> </Td>
-           <td class ="col" width=320 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $activite . '</FONT> </td>
-           <td class ="col" width=140 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $prix . ' €</FONT> </td>
+           <td class ="col" width=280 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $activite . '</FONT> </td>
+           <td class ="col" width=100 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $prix . ' €</FONT> </td>
+         <td class ="col" width=160 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $n . ' </FONT> </td>
          </TR>';
         } $texte = $texte . ' </TABLE>
              </div>';
@@ -3580,6 +3713,8 @@ function pdfAchats($bdd, $idco) {
     /* Affichage des totaux */
     /*     * *********************** */
 
+    $totalrepas =$n*$totalrepas ;
+    $totalexcursions=$n*$totalexcursions;
     $total = $totalrepas + $totalexcursions;
     $texte = $texte . ' 
 
@@ -3642,13 +3777,14 @@ function pdfAchats($bdd, $idco) {
             <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Mobile</u> : <?php echo"$mobile"; ?> </FONT></div> 
 
             <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Mail</u> : <?php echo"$mail"; ?></FONT></div> 
+       <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Accompagnant</u> : <?php echo"$accompagnant"; ?></FONT></div> 
         </div>
 
         <div class="row section-head">
             <h2 style="color : #11ABB0;" > <FONT size="5">ACTIVITES RESERVEES</FONT></h2> 
         </div>
 
-    <?php echo"$texte"; ?>
+        <?php echo"$texte"; ?>
 
 
         <page_footer backtop="5mm" backbottom="10mm" backleft="10mm" backright="10mm">
@@ -3709,6 +3845,26 @@ function pdfCommandes($bdd, $idco) {
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $basketID = $row["Basket_ID"];
 
+    /* Récupération du follower */
+    $sql = 'SELECT Person_Lastname, Person_Firstname '
+            . 'FROM Follower '
+            . ' INNER JOIN Person ON (Person.Person_ID = Follower.Person_ID) '
+            . ' WHERE (Member_ID = :id)';
+    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $stmt->execute(array(':id' => "$memberID"));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $fnom = $row["Person_Lastname"];
+    $fprenom = $row["Person_Firstname"];
+
+    $accompagnant = "";
+    $n = 1; /* nombre de personnes*/
+    if (!(empty($fnom) && empty($fprenom))) {
+        $accompagnant = $fprenom . " " . $fnom;
+        $n = $n + 1;
+    } else {
+        $accompagnant = "Aucun";
+    }
+    
     /*     * ************************************************* */
     /* Récupération des repas payés et affichage */
     /*     * *************************************************** */
@@ -3746,8 +3902,9 @@ function pdfCommandes($bdd, $idco) {
     <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 100%; margin-left : 0;border-collapse: collapse;">             
          <TR class="row" >
                         <Td class ="col" width=100 style="border:1px solid black; background-color : #C9D2D7;text-align : center;"><FONT size="5" > <b> Date </b></FONT></Td>
-                        <td class ="col" width=320 style="border:1px solid black; background-color : #C9D2D7; text-align : center;"> <FONT size="5" > <b> Intitulé </b></FONT></td>
-                        <td class ="col" width=140 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Tarif </b> </FONT></td>
+                        <td class ="col" width=280 style="border:1px solid black; background-color : #C9D2D7; text-align : center;"> <FONT size="5" > <b> Intitulé </b></FONT></td>
+                        <td class ="col" width=100 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Tarif </b> </FONT></td>
+        <td class ="col" width=160 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Nombre de personnes </b> </FONT></td>
         </TR> ';
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
@@ -3758,122 +3915,15 @@ function pdfCommandes($bdd, $idco) {
             $totalrepas = "$prix" + "$totalrepas";
             $texte = $texte . ' <TR class="row" >
            <Td class ="col"  width=100 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $date . '</FONT> </Td>
-           <td class ="col" width=320 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $activite . '</FONT> </td>
-           <td class ="col" width=140 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $prix . ' €</FONT> </td>
+           <td class ="col" width=280 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $activite . '</FONT> </td>
+           <td class ="col" width=100 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $prix . ' €</FONT> </td>
+        <td class ="col" width=160 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $n . ' </FONT> </td>
          </TR>';
         } $texte = $texte . ' </TABLE>
              </div>';
     } else {
         $texte = $texte . '  <div style="" > <FONT size="3.5" style="font-weight:normal;color : #707B82;" > Aucun repas commandé</FONT></div>';
     }
-    
-    
-/* ---------------------------------------------------------------------------------------------------- */
-/*                           AFFICHAGE DES INFORMATIONS PERSONNELLES DANS MON COMPTE                                                     */
-/* ---------------------------------------------------------------------------------------------------- */
-
-/* Fontion pour afficher le tableau des repas */
-
-function afficheRepas($bdd) {
-    try {
-
-        /* Préparation de la requête */
-        $sql = 'SELECT Activity_Name, Activity_Date, Activity_Price1, Activity_Price2, Activity_Capacity FROM Activity ' .
-                'INNER JOIN Activity_Type ON (Activity.Activity_Type_ID = Activity_Type.Activity_Type_ID) ' .
-                'WHERE (Congress_ID =' . congressID . ' AND (Activity_Type_Name= :nom)) ORDER BY (Activity_Date);';
-
-        $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-
-        /* Exécution de la requête */
-        $stmt->execute(array(':nom' => 'Repas'));
-
-        /* Exploitation des résultats */
-
-        /* Création du tableau */
-        echo'
-    <html>
-         <div>
-               <center><TABLE id="tableau" cols="3" style="border:1px solid black">
-                    <CAPTION> <h2>Repas<br></br></h2> </CAPTION>
-
-                    <TR class="row" >
-                        <TH class ="col" height=60 width=20% style="border:1px solid black;">Date</TH>
-                        <TH class ="col" height=60 width=30% style="border:1px solid black;">Intitulé </TH>
-                        <th class ="col" height=60 width=20% style="border:1px solid black">Tarif privilège <br>(jusqu\'au 31/03)  </th>
-                        <th class ="col" height=60 width=20% style="border:1px solid black">Tarif plein <br>(à compter du 01/04)  </th>
-                        <th class ="col" height=60 width=100.65 width=10% style="border:1px solid black"> <FONT size="2.5pt">Places restantes </FONT></th>
-                     </TR>';
-
-        /* Affichage des activités */
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
-
-            if ($row["Activity_Capacity"] > 0) {
-                afficheActiviteLibre($row["Activity_Name"], $row["Activity_Date"], $row["Activity_Price1"], $row["Activity_Price2"], $row["Activity_Capacity"]);
-            } else {
-                afficheActiviteComplete($row["Activity_Name"], $row["Activity_Date"], $row["Activity_Price1"], $row["Activity_Price2"]);
-            }
-        }
-
-        /* Fermeture du tableau */
-        echo'</TABLE></center>
-                        </div>
-                        <br></br></html>';
-    } catch (PDOException $e) {
-        echo 'Connexion échouée : ' . $e->getMessage();
-    }
-}
-
-/* Fontion pour afficher le tableau des excursions */
-
-function afficheExcursions($bdd) {
-    try {
-
-        /* Préparation de la requête */
-        $sql = 'SELECT Activity_Name, Activity_Date, Activity_Price1, Activity_Price2, Activity_Capacity FROM Activity ' .
-                'INNER JOIN Activity_Type ON (Activity.Activity_Type_ID = Activity_Type.Activity_Type_ID) ' .
-                'WHERE (Congress_ID =' . congressID . ' AND (Activity_Type_Name= :nom)) ORDER BY (Activity_Date);';
-
-        $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-
-        /* Exécution de la requête */
-        $stmt->execute(array(':nom' => 'Excursion'));
-
-        /* Exploitation des résultats */
-
-        /* Création du tableau */
-        echo'
-    <html>
-         <div>
-               <center><TABLE id="tableau" cols="3" style="border:1px solid black">
-                    <CAPTION> <h2>Excursions<br></br></h2> </CAPTION>
-
-                    <TR class="row" >
-                        <TH class ="col" height=60 width=20% style="border:1px solid black;">Date</TH>
-                        <TH class ="col" height=60 width=30% style="border:1px solid black;">Intitulé </TH>
-                        <th class ="col" height=60 width=20% style="border:1px solid black">Tarif privilège <br>(jusqu\'au 31/03)  </th>
-                        <th class ="col" height=60 width=20% style="border:1px solid black">Tarif plein <br>(à compter du 01/04)  </th>
-                        <th class ="col" height=60 width=100.65 width=10% style="border:1px solid black"> <FONT size="2.5pt">Places restantes </FONT></th>
-                     </TR>';
-
-        /* Affichage des activités */
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
-
-            if ($row["Activity_Capacity"] > 0) {
-                afficheActiviteLibre($row["Activity_Name"], $row["Activity_Date"], $row["Activity_Price1"], $row["Activity_Price2"], $row["Activity_Capacity"]);
-            } else {
-                afficheActiviteComplete($row["Activity_Name"], $row["Activity_Date"], $row["Activity_Price1"], $row["Activity_Price2"]);
-            }
-        }
-
-        /* Fermeture du tableau */
-        echo'</TABLE></center>
-                        </div>
-                        <br></br></html>';
-    } catch (PDOException $e) {
-        echo 'Connexion échouée : ' . $e->getMessage();
-    }
-}
-
 
     /*     * ****************************************************** */
     /* Récupération des excursions payées et affichage */
@@ -3912,9 +3962,10 @@ function afficheExcursions($bdd) {
 <div>
     <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 100%; margin-left : 0;border-collapse: collapse;">             
          <TR class="row" >
-                        <Td class ="col" width=100 style="border:1px solid black; background-color : #C9D2D7;text-align : center;"><FONT size="5" > <b> Date </b></FONT></Td>
-                        <td class ="col" width=320 style="border:1px solid black; background-color : #C9D2D7; text-align : center;"> <FONT size="5" > <b> Intitulé </b></FONT></td>
-                        <td class ="col" width=140 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Tarif </b> </FONT></td>
+                         <Td class ="col" width=100 style="border:1px solid black; background-color : #C9D2D7;text-align : center;"><FONT size="5" > <b> Date </b></FONT></Td>
+                        <td class ="col" width=280 style="border:1px solid black; background-color : #C9D2D7; text-align : center;"> <FONT size="5" > <b> Intitulé </b></FONT></td>
+                        <td class ="col" width=100 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Tarif </b> </FONT></td>
+        <td class ="col" width=160 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Nombre de personnes </b> </FONT></td>
         </TR> ';
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
@@ -3926,8 +3977,9 @@ function afficheExcursions($bdd) {
             $totalexcursions = $prix + $totalexcursions;
             $texte = $texte . ' <TR class="row" >
            <Td class ="col"  width=100 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $date . '</FONT> </Td>
-           <td class ="col" width=320 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $activite . '</FONT> </td>
-           <td class ="col" width=140 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $prix . ' €</FONT> </td>
+           <td class ="col" width=280 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $activite . '</FONT> </td>
+           <td class ="col" width=100 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $prix . ' €</FONT> </td>
+        <td class ="col" width=160 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $n . ' </FONT> </td>
          </TR>';
         } $texte = $texte . ' </TABLE>
              </div>';
@@ -3938,6 +3990,8 @@ function afficheExcursions($bdd) {
     /* Affichage des totaux */
     /*     * *********************** */
 
+    $totalrepas =$totalrepas*$n;
+    $totalexcursions=$totalexcursions*$n;
     $total = $totalrepas + $totalexcursions;
     $texte = $texte . ' 
 
@@ -4000,6 +4054,7 @@ function afficheExcursions($bdd) {
             <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Mobile</u> : <?php echo"$mobile"; ?> </FONT></div> 
 
             <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Mail</u> : <?php echo"$mail"; ?></FONT></div> 
+         <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Accompagnant</u> : <?php echo"$accompagnant"; ?></FONT></div> 
         </div>
 
         <div class="row section-head">
@@ -4007,7 +4062,7 @@ function afficheExcursions($bdd) {
             <h2 style="color : #11ABB0;" > <FONT size="5">ACTIVITES COMMANDEES</FONT></h2> 
         </div>
 
-    <?php echo"$texte"; ?>
+        <?php echo"$texte"; ?>
 
 
         <page_footer backtop="5mm" backbottom="10mm" backleft="10mm" backright="10mm">

@@ -80,8 +80,11 @@
 
         <div class="row section-head">
             <div class="col full">
-                <br>
-                <h2 style="margin : 65px ; color : #11ABB0; text-align : center"> Activités choisies </h2>
+                <br></br>
+                <br></br>
+                <h2 style=" color : #11ABB0; text-align : center"> Activités choisies </h2>
+                <p style="text-align : center"> <i> Attention, si vous avez un accompagnant, les tarifs seront doublés.  </i></p>
+<br></br>
 
             </div>
             <?php
