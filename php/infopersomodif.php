@@ -91,27 +91,27 @@
                            
                         <div>
                             <label for="contactSubject">Prénom<span class="required">*</span></label>
-                            <input name="prenom" type="text" id="prenom" size="35" value=' . $prenom . '/>
+                            <input name="prenom" type="text" id="prenom" size="35" value='.$prenom.'>
                         </div>
 
                         <div>
                             <label for="contactSubject">Nom<span class="required">*</span></label>
-                            <input name="nom" type="text" id="nom" size="35" value=' . $nom . '/>
+                            <input name="nom" type="text" id="nom" size="35" value='.$nom.'>
                         </div>
                         
                      <div>
                         <label for="contactSubject">N°<span class="required">*</span></label>
-                        <input name="num" type="text" id="num" size="35" value=' . $num . ' />
+                        <input name="num" type="text" id="num" size="35" value='.$num.' >
                     </div>
                     
                     <div>
                         <label for="contactSubject">Rue<span class="required">*</span></label>
-                        <input name="rue" type="text" id="rue" size="35" value=' . $rue . ' />
+                        <input name="rue" type="text" id="rue" size="35" value='.$rue.' >
                     </div>
 
                     <div>
                         <label for="contactSubject">Complément d\'adresse</label>
-                        <input name="cadr" type="text" id="cadr" size="5" value=' . $adressesup . ' />
+                        <input name="cadr" type="text" id="cadr" size="5" value='.$adressesup.' >
                     </div>
 
 

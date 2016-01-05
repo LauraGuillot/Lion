@@ -59,7 +59,7 @@ if ($titre == 1) {
 
 
 /* Définition de la connexion à la base de données*/
-$bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', 'lion');
+$bdd = new PDO('mysql:host=127.0.0.1:3306;dbname=lion;charset=utf8', 'root', '');
 
 /* Préparation de la requête */
 $stmt = $bdd->prepare("SELECT Count(Member_ID) FROM Member WHERE (Member_EMail='$email');", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
@@ -337,6 +337,18 @@ $idco = $connexion;
 </html>';
 }}
 else{
+    include ("fonctions.php");
+     /* On récupère le membre ID */
+    $req = $bdd->prepare("SELECT Member_ID FROM Member WHERE (Member_EMail = :mail)", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $req->execute(array('mail' => "$email"));
+    $row = $req->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $memberID = $row["Member_ID"];
+    
+    /*On récupère l'idco*/
+    $req = $bdd->prepare("SELECT Connexion_ID FROM Connexion WHERE (Member_ID = :id)", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $req->execute(array('id' => "$memberID"));
+    $row = $req->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $idco = $row["Connexion_ID"];
 
     echo'<!DOCTYPE html>
 <!--[if lt IE 8 ]><html class="ie ie7" lang="en"> <![endif]-->
@@ -421,8 +433,8 @@ else{
         <div class="col full">
         <br></br>
         <br></br>
-            <span><h2 style = "color :#70F861; margin : 65px; text-align : center"> L\'inscription a échoué <br></br>
-           <center><FONT size="3.5pt " style = "color :#F0FFFF ;font-weight:normal">Veuillez recommencer le processus </center></FONT></h2><span>
+            <span><h2 style = "color :#FF5E4D; margin : 65px; text-align : center"> L\'inscription a déjà été validée avec ces informations <br></br>
+           <center><FONT size="3.5pt " style = "color :#F0FFFF ;font-weight:normal">Vous êtes déjà inscrit </center></FONT></h2><span>
         <br></br>
         <br></br>
         <br></br>
