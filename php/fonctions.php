@@ -860,6 +860,7 @@ function afficheActiviteLibre2($nom, $date, $prix1, $prix2, $idco, $bdd) {
  * Pour chaque activité complète, on affiche une ligne de tableau avec son intitulé, sa date , ses tarifs (privilège et plein) et une mention "complet".
  * Si l'activité a déjà été réservée par le membre, on affiche la mention "Déjà réservée" à la place de la mention "complet".
  */
+
 function afficheActiviteComplete2($nom, $date, $prix1, $prix2, $idco, $bdd) {
     /* On teste si l'utilisateur a déjà réseré cette activité ou non */
     /* On récupère l'id du membre */
@@ -900,6 +901,7 @@ function afficheActiviteComplete2($nom, $date, $prix1, $prix2, $idco, $bdd) {
  * Description :
  * On affiche tous l'agenda en utilisant les fonctions précédentes pour obtenir un tableau d'excursions et un tableau de repas
  */
+
 function afficheAgenda2($idco, $bdd) {
 
 
@@ -921,6 +923,7 @@ function afficheAgenda2($idco, $bdd) {
  * Description :
  * On affiche en haut à droite de la page, un compteur indiquant le nombre d'activités dans le panier du membre
  */
+
 function compteurPanier($bdd, $idco) {
     /* Récupération du membre id */
     $memberID = getMemberID($bdd, $idco);
@@ -965,9 +968,13 @@ function compteurPanier($bdd, $idco) {
     }
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
-/*                           AFFICHAGE ACHATS                                    */
-/* ---------------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------------- 
+ *                           AFFICHAGE ACHATS    
+ * Paramètres :  $bdd - Base de données / $idco - identifiant de connexion du membre
+ * Description :
+ * L'objectif ici est d'afficher tous les achats faits par le membre. Pour cela, on va afficher deux tableaux, un pour les repas et un pour les excursions
+ * On affiche aussi les trois totaux : repas, excursions et repas+excursions.                              
+ * ---------------------------------------------------------------------------------------------------- */
 
 function afficheAchats($bdd, $idco) {
     /* Récupération du membreID */
@@ -1131,9 +1138,13 @@ function afficheAchats($bdd, $idco) {
     }
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
-/*                           AFFICHAGE COMMANDES                                   */
-/* ---------------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------------- 
+ *                           AFFICHAGE COMMANDES    
+ * Paramètres :  $bdd - Base de données / $idco - identifiant de connexion du membre
+ * Description :
+ * L'objectif ici est d'afficher toutes les commandes faits par le membre. Pour cela, on va afficher deux tableaux, un pour les repas et un pour les excursions
+ * On affiche aussi les trois totaux des activités commandées : repas, excursions et repas+excursions.                                 
+ * ---------------------------------------------------------------------------------------------------- */
 
 function afficheCommandes($bdd, $idco) {
     /* Récupération du membreID */
@@ -1299,9 +1310,12 @@ function afficheCommandes($bdd, $idco) {
     }
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
-/*                           AFFICHAGE INFOS PERSO                                 */
-/* ---------------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------------- 
+ *                           AFFICHAGE INFOS PERSO   
+ * Paramètres :  $bdd - Base de données / $idco - identifiant de connexion du membre
+ * Description : 
+ * On affiche ici toutes les informations personnelles du membre.                            
+ * ---------------------------------------------------------------------------------------------------- */
 
 function afficheInfos($bdd, $idco) {
 
@@ -1381,7 +1395,12 @@ function afficheInfos($bdd, $idco) {
 /* ---------------------------------------------------------------------------------------------------- */
 
 
-/* Fontion pour afficher le tableau des activités du panier */
+/* Fontion pour afficher le tableau des activités du panier 
+ * Paramètres :  $bdd - Base de données / $idco - identifiant de connexion du membre
+ * Description : 
+ * On affiche toutes les activités ajoutées au panier par le client ainsi que leurs totaux.
+ * Si le client a un accompagnant, les totaux sont alors doublés.
+ */
 
 function affichePanier($bdd, $idco) {
     try {
@@ -1469,7 +1488,11 @@ function affichePanier($bdd, $idco) {
     }
 }
 
-/* Fontion pour afficher d'une activité */
+/* Fontion pour afficher d'une activité 
+ * Paramètre : $bdd - Base de données / $nom - Nom de l'activité / $date - Date de l'activité / $prix - Prix à payer / $type - type de l'activité / $idco - identifiant de connexion du membre / $n - nombre de réservations
+ * Description :
+ * On affiche dans une ligne de tableau l'intitulé de l'activité, sa date, son prix, le nombre de places réservées et un bouton pour la supprimer du panier
+ */
 
 function afficheActivite($type, $nom, $date, $prix, $idco, $n, $bdd) {
 
@@ -1489,7 +1512,12 @@ function afficheActivite($type, $nom, $date, $prix, $idco, $n, $bdd) {
          </TR>';
 }
 
-/* Affichage d'un bouton pour valider le panier */
+/* Affichage d'un bouton pour valider le panier
+ * Paramètres :  $bdd - Base de données / $idco - identifiant de connexion du membre
+ * Description : 
+ * Une fois toutes les activités du panier affichées, on place un bouton valider qui permet de valider le panier et de passer au paiement
+ * Ce bouton n'est visible que si le panier est non vide.
+ */
 
 function afficheBoutonValider($basketID, $bdd, $idco) {
 
@@ -1510,9 +1538,17 @@ function afficheBoutonValider($basketID, $bdd, $idco) {
     }
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
-/*                           AFFICHAGE RECAPITULATIF DU PANIER                            */
-/* ---------------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------------- 
+ *                           AFFICHAGE RECAPITULATIF DU PANIER  
+ * Paramètres :  $bdd - Base de données / $idco - identifiant de connexion du membre
+ * Description :  
+ * Une fois le panier validé, on affiche un récapitulatif du panier afin que l'utilisateur puisse vérifier ses réservations.
+ * Ce récapitulatif comprend toutes les informations personnelles de l'utilisateurs et toutes les activités qui figuraient dans son panier.
+ * On peut aussi y lire les différents totaux. 
+ * A la suite de ce récapitulatif, se situent deux boutons :
+ * - valider et payer qui permet de passer au choix du paiement
+ * - imprimer qui permet d'éditer un récapitulatif PDF du panier                       
+ * ---------------------------------------------------------------------------------------------------- */
 
 function afficheRecap($bdd, $idco) {
 
@@ -1808,9 +1844,15 @@ function afficheRecap($bdd, $idco) {
     }
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
-/*                          AJOUT D'ACTIVITE AU PANIER                                         */
-/* ---------------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------------- 
+ *                          AJOUT D'ACTIVITE AU PANIER  
+ * Paramètres :  $bdd - Base de données / $idco - identifiant de connexion du membre / $nom - Nom de l'activité à ajouter
+ * Description :
+ * Cette fonction permet d'ajouter une activité au panier.
+ * C'est à dire qu'elle crée une ligne dans la table belong avec l'activité à ajouter, la basketID de l'utilisateur et le prix de l'activité.
+ * Ce prix varie selon la date de réservation, c'est pourquoi un test est fait pour le déterminer.
+ * Par ailleurs, il faut mettre à jour les totaux du panier et décrémenter le nombre de places disponibles de l'activité.                                       
+ * ---------------------------------------------------------------------------------------------------- */
 
 function addAct($bdd, $idco, $nom) {
     /* On récupère son member_ID */
@@ -1910,9 +1952,11 @@ function addAct($bdd, $idco, $nom) {
     header("location:" . $_SERVER['HTTP_REFERER']);
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
-/*                          AFFICHAGE DU PIED DE PAGE                                                  */
-/* ---------------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------------- 
+ *                          AFFICHAGE DU PIED DE PAGE 
+ * Description :
+ * Cette fonction permet d'afficher le pied de page avec les icônes facebook, twitter et linkedin                                                 
+ * ---------------------------------------------------------------------------------------------------- */
 
 function afficheFooter() {
     echo' 
@@ -1938,9 +1982,12 @@ function afficheFooter() {
     </html>';
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
-/*                          AFFICHAGE DU HEADER                                                */
-/* ---------------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------------- 
+ *                          AFFICHAGE DU HEADER                                                
+ * Description :
+ * L'affichage du header consiste à afficher les différents onglets disponibles.
+ * Afin d'afficher correctement les onglets qui sont actifs, il a fallu tester l'URL de la page affichée.
+ * ---------------------------------------------------------------------------------------------------- */
 
 function afficheHeader() {
 
@@ -2117,14 +2164,20 @@ function afficheHeader() {
     }
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
-/*                          REINITIALISATION DU MOT DE PASSE                                              */
-/* ---------------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------------- 
+ *                          REINITIALISATION DU MOT DE PASSE     
+ * Paramètres :  $bdd - Base de données / $email - mail du membre / $mdp - Mot de passe saisi par le membre / $mdp2 - Confirmation du mot de passe
+ * Description :     
+ * - Si les informations saisies sont correctes ( email appartenant à la base de données et les deux mots de passes identiques), on remplace le mot de passe du membre par le nouveau saisi
+ * - Sinon, on affiche un message d'erreur.                                   
+ * ---------------------------------------------------------------------------------------------------- */
 
 function initMDP($email, $mdp, $mdp2, $bdd) {
+
     /* On teste si l'email est dans la base */
     $cpt = testMail($bdd, $email);
 
+    /* Si l'email n'est pas dans la base ou si les mots de passes sont différents, on affiche un message d'erreur */
     if ($cpt = 0 or empty($mdp) or $mdp != $mdp2 or ! preg_match('#^[\w.-]+@[\w.-]+\.[a-z]{2,6}$#i', $email)) {
 
         header("Location: http://localhost/lion/lion/php/perteMdpNew.php");
@@ -2141,9 +2194,15 @@ function initMDP($email, $mdp, $mdp2, $bdd) {
     }
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
-/*                          AFFICHAGE DU RECAPITULATIF PDF DU PANIER                           */
-/* ---------------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------------- 
+ *                          AFFICHAGE DU RECAPITULATIF PDF DU PANIER 
+ * Paramètres :  $bdd - Base de données / $idco - identifiant de connexion du membre
+ * Description :  
+ * Une fois le panier validé, on affiche un récapitulatif du panier afin que l'utilisateur puisse vérifier ses réservations.
+ * Ce récapitulatif peut être imprimé via un pdf.
+ * La fonction afficheRecapPDF permet de générer ce pdf (grâce à la classe html2pdf) avec toutes les informations suivantes : 
+ * informations personnelles de l'utilisateur, les activités du panier, les totaux.
+ * ---------------------------------------------------------------------------------------------------- */
 
 function afficheRecapPDF($bdd, $idco) {
     /* Récupération des données personnelles du membre */
@@ -2369,11 +2428,11 @@ function afficheRecapPDF($bdd, $idco) {
         <div class="row section-head">
             <h2 style="color : #8BB24C;"> <FONT size="5">Repas</FONT></h2>
         </div>
-    <?php echo"$repas" ?>
+        <?php echo"$repas" ?>
         <div class="row section-head">
             <h2 style="color : #8BB24C;"> <FONT size="5">Excursions</FONT></h2>
         </div>
-    <?php echo"$excursion" ?>
+        <?php echo"$excursion" ?>
 
 
         <div class="row section-head">
@@ -2417,9 +2476,14 @@ function afficheRecapPDF($bdd, $idco) {
     }
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
-/*                          SUPPRESSION D'ACTIVITE DU PANIER                       */
-/* ---------------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------------- 
+ *                          SUPPRESSION D'ACTIVITE DU PANIER        
+ * Paramètres :  $bdd - Base de données / $idco - identifiant de connexion du membre / $nom - Nom de l'activité à ajouter
+ * Description :
+ * Cette fonction permet de supprimer une activité au panier.
+ * C'est à dire qu'elle supprime de la table belong la ligne où il y a l'ID de l'activité et le basketID du membre
+ * A la suppression, il faut mettre à jour les totaux du panier et incrémenter le nombre de places disponibles de l'activité ( de 2 ou 1 si il y a un accompagnant ou non)              
+ * ---------------------------------------------------------------------------------------------------- */
 
 function suppAct($bdd, $idco, $nom) {
     /* On récupère son member_ID */
@@ -2444,7 +2508,6 @@ function suppAct($bdd, $idco, $nom) {
     $stmt->execute(array('aid' => "$activiteID", 'bid' => "$basketID"));
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $prix = $row["Belong_Price"];
-
 
     /* On supprime de la table belong le basket_ID, l'activity_ID et le prix */
     deleteAct($bdd, $activiteID, $basketID);
@@ -2505,9 +2568,14 @@ function suppAct($bdd, $idco, $nom) {
     header("location:" . $_SERVER['HTTP_REFERER']);
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
-/*                          VERIFICATION CONNEXION                                                    */
-/* ---------------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------------- 
+ *                          VERIFICATION CONNEXION       
+ * Paramètres :  $bdd - Base de données / $mail - Mail du membre / $mdp - Mot de passe du membre
+ * Description :            
+ * Lorsqu'un membre veut se connecter, il saisit son mail et son mot de passe. Il faut alors vérifier si ils sont corrects.
+ * - Si ils sont corrects, on connecte l'utilisateur en lui créant une connexion si il n'en a pas ou en récupérant une ancienne connexion s'il en a encore une
+ * - Sinon, on affiche un message d'erreur.                                 
+ * ---------------------------------------------------------------------------------------------------- */
 
 function testConnexion($bdd, $mail, $mdp) {
     try {
@@ -2852,9 +2920,12 @@ function testConnexion($bdd, $mail, $mdp) {
     }
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
-/*                        SELECTION DES CLUBS D'UN DISTRICT                                                  */
-/* ---------------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------------- 
+ *                        SELECTION DES CLUBS D'UN DISTRICT  
+ * Paramètres :  $bdd - Base de données / $district - Nom du district
+ * Description : 
+ * Cette fonction petmet d'afficher, dans un menu déroulant, tous les clubs d'un district.                                               
+ * ---------------------------------------------------------------------------------------------------- */
 
 function afficheClub($bdd, $district) {
     try {
@@ -2886,9 +2957,14 @@ function afficheClub($bdd, $district) {
     }
 }
 
-/* ----------------------------------------------------------------------------------------------- */
-/*                                 GESTION DES CONNEXIONS                                        */
-/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- 
+ *                                 GESTION DES CONNEXIONS                                        
+ * Paramètres :  $bdd - Base de données 
+ * Description : 
+ * Cette fonction sert à mettre à jour la table connexion. Lorsqu'un utilisateur connecté, n'a pas effectué de clic pendant plus de 30 min, on supprime sa connexion.
+ * Cette fonction est appelée à chaque clic d'un utilisateur.
+ * Ainsi, si un utilisateur quitte le site sans se déconnecter, sa connexio sera supprimée après 30 min et son panier sera vidé.
+ * ----------------------------------------------------------------------------------------------- */
 
 function gereConnexion($bdd) {
     /* On récupère la date courante */
@@ -2922,9 +2998,18 @@ function gereConnexion($bdd) {
 gereConnexion($bdd);
 
 
-/* ----------------------------------------------------------------------------------------------- */
-/*                                BON DE COMMANDE PDF                                    */
-/* ----------------------------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------------------------
+ *                                BON DE COMMANDE PDF  
+ * Paramètres :  $bdd - Base de données / $idco - identifiant de connexion du membre 
+ * Description : 
+ * Lorsqu'un membre réserve une activité et choisit le mode de paiement par chèque, un bon de commande lui est généré au format pdf.
+ * Cette tâche est effectuée par la fonction bonDeCommande (à l'aide de la classe html2pdf).
+ * Sur le bon de commande figurent :
+ * - le numéro de commande composé de : l'identifiant du membre, la liste des identifiants des activités réservées, la date actuelle
+ * - les informations personnelles du membre
+ * - les activités réservées lors de cette commande
+ * - les totaux                                
+ * ----------------------------------------------------------------------------------------------- */
 
 function bonDeCommande($bdd, $idco) {
 
@@ -3041,7 +3126,7 @@ function bonDeCommande($bdd, $idco) {
             <h2 style="color : #11ABB0;" > <FONT size="5">ACTIVITES RESERVEES</FONT></h2> 
         </div>
 
-    <?php echo"$activite"; ?>
+        <?php echo"$activite"; ?>
 
         <div class="row section-head">
             <h2 style="color : #11ABB0;" > <FONT size="5">TOTAL</FONT></h2> 
@@ -3075,9 +3160,12 @@ function bonDeCommande($bdd, $idco) {
     }
 }
 
-/* ----------------------------------------------------------------------------------------------- */
-/*                                Achats PDF                                    */
-/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- 
+ *                                Achats PDF 
+ * Paramètres :  $bdd - Base de données / $idco - identifiant de connexion du membre 
+ * Description : 
+ * Dans l'onglet MesAchats, l'utilisateur a accès à ses achats. Il peut les imprimer via un PDF généré par la fonction pdfAchats.                                   
+ * ----------------------------------------------------------------------------------------------- */
 
 function pdfAchats($bdd, $idco) {
     /* Récupération des données personnelles du membre */
@@ -3280,7 +3368,7 @@ function pdfAchats($bdd, $idco) {
             <h2 style="color : #11ABB0;" > <FONT size="5">ACTIVITES RESERVEES</FONT></h2> 
         </div>
 
-    <?php echo"$texte"; ?>
+        <?php echo"$texte"; ?>
 
 
         <page_footer backtop="5mm" backbottom="10mm" backleft="10mm" backright="10mm">
@@ -3302,9 +3390,12 @@ function pdfAchats($bdd, $idco) {
     }
 }
 
-/* ----------------------------------------------------------------------------------------------- */
-/*                                Commandes PDF                                    */
-/* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- 
+ *                                Commandes PDF    
+ * Paramètres :  $bdd - Base de données / $idco - identifiant de connexion du membre 
+ * Description :                
+ * Dans l'onglet MesCommandes, l'utilisateur a accès à ses achats. Il peut les imprimer via un PDF généré par la fonction pdfCommandes.                    
+ * ----------------------------------------------------------------------------------------------- */
 
 function pdfCommandes($bdd, $idco) {
     /* Récupération des données personnelles du membre */
@@ -3508,7 +3599,7 @@ function pdfCommandes($bdd, $idco) {
             <h2 style="color : #11ABB0;" > <FONT size="5">ACTIVITES COMMANDEES</FONT></h2> 
         </div>
 
-    <?php echo"$texte"; ?>
+        <?php echo"$texte"; ?>
 
 
         <page_footer backtop="5mm" backbottom="10mm" backleft="10mm" backright="10mm">
