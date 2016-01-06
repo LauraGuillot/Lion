@@ -1,5 +1,5 @@
 <?php
-include "constantes.php";
+include "requetes.php";
 
 /* ---------------------------------------------------------------------------------------------------- */
 /*                            PAIEMENT PAR CB                                                         */
@@ -8,42 +8,10 @@ include "constantes.php";
 function paiementCB($bdd, $valid, $idco) {
     if ($valid) {
 
-        /* On récupère son member_ID */
-        $sql1 = 'SELECT Member_ID FROM Connexion WHERE (Connexion_ID = :idco )';
-        $stmt = $bdd->prepare($sql1, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-        $stmt->execute(array('idco' => "$idco"));
-        $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-        $memberID = $row["Member_ID"];
+        $memberID = getMemberID($bdd, $idco);
+        $basketID = getBasketID($bdd, $memberID);
+        setActivityCB($bdd, $basketID);
 
-        /* On récupère son basket_ID */
-        $sql2 = 'SELECT Basket_ID FROM Basket WHERE (Member_ID = :id )';
-        $stmt = $bdd->prepare($sql2, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-        $stmt->execute(array('id' => "$memberID"));
-        $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-        $basketID = $row["Basket_ID"];
-
-        /* On met à jour les activités payées */
-        $sql3 = 'UPDATE Belong SET Belong_Payement_Way = "CB" WHERE (Basket_ID = :id AND Belong_Paid =0 AND Belong_Payement_Way IS NULL)';
-        $stmt = $bdd->prepare($sql3);
-        $stmt->execute(array('id' => "$basketID"));
-
-        $sql4 = 'UPDATE Belong SET Belong_Paid = 1 WHERE (Basket_ID = :id AND Belong_Payement_Way LIKE "CB")';
-        $stmt = $bdd->prepare($sql4);
-        $stmt->execute(array('id' => "$basketID"));
-
-        /* On remet à 0 tous les totaux du panier */
-        $sql5 = 'UPDATE Basket SET Basket_Total = 0 WHERE (Basket_ID = :id)';
-        $stmt = $bdd->prepare($sql5);
-        $stmt->execute(array('id' => "$basketID"));
-
-
-        $sql6 = 'UPDATE Basket SET Basket_Trip_Total = 0 WHERE (Basket_ID = :id)';
-        $stmt = $bdd->prepare($sql6);
-        $stmt->execute(array('id' => "$basketID"));
-
-        $sql6 = 'UPDATE Basket SET Basket_Meal_Total = 0 WHERE (Basket_ID = :id)';
-        $stmt = $bdd->prepare($sql6);
-        $stmt->execute(array('id' => "$basketID"));
 
         /* On redirige l'utilisateur vers ses achats */
         echo' 
@@ -357,41 +325,13 @@ function paiementCH($bdd, $idco) {
 
     /* Ajouter le mode de paiement aux activités réservées */
     /* On récupère son member_ID */
-    $sql1 = 'SELECT Member_ID FROM Connexion WHERE (Connexion_ID = :idco )';
-    $stmt = $bdd->prepare($sql1, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('idco' => "$idco"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $memberID = $row["Member_ID"];
+    $memberID = getMemberID($bdd, $idco);
 
     /* On récupère son basket_ID */
-    $sql2 = 'SELECT Basket_ID FROM Basket WHERE (Member_ID = :id )';
-    $stmt = $bdd->prepare($sql2, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('id' => "$memberID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $basketID = $row["Basket_ID"];
+    $basketID = getBasketID($bdd, $memberID);
 
-    /* On met à jour les activités commandées */
-    $sql3 = 'UPDATE Belong SET Belong_Payement_Way = "CH" WHERE (Basket_ID = :id AND Belong_Paid =0)';
-    $stmt = $bdd->prepare($sql3);
-    $stmt->execute(array('id' => "$basketID"));
-
-    $sql3 = 'UPDATE Belong SET Belong_Date = NOW() WHERE (Basket_ID = :id AND Belong_Paid =0 AND Belong_Date IS NULL)';
-    $stmt = $bdd->prepare($sql3);
-    $stmt->execute(array('id' => "$basketID"));
-
-    /* On remet à 0 tous les totaux du panier */
-    $sql5 = 'UPDATE Basket SET Basket_Total = 0 WHERE (Basket_ID = :id)';
-    $stmt = $bdd->prepare($sql5);
-    $stmt->execute(array('id' => "$basketID"));
-
-
-    $sql6 = 'UPDATE Basket SET Basket_Trip_Total = 0 WHERE (Basket_ID = :id)';
-    $stmt = $bdd->prepare($sql6);
-    $stmt->execute(array('id' => "$basketID"));
-
-    $sql6 = 'UPDATE Basket SET Basket_Meal_Total = 0 WHERE (Basket_ID = :id)';
-    $stmt = $bdd->prepare($sql6);
-    $stmt->execute(array('id' => "$basketID"));
+    /* Enregistrement de la commande */
+    setActivityCH($bdd, $basketID);
 
     /* Afficher un message indiquant la démarche à suivre à l'utilisateur */
 
@@ -530,66 +470,21 @@ function paiementCH($bdd, $idco) {
 
 function deconnexion($idco, $bdd) {
 
-
     /* Récupération du membre id */
-    $sql = 'SELECT Member_ID FROM Connexion WHERE (Connexion_ID = :idco)';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('idco' => "$idco"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $memberID = $row["Member_ID"];
+    $memberID = getMemberID($bdd, $idco);
 
     /* Récupération du basket id */
-    $sql = 'SELECT Basket_ID FROM Basket WHERE (Member_ID = :id )';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('id' => "$memberID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $basketID = $row["Basket_ID"];
+    $basketID = getBasketID($bdd, $memberID);
 
     /* Incrémentation des capacités de toutes les activités supprimées */
-    $sql1 = 'SELECT Count(Follower_ID) FROM Follower WHERE (Member_ID = :id )';
-    $stmt = $bdd->prepare($sql1, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('id' => "$memberID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $c = $row["Count(Follower_ID)"];
-
-    $sql = 'SELECT Activity.Activity_ID , Activity_Capacity FROM Activity  INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) WHERE (Basket_ID =' . $basketID . ' AND Belong_Paid =0 AND Belong_Payement_Way IS NULL AND Congress_ID =' . congressID . ' )';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array());
-
-
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
-
-        $activiteID = $row["Activity_ID"];
-        $cap = $row["Activity_Capacity"];
-        $cap1 = "$cap" + "1" + "$c"; /* Si il y a un follower, on augmente de 2 */
-
-        $sql2 = 'UPDATE Activity SET Activity_Capacity = :c WHERE (Activity_ID = :id AND Congress_ID =' . congressID . ' )';
-        $stmt2 = $bdd->prepare($sql2);
-        $stmt2->execute(array('c' => "$cap1", 'id' => "$activiteID"));
-    }
+    setCapacity($bdd, $memberID, $basketID);
 
 
     /* Suppression des activités non payées */
-    $sql = 'DELETE FROM Belong WHERE(Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL)';
-    $stmt = $bdd->prepare($sql);
-    $stmt->execute(array(':id' => "$basketID"));
-
-    /* Remise à 0 des totaux du panier */
-    $sql = 'UPDATE Basket SET Basket_Total =0 WHERE (Basket_ID = :id)';
-    $stmt = $bdd->prepare($sql);
-    $stmt->execute(array(':id' => "$basketID"));
-
-    $sql = 'UPDATE Basket SET Basket_Meal_Total =0 WHERE (Basket_ID = :id)';
-    $stmt = $bdd->prepare($sql);
-    $stmt->execute(array(':id' => "$basketID"));
-
-    $sql = 'UPDATE Basket SET Basket_Trip_Total =0 WHERE (Basket_ID = :id)';
-    $stmt = $bdd->prepare($sql);
-    $stmt->execute(array(':id' => "$basketID"));
+    videBasket($bdd, $basketID);
 
     /* Suppression de la connexion */
-    $req0 = $bdd->prepare('DELETE FROM Connexion WHERE (Connexion_ID=:id)');
-    $req0->execute(array('id' => $idco));
+    suppConnexion($bdd, $idco);
 
     header("Location: http://Localhost/lion/Lion/php/home.php");
 }
@@ -854,32 +749,16 @@ function afficheActiviteLibre2($nom, $date, $prix1, $prix2, $idco, $bdd) {
 
     /* On teste si l'utilisateur a déjà réseré cette activité ou non */
     /* On récupère l'id du membre */
-    $sql1 = 'SELECT Member_ID FROM Connexion WHERE (Connexion_ID = :idco )';
-    $stmt = $bdd->prepare($sql1, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('idco' => "$idco"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $memberID = $row["Member_ID"];
+    $memberID = getMemberID($bdd, $idco);
 
     /* On récupère son basket id */
-    $sql2 = 'SELECT Basket_ID FROM Basket WHERE (Member_ID = :id )';
-    $stmt = $bdd->prepare($sql2, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('id' => "$memberID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $basketID = $row["Basket_ID"];
+    $basketID = getBasketID($bdd, $memberID);
 
     /* On récupère d'activité ID */
-    $sql3 = 'SELECT Activity_ID FROM Activity WHERE (Activity_Name = :nom )';
-    $stmt = $bdd->prepare($sql3, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('nom' => "$nom"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $activiteID = $row["Activity_ID"];
+    $activiteID = getActivityID($bdd, $nom);
 
     /* on regarde si l'activité est dans son panier ou non */
-    $sql3 = 'SELECT count(Basket_ID) FROM Belong WHERE (Basket_ID = :Bid AND Activity_ID = :Aid )';
-    $stmt = $bdd->prepare($sql3, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('Bid' => "$basketID", 'Aid' => "$activiteID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $cpt = $row["count(Basket_ID)"];
+    $cpt = estDansPanier($bdd, $activiteID, $basketID);
 
     if ($cpt != 0) {
 
@@ -912,32 +791,16 @@ function afficheActiviteLibre2($nom, $date, $prix1, $prix2, $idco, $bdd) {
 function afficheActiviteComplete2($nom, $date, $prix1, $prix2, $idco, $bdd) {
     /* On teste si l'utilisateur a déjà réseré cette activité ou non */
     /* On récupère l'id du membre */
-    $sql1 = 'SELECT Member_ID FROM Connexion WHERE (Connexion_ID = :idco )';
-    $stmt = $bdd->prepare($sql1, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('idco' => "$idco"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $memberID = $row["Member_ID"];
+    $memberID = getMemberID($bdd, $idco);
 
     /* On récupère son basket id */
-    $sql2 = 'SELECT Basket_ID FROM Basket WHERE (Member_ID = :id )';
-    $stmt = $bdd->prepare($sql2, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('id' => "$memberID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $basketID = $row["Basket_ID"];
+    $basketID = getBasketID($bdd, $memberID);
 
     /* On récupère d'activité ID */
-    $sql3 = 'SELECT Activity_ID FROM Activity WHERE ( Activity_Name = :nom )';
-    $stmt = $bdd->prepare($sql3, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('nom' => "$nom"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $activiteID = $row["Activity_ID"];
+    $activiteID = getActivityID($bdd, $nom);
 
     /* on regarde si l'activité est dans son panier ou non */
-    $sql3 = 'SELECT count(Basket_ID) FROM Belong WHERE (Basket_ID = :Bid AND Activity_ID = :Aid )';
-    $stmt = $bdd->prepare($sql3, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('Bid' => "$basketID", 'Aid' => "$activiteID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $cpt = $row["count(Basket_ID)"];
+    $cpt = estDansPanier($bdd, $activiteID, $basketID);
 
 
     if ($cpt == 0) {
@@ -982,27 +845,13 @@ function afficheAgenda2($idco, $bdd) {
 
 function compteurPanier($bdd, $idco) {
     /* Récupération du membre id */
-    $sql = 'SELECT Member_ID FROM Connexion WHERE (Connexion_ID = :idco)';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':idco' => "$idco"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $memberID = $row["Member_ID"];
+    $memberID = getMemberID($bdd, $idco);
 
     /* Récupération du basket id */
-    $sql = 'SELECT Basket_ID FROM Basket WHERE (Member_ID = :id )';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$memberID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $basketID = $row["Basket_ID"];
+    $basketID = getBasketID($bdd, $memberID);
 
     /* Récupération du nombre d'activités dans le panier */
-    $sql = 'SELECT Count(Activity.Activity_ID) FROM Activity '
-            . 'INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
-            . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL AND Congress_ID =' . congressID . ' ) ';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$basketID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $cpt = $row["Count(Activity.Activity_ID)"];
+    $cpt = comptePanier($bdd, $basketID);
 
     /* Exploitation des résultats */
 
@@ -1044,35 +893,13 @@ function compteurPanier($bdd, $idco) {
 
 function afficheAchats($bdd, $idco) {
     /* Récupération du membreID */
-    $sql = 'SELECT Member_ID FROM Connexion  WHERE (Connexion_ID = :id)';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('id' => "$idco"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $memberID = $row["Member_ID"];
+    $memberID = getMemberID($bdd, $idco);
 
     /* Récupération du basketID */
-    $sql = 'SELECT Basket_ID FROM Basket WHERE (Member_ID = :id )';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$memberID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $basketID = $row["Basket_ID"];
-    
-      /* Récupération du follower */
-    $sql = 'SELECT Person_Lastname, Person_Firstname '
-            . 'FROM Follower '
-            . ' INNER JOIN Person ON (Person.Person_ID = Follower.Person_ID) '
-            . ' WHERE (Member_ID = :id)';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$memberID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $fnom = $row["Person_Lastname"];
-    $fprenom = $row["Person_Firstname"];
+    $basketID = getBasketID($bdd, $memberID);
 
-   
-    $n = 1; /* nombre de personnes*/
-    if (!(empty($fnom) && empty($fprenom))) {
-        $n = $n + 1;
-    } 
+    /* Récupération du follower */
+    $n = nbPersonne($bdd, $memberID);
 
     /*     * ************************************************** */
     /* Récupération des repas payés et affichage */
@@ -1084,14 +911,7 @@ function afficheAchats($bdd, $idco) {
          </div>';
 
     /* Récupération du nombre de repas réservés */
-    $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
-            . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
-            . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
-            . ' WHERE (Basket_ID = :id AND Belong_Paid = 1 AND Activity_Type_Name = "Repas" AND Congress_ID = ' . congressID . ')';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$basketID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $cpt = $row["Count(Activity.Activity_ID)"];
+    $cpt = getNbRepasAchetes($bdd, $basketID);
 
     $totalrepas = 0;
 
@@ -1148,14 +968,7 @@ function afficheAchats($bdd, $idco) {
          </div>';
 
     /* Récupération du nombre d'excursions réservées */
-    $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
-            . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
-            . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
-            . ' WHERE (Basket_ID = :id AND Belong_Paid = 1 AND Activity_Type_Name = "Excursion" AND Congress_ID = ' . congressID . ')';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$basketID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $cpt2 = $row["Count(Activity.Activity_ID)"];
+    $cpt2 = getNbExcursionsAchetees($bdd, $basketID);
 
     $totalexcursions = 0;
 
@@ -1203,8 +1016,8 @@ function afficheAchats($bdd, $idco) {
     /* Affichage des totaux */
     /*     * *********************** */
 
-    $totalrepas =$n*$totalrepas;
-    $totalexcursions=$n*$totalexcursions;
+    $totalrepas = $n * $totalrepas;
+    $totalexcursions = $n * $totalexcursions;
     $total = $totalrepas + $totalexcursions;
     echo'
 
@@ -1246,36 +1059,14 @@ function afficheAchats($bdd, $idco) {
 
 function afficheCommandes($bdd, $idco) {
     /* Récupération du membreID */
-    $sql = 'SELECT Member_ID FROM Connexion  WHERE (Connexion_ID = :id)';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('id' => "$idco"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $memberID = $row["Member_ID"];
+    $memberID = getMemberID($bdd, $idco);
 
     /* Récupération du basketID */
-    $sql = 'SELECT Basket_ID FROM Basket WHERE (Member_ID = :id )';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$memberID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $basketID = $row["Basket_ID"];
-    
-    /* Récupération du follower */
-    $sql = 'SELECT Person_Lastname, Person_Firstname '
-            . 'FROM Follower '
-            . ' INNER JOIN Person ON (Person.Person_ID = Follower.Person_ID) '
-            . ' WHERE (Member_ID = :id)';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$memberID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $fnom = $row["Person_Lastname"];
-    $fprenom = $row["Person_Firstname"];
+    $basketID = getBasketID($bdd, $memberID);
 
-   
-    $n = 1; /* nombre de personnes*/
-    if (!(empty($fnom) && empty($fprenom))) {
-        $n = $n + 1;
-    } 
-    
+    /* Récupération du follower */
+    $n = nbPersonne($bdd, $memberID);
+
     /*     * ************************************************** */
     /* Récupération des repas payés et affichage */
     /*     * **************************************************** */
@@ -1286,14 +1077,7 @@ function afficheCommandes($bdd, $idco) {
          </div>';
 
     /* Récupération du nombre de repas réservés */
-    $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
-            . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
-            . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
-            . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way="CH" AND Activity_Type_Name = "Repas" AND Congress_ID =' . congressID . ' )';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$basketID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $cpt = $row["Count(Activity.Activity_ID)"];
+    $cpt = getNbRepasCommandes($bdd, $basketID);
 
     $totalrepas = 0;
 
@@ -1350,14 +1134,8 @@ function afficheCommandes($bdd, $idco) {
          </div>';
 
     /* Récupération du nombre d'excursions réservées */
-    $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
-            . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
-            . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
-            . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way="CH" AND Activity_Type_Name = "Excursion" AND Congress_ID =' . congressID . ' )';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$basketID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $cpt2 = $row["Count(Activity.Activity_ID)"];
+
+    $cpt2 = getNbExcursionsCommandees($bdd, $basketID);
 
     $totalexcursions = 0;
 
@@ -1405,10 +1183,10 @@ function afficheCommandes($bdd, $idco) {
     /* Affichage des totaux */
     /*     * *********************** */
 
-    $totalrepas = $n*$totalrepas;
-    $totalexcursions = $n*$totalexcursions;
+    $totalrepas = $n * $totalrepas;
+    $totalexcursions = $n * $totalexcursions;
     $total = $totalrepas + $totalexcursions;
-   
+
     echo'
 
         <div class="row section-head">
@@ -1450,52 +1228,10 @@ function afficheCommandes($bdd, $idco) {
 function afficheInfos($bdd, $idco) {
 
     /* Récupération des données personnelles du membre */
-    $sql = 'SELECT Member.Member_ID, Person_Lastname, Person_Firstname, Member_Title, Member_Status, District_Name, Club_Name, '
-            . ' Member_Num, Member_Additional_Adress, Member_Street, Member_City, Member_Postal_Code, Member_Phone, '
-            . ' Member_Mobile, Member_EMail, Member_Position_Club, Member_Position_District, Member_By_Train, Member_Date_Train '
-            . ' FROM Member'
-            . ' INNER JOIN Connexion ON (Connexion.Member_ID = Member.Member_ID)  '
-            . ' INNER JOIN Person ON (Person.Person_ID = Member.Person_ID) '
-            . ' INNER JOIN Club ON (Club.Club_ID = Member.Club_ID) '
-            . ' INNER JOIN District ON (District.District_ID = Member.District_ID) '
-            . ' WHERE (Connexion_ID = :id)';
-
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('id' => "$idco"));
-
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $memberID = $row["Member_ID"];
-    $nom = $row["Person_Lastname"];
-    $prenom = $row["Person_Firstname"];
-    $titre = $row["Member_Title"];
-    $status = $row["Member_Status"];
-    $district = $row["District_Name"];
-    $club = $row["Club_Name"];
-    $num = $row["Member_Num"];
-    $adressesup = $row["Member_Additional_Adress"];
-    $rue = $row["Member_Street"];
-    $ville = $row["Member_City"];
-    $cp = $row["Member_Postal_Code"];
-    $tel = $row["Member_Phone"];
-    $mobile = $row["Member_Mobile"];
-    $mail = $row["Member_EMail"];
-    $positionclub = $row["Member_Position_Club"];
-    $positiondistrict = $row["Member_Position_District"];
-    $train = $row["Member_By_Train"];
-    $traindate = $row["Member_Date_Train"];
-
+    list($memberID, $nom, $prenom, $titre, $status, $district, $club, $num, $adressesup, $rue, $ville, $cp, $tel, $mobile, $mail, $positionclub, $positiondistrict, $train, $traindate) = getInfos($bdd, $idco);
 
     /* Récupération du follower */
-    $sql = 'SELECT Person_Lastname, Person_Firstname '
-            . 'FROM Follower '
-            . ' INNER JOIN Person ON (Person.Person_ID = Follower.Person_ID) '
-            . ' INNER JOIN Member ON (Member.Member_ID = Follower.Member_ID)'
-            . ' WHERE (Member_ID = :id)';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$memberID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $fnom = $row["Person_Lastname"];
-    $fprenom = $row["Person_Firstname"];
+    list ($fnom, $fprenom) = getFollower($bdd, $memberID);
 
     /* Affichage des données personnelles avec possibilité de modification */
     echo'
@@ -1573,27 +1309,13 @@ function affichePanier($bdd, $idco) {
     try {
 
         /* Récupération du membre id */
-        $sql = 'SELECT Member_ID FROM Connexion WHERE (Connexion_ID = :idco)';
-        $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-        $stmt->execute(array(':idco' => "$idco"));
-        $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-        $memberID = $row["Member_ID"];
+        $memberID = getMemberID($bdd, $idco);
 
         /* Récupération du basket id */
-        $sql = 'SELECT Basket_ID FROM Basket WHERE (Member_ID = :id)';
-        $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-        $stmt->execute(array(':id' => "$memberID"));
-        $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-        $basketID = $row["Basket_ID"];
+        $basketID = getBasketID($bdd, $memberID);
 
         /* Récupération du follower : si il y a un accompagnant les tarifs sont doublés */
-        $sql = 'SELECT count(Follower_ID) FROM Follower WHERE (Member_ID = :id)';
-        $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-        $stmt->execute(array(':id' => "$memberID"));
-        $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-        $n = $row["count(Follower_ID)"];
-
-        $n = $n + 1;
+        $n = nbPersonne($bdd, $memberID);
 
         /* Récupération des activités non payées */
         $sql = 'SELECT Activity_Type_Name, Activity_Name, Activity_Date, Belong_Price FROM Activity '
@@ -1633,15 +1355,9 @@ function affichePanier($bdd, $idco) {
                         <br></br></html>';
 
         /* Total */
-        $sql = 'SELECT Basket_Meal_Total, Basket_Trip_Total, Basket_Total FROM Basket WHERE (Basket_ID = :id)';
-        $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-        $stmt->execute(array(':id' => "$basketID"));
-        $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-        $totalrepas = $row["Basket_Meal_Total"];
+        list ($totalrepas, $totalexcursion, $total) = getTotal($bdd, $basketID);
         $totalrepas = $totalrepas * $n;
-        $totalexcursion = $row["Basket_Trip_Total"];
         $totalexcursion = $totalexcursion * $n;
-        $total = $row["Basket_Total"];
         $total = $total * $n;
 
         /* Affichage des totaux */
@@ -1698,13 +1414,9 @@ function afficheActivite($type, $nom, $date, $prix, $idco, $n, $bdd) {
 /* Affichage d'un bouton pour valider le panier */
 
 function afficheBoutonValider($basketID, $bdd, $idco) {
+
     /* on regarde si l'activité est dans son panier ou non */
-    $sql3 = 'SELECT count(Belong.Activity_ID) FROM Belong INNER JOIN Activity ON (Activity.Activity_ID = Belong.Activity_ID)'
-            . 'WHERE (Basket_ID = :id AND Congress_ID =' . congressID . ' AND Belong_Paid =0 AND Belong_Payement_Way IS NULL)';
-    $stmt = $bdd->prepare($sql3, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('id' => "$basketID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $cpt = $row["count(Belong.Activity_ID)"];
+    $cpt = comptePanier($bdd, $basketID);
 
     if ($cpt != 0) {
         echo'<form name="validPanier" id="contactForm" method="post"  action="recapitulatifPanier.php">
@@ -1725,59 +1437,19 @@ function afficheBoutonValider($basketID, $bdd, $idco) {
 /* ---------------------------------------------------------------------------------------------------- */
 
 function afficheRecap($bdd, $idco) {
+
     /* Récupération des données personnelles du membre */
-    $sql = 'SELECT Member.Member_ID, Person_Lastname, Person_Firstname, Member_Title, Member_Status, District_Name, Club_Name, '
-            . ' Member_Num, Member_Additional_Adress, Member_Street, Member_City, Member_Postal_Code, Member_Phone, '
-            . ' Member_Mobile, Member_EMail, Member_Position_Club, Member_Position_District, Member_By_Train, Member_Date_Train '
-            . ' FROM Member '
-            . ' INNER JOIN Connexion ON (Connexion.Member_ID = Member.Member_ID) '
-            . ' INNER JOIN Person ON (Person.Person_ID = Member.Person_ID) '
-            . ' INNER JOIN Club ON (Club.Club_ID = Member.Club_ID) '
-            . ' INNER JOIN District ON (District.District_ID = Member.District_ID) '
-            . ' WHERE (Connexion_ID = :id)';
-
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('id' => "$idco"));
-
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $memberID = $row["Member_ID"];
-    $nom = $row["Person_Lastname"];
-    $prenom = $row["Person_Firstname"];
-    $titre = $row["Member_Title"];
-    $status = $row["Member_Status"];
-    $district = $row["District_Name"];
-    $club = $row["Club_Name"];
-    $num = $row["Member_Num"];
-    $adressesup = $row["Member_Additional_Adress"];
-    $rue = $row["Member_Street"];
-    $ville = $row["Member_City"];
-    $cp = $row["Member_Postal_Code"];
-    $tel = $row["Member_Phone"];
-    $mobile = $row["Member_Mobile"];
-    $mail = $row["Member_EMail"];
-    $positionclub = $row["Member_Position_Club"];
-    $positiondistrict = $row["Member_Position_District"];
-    $train = $row["Member_By_Train"];
-    $traindate = $row["Member_Date_Train"];
+    list($memberID, $nom, $prenom, $titre, $status, $district, $club, $num, $adressesup, $rue, $ville, $cp, $tel, $mobile, $mail, $positionclub, $positiondistrict, $train, $traindate) = getInfos($bdd, $idco);
 
 
     /* Récupération du follower */
-    $sql = 'SELECT Person_Lastname, Person_Firstname '
-            . 'FROM Follower '
-            . ' INNER JOIN Person ON (Person.Person_ID = Follower.Person_ID) '
-            . ' WHERE (Member_ID = :id)';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$memberID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $fnom = $row["Person_Lastname"];
-    $fprenom = $row["Person_Firstname"];
+    list ($fnom, $fprenom) = getFollower($bdd, $memberID);
 
     /* Récupération du nombre de personnes réservant l'activité */
     $n = 1;
     if (!(empty($fom) && empty($fprenom))) {
         $n = $n + 1;
     }
-
 
 
     /* Affichage des informations personnelles */
@@ -1882,16 +1554,12 @@ function afficheRecap($bdd, $idco) {
     /*     * ********************************************** */
 
     /* Récupération du basketID et des totaux */
-    $sql = 'SELECT Basket_ID, Basket_Total, Basket_Trip_Total, Basket_Meal_Total FROM Basket WHERE (Member_ID = :id )';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$memberID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $basketID = $row["Basket_ID"];
-    $total = $row["Basket_Total"];
+    $basketID = getBasketID($bdd, $memberID);
+
+    list ($totalrepas, $totalexcursion, $total) = getTotal($bdd, $basketID);
+
     $total = $n * $total;
-    $totaltrip = $row["Basket_Trip_Total"];
     $totaltrip = $n * $totaltrip;
-    $totalmeal = $row["Basket_Meal_Total"];
     $totalmeal = $n * $totalmeal;
 
     /*     * ************************************************** */
@@ -1899,14 +1567,7 @@ function afficheRecap($bdd, $idco) {
     /*     * **************************************************** */
 
     /* Récupération du nombre de repas réservés */
-    $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
-            . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
-            . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
-            . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL AND Activity_Type_Name = "Repas" AND Congress_ID = ' . congressID . ')';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$basketID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $cpt = $row["Count(Activity.Activity_ID)"];
+    $cpt = getNbRepasPanier($bdd, $basketID);
 
 
     if ($cpt != 0) {
@@ -1965,14 +1626,7 @@ function afficheRecap($bdd, $idco) {
          </div>';
 
     /* Récupération du nombre d'excursions réservées */
-    $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
-            . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
-            . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
-            . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL AND Activity_Type_Name = "Excursion" AND Congress_ID = ' . congressID . ')';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$basketID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $cpt2 = $row["Count(Activity.Activity_ID)"];
+    $cpt2 = getNbExcursionsPanier($bdd, $basketID);
 
 
     if ($cpt2 != 0) {
@@ -2082,18 +1736,10 @@ function afficheRecap($bdd, $idco) {
 
 function addAct($bdd, $idco, $nom) {
     /* On récupère son member_ID */
-    $sql1 = 'SELECT Member_ID FROM Connexion WHERE (Connexion_ID = :idco )';
-    $stmt = $bdd->prepare($sql1, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('idco' => "$idco"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $memberID = $row["Member_ID"];
+    $memberID = getMemberID($bdd, $idco);
 
     /* On récupère son basket_ID */
-    $sql2 = 'SELECT Basket_ID FROM Basket WHERE (Member_ID = :id )';
-    $stmt = $bdd->prepare($sql2, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('id' => "$memberID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $basketID = $row["Basket_ID"];
+    $basketID = getBasketID($bdd, $memberID);
 
 
     /* On récupère le prix, le type et l'activity_ID de l'activité choisie */
@@ -2127,10 +1773,7 @@ function addAct($bdd, $idco, $nom) {
     }
 
     /* On ajoute à la table belong le basket_ID, l'activity_ID et le prix */
-
-    $sql4 = 'INSERT INTO Belong (Activity_ID, Basket_ID, Belong_Price, Belong_Paid) VALUES (:activiteID, :basketID , :prix, 0)';
-    $stmt = $bdd->prepare($sql4);
-    $stmt->execute(array('activiteID' => "$activiteID", 'basketID' => "$basketID", 'prix' => "$prix"));
+    insertBelong($bdd, $activiteID, $basketID, $prix);
 
     /* On met à jour le panier en calculant les totaux */
 
@@ -2178,15 +1821,10 @@ function addAct($bdd, $idco, $nom) {
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $cap = $row["Activity_Capacity"];
 
+    $cpt = nbPersonne($bdd, $memberID);
 
-    $sql1 = 'SELECT Count(Follower_ID) FROM Follower WHERE (Member_ID = :id)';
-    $stmt = $bdd->prepare($sql1, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('id' => "$memberID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $cpt = $row["Count(Follower_ID)"];
+    $sum = "$cap" - "$cpt";
 
-
-    $sum = "$cap" - "1" - "$cpt"; /* S'il y a un follower, on décrémente une place de plus */
     $sql8 = 'UPDATE Activity SET Activity_Capacity = :sum WHERE (Activity_ID=:id)';
     $stmt = $bdd->prepare($sql8);
     $stmt->execute(array('sum' => "$sum", 'id' => "$activiteID"));
@@ -2370,7 +2008,7 @@ function afficheHeader() {
     </html>';
     }
 
-    if (strcmp($file, 'verifPerteMdp1.php') == 0 ||strcmp($file, 'perteMdp1.php') == 0 ||strcmp($file, 'initMdp.php') == 0 || strcmp($file, 'perteMdpNew.php') == 0 || strcmp($file, 'perteMdp.php') == 0 || strcmp($file, 'verif2bis.php') == 0 || strcmp($file, 'verifConnexion.php') == 0 || strcmp($file, 'verif1.php') == 0 || strcmp($file, 'verif3.php') == 0 || strcmp($file, 'verif2.php') == 0 || strcmp($file, 'inscription.php') == 0 || strcmp($file, 'inscription2.php') == 0 || strcmp($file, 'inscription3.php') == 0) {
+    if (strcmp($file, 'verifPerteMdp1.php') == 0 || strcmp($file, 'perteMdp1.php') == 0 || strcmp($file, 'initMdp.php') == 0 || strcmp($file, 'perteMdpNew.php') == 0 || strcmp($file, 'perteMdp.php') == 0 || strcmp($file, 'verif2bis.php') == 0 || strcmp($file, 'verifConnexion.php') == 0 || strcmp($file, 'verif1.php') == 0 || strcmp($file, 'verif3.php') == 0 || strcmp($file, 'verif2.php') == 0 || strcmp($file, 'inscription.php') == 0 || strcmp($file, 'inscription2.php') == 0 || strcmp($file, 'inscription3.php') == 0) {
         echo' 
     <html>
          <header class="mobile">
@@ -2407,27 +2045,17 @@ function afficheHeader() {
 
 function initMDP($email, $mdp, $mdp2, $bdd) {
     /* On teste si l'email est dans la base */
-    $sql = 'SELECT Count(Member_ID) FROM Member WHERE (Member_EMail = :mail)';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('mail' => "$email"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $cpt = $row["Count(Member_ID)"];
+    $cpt = testMail($bdd, $email);
 
     if ($cpt = 0 or empty($mdp) or $mdp != $mdp2 or ! preg_match('#^[\w.-]+@[\w.-]+\.[a-z]{2,6}$#i', $email)) {
 
         header("Location: http://localhost/lion/lion/php/perteMdpNew.php");
     } else {
         /* On récupère l'ID du membre pour mettre à jour en toute sécurité */
-        $sql = 'SELECT Member_ID FROM Member WHERE (Member_EMail = :mail)';
-        $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-        $stmt->execute(array('mail' => "$email"));
-        $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-        $id = $row["Member_ID"];
+        $id = getMemberIDMail($bdd, $email);
 
         /* Réinitialisation du mot de passe */
-        $sql = 'UPDATE Member SET Member_Password = :mdp WHERE (Member_ID= ' . $id . ')';
-        $stmt = $bdd->prepare($sql);
-        $stmt->execute(array('mdp' => "$mdp"));
+        setMdp($bdd, $id, $mdp);
 
 
         /* Redirection vers la page d'inscription */
@@ -2441,45 +2069,19 @@ function initMDP($email, $mdp, $mdp2, $bdd) {
 
 function afficheRecapPDF($bdd, $idco) {
     /* Récupération des données personnelles du membre */
-    $sql = 'SELECT Member.Member_ID, Person_Lastname, Person_Firstname, Member_Title, Member_Status, District_Name, Club_Name, '
-            . ' Member_Num, Member_Additional_Adress, Member_Street, Member_City, Member_Postal_Code, Member_Phone, '
-            . ' Member_Mobile, Member_EMail, Member_Position_Club, Member_Position_District, Member_By_Train, Member_Date_Train '
-            . ' FROM Member '
-            . ' INNER JOIN Connexion ON (Connexion.Member_ID = Member.Member_ID) '
-            . ' INNER JOIN Person ON (Person.Person_ID = Member.Person_ID) '
-            . ' INNER JOIN Club ON (Club.Club_ID = Member.Club_ID) '
-            . ' INNER JOIN District ON (District.District_ID = Member.District_ID) '
-            . ' WHERE (Connexion_ID = :id)';
+    list($memberID, $nom, $prenom, $titre, $status, $district, $club, $num, $adressesup, $rue, $ville, $cp, $tel, $mobile, $mail, $positionclub, $positiondistrict, $train, $traindate) = getInfos($bdd, $idco);
 
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('id' => "$idco"));
 
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $memberID = $row["Member_ID"];
-    $nom = $row["Person_Lastname"];
-    $prenom = $row["Person_Firstname"];
-    $titre = $row["Member_Title"];
-    $status = $row["Member_Status"];
+    /* Récupération du follower */
+    list ($fnom, $fprenom) = getFollower($bdd, $memberID);
+
+    /* Traitement des données */
     if ($status == 0) {
         $status = "Leo";
     } else {
         $status = "Lion";
     }
-    $district = $row["District_Name"];
-    $club = $row["Club_Name"];
-    $num = $row["Member_Num"];
-    $adressesup = $row["Member_Additional_Adress"];
-    $rue = $row["Member_Street"];
-    $ville = $row["Member_City"];
-    $cp = $row["Member_Postal_Code"];
-    $tel = $row["Member_Phone"];
-    $mobile = $row["Member_Mobile"];
-    $mail = $row["Member_EMail"];
-    $positionclub = $row["Member_Position_Club"];
-    $positiondistrict = $row["Member_Position_District"];
 
-    $train = $row["Member_By_Train"];
-    $traindate = $row["Member_Date_Train"];
 
     if ($train == 1) {
         $resulttrain = "Arrivée en train le : $traindate";
@@ -2488,19 +2090,7 @@ function afficheRecapPDF($bdd, $idco) {
     }
 
 
-    /* Récupération du follower */
-    $sql = 'SELECT Person_Lastname, Person_Firstname '
-            . 'FROM Follower '
-            . ' INNER JOIN Person ON (Person.Person_ID = Follower.Person_ID) '
-            . ' WHERE (Member_ID = :id)';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$memberID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $fnom = $row["Person_Lastname"];
-    $fprenom = $row["Person_Firstname"];
-
-    $accompagnant = "";
-    $n = 1; /* nombre de personnes*/
+    $n = 1; /* nombre de personnes */
     if (!(empty($fnom) && empty($fprenom))) {
         $accompagnant = $fprenom . " " . $fnom;
         $n = $n + 1;
@@ -2510,32 +2100,24 @@ function afficheRecapPDF($bdd, $idco) {
 
     $dateauj = date("d-m-Y");
 
-    /******************************************* */
+    /*     * ***************************************** */
     /* Récupération des activités du panier */
-    /*********************************************** */
+    /*     * ********************************************* */
 
     /* Récupération du basketID et des totaux */
-    $sql = 'SELECT Basket_ID, Basket_Total, Basket_Trip_Total, Basket_Meal_Total FROM Basket WHERE (Member_ID = :id)';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$memberID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $basketID = $row["Basket_ID"];
-    $total = $row["Basket_Total"];
-    $total = $total*$n;
-    $totaltrip = $row["Basket_Trip_Total"];
-    $totaltrip = $totaltrip*$n;
-    $totalmeal = $row["Basket_Meal_Total"];
-    $totalmeal = $totalmeal*$n;
+    /* Récupération du basketID et des totaux */
+    $basketID = getBasketID($bdd, $memberID);
+
+    list ($totalrepas, $totalexcursion, $total) = getTotal($bdd, $basketID);
+
+    $total = $n * $total;
+    $totaltrip = $n * $totaltrip;
+    $totalmeal = $n * $totalmeal;
+
 
     /* Récupération du nombre de repas réservés */
-    $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
-            . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
-            . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
-            . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL AND Activity_Type_Name = "Repas" AND Congress_ID = ' . congressID . ')';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$basketID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $cpt = $row["Count(Activity.Activity_ID)"];
+    $cpt = getNbRepasPanier($bdd, $basketID);
+
     $repas = '';
 
     if ($cpt != 0) {
@@ -2570,7 +2152,6 @@ function afficheRecapPDF($bdd, $idco) {
            <td class ="col" width=100 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $prix . ' €</FONT> </td>
            <td class ="col" width=160 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $n . ' </FONT> </td>
         </TR> ';
-
         } $repas = $repas . ' </TABLE>
              </div>';
     } else {
@@ -2586,15 +2167,7 @@ function afficheRecapPDF($bdd, $idco) {
 
 
     /* Récupération du nombre d'excursions réservées */
-
-    $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
-            . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
-            . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
-            . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL AND Activity_Type_Name = "Excursion" AND Congress_ID = ' . congressID . ')';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$basketID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $cpt2 = $row["Count(Activity.Activity_ID)"];
+    $cpt = getNbExcursionsPanier($bdd, $basketID);
 
 
     if ($cpt2 != 0) {
@@ -2718,11 +2291,11 @@ function afficheRecapPDF($bdd, $idco) {
         <div class="row section-head">
             <h2 style="color : #8BB24C;"> <FONT size="5">Repas</FONT></h2>
         </div>
-        <?php echo"$repas" ?>
+    <?php echo"$repas" ?>
         <div class="row section-head">
             <h2 style="color : #8BB24C;"> <FONT size="5">Excursions</FONT></h2>
         </div>
-        <?php echo"$excursion" ?>
+    <?php echo"$excursion" ?>
 
 
         <div class="row section-head">
@@ -2772,18 +2345,10 @@ function afficheRecapPDF($bdd, $idco) {
 
 function suppAct($bdd, $idco, $nom) {
     /* On récupère son member_ID */
-    $sql1 = 'SELECT Member_ID FROM Connexion WHERE (Connexion_ID = :idco )';
-    $stmt = $bdd->prepare($sql1, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('idco' => "$idco"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $memberID = $row["Member_ID"];
+    $memberID = getMemberID($bdd, $idco);
 
     /* On récupère son basket_ID */
-    $sql2 = 'SELECT Basket_ID FROM Basket WHERE (Member_ID = :id )';
-    $stmt = $bdd->prepare($sql2, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('id' => "$memberID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $basketID = $row["Basket_ID"];
+    $basketID = getBasketID($bdd, $memberID);
 
     /* On récupère les données relatives à l'activité */
     $sql3 = 'SELECT Activity_ID, Activity_Type_Name FROM Activity '
@@ -2804,10 +2369,7 @@ function suppAct($bdd, $idco, $nom) {
 
 
     /* On supprime de la table belong le basket_ID, l'activity_ID et le prix */
-
-    $sql4 = 'DELETE FROM Belong WHERE (Activity_ID = :aid AND Basket_ID = :bid)';
-    $stmt = $bdd->prepare($sql4);
-    $stmt->execute(array('aid' => "$activiteID", 'bid' => "$basketID"));
+    deleteAct($bdd, $activiteID, $basketID);
 
     /* On met à jour le panier en calculant les totaux */
 
@@ -2855,13 +2417,9 @@ function suppAct($bdd, $idco, $nom) {
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $cap = $row["Activity_Capacity"];
 
-    $sql1 = 'SELECT Count(Follower_ID) FROM Follower WHERE (Member_ID = :id )';
-    $stmt = $bdd->prepare($sql1, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('id' => "$memberID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $c = $row["Count(Follower_ID)"];
+    $c = nbPersonne($bdd, $memberID);
 
-    $sum = "$cap" + "1" + "$c"; /* si il y a un follower, on incrémente de 2 */
+    $sum = "$cap" + "$c"; /* si il y a un follower, on incrémente de 2 */
     $sql8 = 'UPDATE Activity SET Activity_Capacity = :sum WHERE (Activity_ID=:id)';
     $stmt = $bdd->prepare($sql8);
     $stmt->execute(array('sum' => "$sum", 'id' => "$activiteID"));
@@ -3062,11 +2620,8 @@ function testConnexion($bdd, $mail, $mdp) {
 
                 /* On regarde si sa connexion est encore active */
 
-                $sql = 'SELECT Count(Connexion_ID) FROM Connexion WHERE (Member_ID = :id) ';
-                $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-                $stmt->execute(array(':id' => "$memberID"));
-                $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-                $cpt = $row['Count(Connexion_ID)'];
+                $cpt = testConnexionMembre($bdd, $memberID);
+
                 // S'il n'y a pas de connexion, on en crée une
                 if ($cpt == 0) {
 
@@ -3077,55 +2632,20 @@ function testConnexion($bdd, $mail, $mdp) {
                     for ($i = 0; $i < 70; $i++) {
                         $chaine .= $c[rand() % strlen($c)];
                     }
-                    //Récupération de la date actuelle
-                    $req8 = $bdd->prepare("SELECT YEAR(DATE(Now()))", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-                    $req8->execute(array());
-                    $row = $req8->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-                    $annee = $row["YEAR(DATE(Now()))"];
 
-                    $req82 = $bdd->prepare("SELECT MONTH(DATE(Now()))", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-                    $req82->execute(array());
-                    $row = $req82->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-                    $mois = $row["MONTH(DATE(Now()))"];
-
-                    $req83 = $bdd->prepare("SELECT DAY(DATE(Now()))", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-                    $req83->execute(array());
-                    $row = $req83->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-                    $day = $row["DAY(DATE(Now()))"];
-
-                    $req81 = $bdd->prepare("SELECT HOUR(Now())", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-                    $req81->execute(array());
-                    $row = $req81->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-                    $heure = $row["HOUR(Now())"];
-
-                    $req84 = $bdd->prepare("SELECT MINUTE(Now())", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-                    $req84->execute(array());
-                    $row = $req84->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-                    $min = $row["MINUTE(Now())"];
-
-                    $req85 = $bdd->prepare("SELECT SECOND(Now())", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-                    $req85->execute(array());
-                    $row = $req85->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-                    $sec = $row["SECOND(Now())"];
-
+                    list ($annee, $mois, $day, $heure, $min, $sec) = dateAuj($bdd);
 
                     $idco = $chaine . $day . $mois . $annee . $heure . $min . $sec;
 
-                    $req9 = $bdd->prepare('INSERT INTO Connexion (Connexion_ID, Last_Connexion, Member_ID ) VALUE (:chaine,NOW(), :id)');
-                    $req9->execute(array(
-                        'chaine' => "$idco",
-                        'id' => "$memberID"));
+                    //Ajout d'une nouvelle connexion                    
+                    insertConnexion($bdd, $memberID, $idco);
+                    
                 } else {
+                    
                     // Si une connexion est déjà active, on l'update
-                    $sql = 'SELECT Connexion_ID FROM Connexion WHERE (Member_ID = :id) ';
-                    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-                    $stmt->execute(array(':id' => "$memberID"));
-                    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-                    $idco = $row['Connexion_ID'];
+                    $idco = getIdco($bdd, $memberID);
 
-                    $req9 = $bdd->prepare("UPDATE Connexion SET Last_Connexion= NOW() WHERE (Connexion_ID =:idco)");
-                    $req9->execute(array(
-                        'idco' => "$idco"));
+                    majConnexion($bdd, $idco);
                 }
             }
 
@@ -3295,11 +2815,7 @@ function afficheClub($bdd, $district) {
 
 function gereConnexion($bdd) {
     /* On récupère la date courante */
-    $sql = 'SELECT NOW()';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array());
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $now = $row['NOW()'];
+    $now = now($bdd);
 
     $date1 = new DateTime($now);
 
@@ -3326,63 +2842,24 @@ function gereConnexion($bdd) {
     }
 }
 
-// gereConnexion($bdd);
+gereConnexion($bdd);
 
-/* ----------------------------------------------------------------------------------------------- */
-/*                                MISE A JOUR DE LAST CONNEXION                                     */
-/* ----------------------------------------------------------------------------------------------- */
-
-function majConnexion($bdd, $idco) {
-    $req9 = $bdd->prepare("UPDATE Connexion SET Last_Connexion= NOW() WHERE (Connexion_ID =:idco)");
-    $req9->execute(array(
-        'idco' => "$idco"));
-}
 
 /* ----------------------------------------------------------------------------------------------- */
 /*                                BON DE COMMANDE PDF                                    */
 /* ----------------------------------------------------------------------------------------------- */
 
 function bonDeCommande($bdd, $idco) {
-    /* On récupère le nom, le prénom et les coordonnées du client */
-
-    $sql = 'SELECT Member.Member_ID, Person_Lastname, Person_Firstname, Member_Title, '
-            . ' Member_Num, Member_Additional_Adress, Member_Street, Member_City, Member_Postal_Code, Member_Phone, '
-            . ' Member_Mobile, Member_EMail '
-            . ' FROM Member '
-            . ' INNER JOIN Connexion ON (Connexion.Member_ID = Member.Member_ID) '
-            . ' INNER JOIN Person ON (Person.Person_ID = Member.Person_ID) '
-            . ' WHERE (Connexion_ID = :id)';
-
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('id' => "$idco"));
-
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $memberID = $row["Member_ID"];
-    $nom = $row["Person_Lastname"];
-    $prenom = $row["Person_Firstname"];
-    $titre = $row["Member_Title"];
-    $num = $row["Member_Num"];
-    $adressesup = $row["Member_Additional_Adress"];
-    $rue = $row["Member_Street"];
-    $ville = $row["Member_City"];
-    $cp = $row["Member_Postal_Code"];
-    $tel = $row["Member_Phone"];
-    $mobile = $row["Member_Mobile"];
-    $mail = $row["Member_EMail"];
     
-    /* Récupération du follower */
-    $sql = 'SELECT Person_Lastname, Person_Firstname '
-            . 'FROM Follower '
-            . ' INNER JOIN Person ON (Person.Person_ID = Follower.Person_ID) '
-            . ' WHERE (Member_ID = :id)';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$memberID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $fnom = $row["Person_Lastname"];
-    $fprenom = $row["Person_Firstname"];
+    /* Récupération des données personnelles du membre */
+    list($memberID, $nom, $prenom, $titre, $status, $district, $club, $num, $adressesup, $rue, $ville, $cp, $tel, $mobile, $mail, $positionclub, $positiondistrict, $train, $traindate) = getInfos($bdd, $idco);
 
+    /* Récupération du follower */
+    list ($fnom, $fprenom) = getFollower($bdd, $memberID);
+    
+ 
     $accompagnant = "";
-    $n = 1; /* nombre de personnes*/
+    $n = 1; /* nombre de personnes */
     if (!(empty($fnom) && empty($fprenom))) {
         $accompagnant = $fprenom . " " . $fnom;
         $n = $n + 1;
@@ -3392,25 +2869,14 @@ function bonDeCommande($bdd, $idco) {
 
     /* On récupère les activités commandées */
 
-
-    /* Récupération du basketID et des totaux */
-    $sql = 'SELECT Basket_ID FROM Basket WHERE (Member_ID = :id)';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$memberID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $basketID = $row["Basket_ID"];
+    /* Récupération du basketID  */
+    $basketID = getBasketID($bdd, $memberID);
 
 
     /* Récupération des activités */
 
     /* On récupère la date du dernier panier */
-    $sql = 'SELECT Belong_Date FROM Activity '
-            . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
-            . ' WHERE (Basket_ID = :id  AND Belong_Payement_Way="CH" AND Congress_ID = ' . congressID . ') ORDER BY (Belong_Date) DESC';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$basketID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $belongdate = $row["Belong_Date"];
+     $belongdate = getDatePanier($bdd, $basketID);
 
     /* On récupère toutes les activités */
     $sql = 'SELECT  Activity.Activity_ID, Activity_Name, Activity_Date, Belong_Price FROM Activity '
@@ -3449,8 +2915,8 @@ function bonDeCommande($bdd, $idco) {
          <td class ="col" width=160 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $n . ' </FONT> </td>
          </TR> ';
     }
-    
-    $total = $total*$n;
+
+    $total = $total * $n;
 
     $activite = $activite . ' </TABLE>
              </div>';
@@ -3537,64 +3003,27 @@ function bonDeCommande($bdd, $idco) {
 /* ----------------------------------------------------------------------------------------------- */
 
 function pdfAchats($bdd, $idco) {
-    /* On récupère le nom, le prénom et les coordonnées du client */
+    /* Récupération des données personnelles du membre */
+    list($memberID, $nom, $prenom, $titre, $status, $district, $club, $num, $adressesup, $rue, $ville, $cp, $tel, $mobile, $mail, $positionclub, $positiondistrict, $train, $traindate) = getInfos($bdd, $idco);
 
-    $sql = 'SELECT Member.Member_ID, Person_Lastname, Person_Firstname, Member_Title, '
-            . ' Member_Num, Member_Additional_Adress, Member_Street, Member_City, Member_Postal_Code, Member_Phone, '
-            . ' Member_Mobile, Member_EMail '
-            . ' FROM Member '
-            . ' INNER JOIN Connexion ON (Connexion.Member_ID = Member.Member_ID) '
-            . ' INNER JOIN Person ON (Person.Person_ID = Member.Person_ID) '
-            . ' WHERE (Connexion_ID = :id)';
-
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('id' => "$idco"));
-
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $memberID = $row["Member_ID"];
-    $nom = $row["Person_Lastname"];
-    $prenom = $row["Person_Firstname"];
-    $titre = $row["Member_Title"];
-    $num = $row["Member_Num"];
-    $adressesup = $row["Member_Additional_Adress"];
-    $rue = $row["Member_Street"];
-    $ville = $row["Member_City"];
-    $cp = $row["Member_Postal_Code"];
-    $tel = $row["Member_Phone"];
-    $mobile = $row["Member_Mobile"];
-    $mail = $row["Member_EMail"];
+    /* Récupération du follower */
+    list ($fnom, $fprenom) = getFollower($bdd, $memberID);
 
     /* Récupération du basketID */
-    $sql = 'SELECT Basket_ID FROM Basket WHERE (Member_ID = :id )';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$memberID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $basketID = $row["Basket_ID"];
-
-    
-    /* Récupération du follower */
-    $sql = 'SELECT Person_Lastname, Person_Firstname '
-            . 'FROM Follower '
-            . ' INNER JOIN Person ON (Person.Person_ID = Follower.Person_ID) '
-            . ' WHERE (Member_ID = :id)';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$memberID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $fnom = $row["Person_Lastname"];
-    $fprenom = $row["Person_Firstname"];
+     $basketID = getBasketID($bdd, $memberID);
 
     $accompagnant = "";
-    $n = 1; /* nombre de personnes*/
+    $n = 1; /* nombre de personnes */
     if (!(empty($fnom) && empty($fprenom))) {
         $accompagnant = $fprenom . " " . $fnom;
         $n = $n + 1;
     } else {
         $accompagnant = "Aucun";
     }
-    
-    /*     * ************************************************* */
+
+    /************************************************** */
     /* Récupération des repas payés et affichage */
-    /*     * *************************************************** */
+    /**************************************************** */
 
 
     $texte = '<div class="row section-head">
@@ -3602,14 +3031,7 @@ function pdfAchats($bdd, $idco) {
          </div>';
 
     /* Récupération du nombre de repas réservés */
-    $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
-            . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
-            . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
-            . ' WHERE (Basket_ID = :id AND Belong_Paid = 1 AND Activity_Type_Name = "Repas" AND Congress_ID = ' . congressID . ')';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$basketID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $cpt = $row["Count(Activity.Activity_ID)"];
+    $cpt = getNbRepasAchetes($bdd, $basketID);
 
     $totalrepas = 0;
 
@@ -3664,14 +3086,7 @@ function pdfAchats($bdd, $idco) {
          </div>';
 
     /* Récupération du nombre d'excursions réservées */
-    $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
-            . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
-            . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
-            . ' WHERE (Basket_ID = :id AND Belong_Paid = 1 AND Activity_Type_Name = "Excursion" AND Congress_ID = ' . congressID . ')';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$basketID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $cpt2 = $row["Count(Activity.Activity_ID)"];
+     $cpt2 = getNbExcursionsAchetees($bdd, $basketID);
 
     $totalexcursions = 0;
 
@@ -3717,8 +3132,8 @@ function pdfAchats($bdd, $idco) {
     /* Affichage des totaux */
     /*     * *********************** */
 
-    $totalrepas =$n*$totalrepas ;
-    $totalexcursions=$n*$totalexcursions;
+    $totalrepas = $n * $totalrepas;
+    $totalexcursions = $n * $totalexcursions;
     $total = $totalrepas + $totalexcursions;
     $texte = $texte . ' 
 
@@ -3781,7 +3196,7 @@ function pdfAchats($bdd, $idco) {
             <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Mobile</u> : <?php echo"$mobile"; ?> </FONT></div> 
 
             <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Mail</u> : <?php echo"$mail"; ?></FONT></div> 
-       <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Accompagnant</u> : <?php echo"$accompagnant"; ?></FONT></div> 
+            <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Accompagnant</u> : <?php echo"$accompagnant"; ?></FONT></div> 
         </div>
 
         <div class="row section-head">
@@ -3815,60 +3230,24 @@ function pdfAchats($bdd, $idco) {
 /* ----------------------------------------------------------------------------------------------- */
 
 function pdfCommandes($bdd, $idco) {
-    /* On récupère le nom, le prénom et les coordonnées du client */
-
-    $sql = 'SELECT Member.Member_ID, Person_Lastname, Person_Firstname, Member_Title, '
-            . ' Member_Num, Member_Additional_Adress, Member_Street, Member_City, Member_Postal_Code, Member_Phone, '
-            . ' Member_Mobile, Member_EMail '
-            . ' FROM Member '
-            . ' INNER JOIN Connexion ON (Connexion.Member_ID = Member.Member_ID) '
-            . ' INNER JOIN Person ON (Person.Person_ID = Member.Person_ID) '
-            . ' WHERE (Connexion_ID = :id)';
-
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array('id' => "$idco"));
-
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $memberID = $row["Member_ID"];
-    $nom = $row["Person_Lastname"];
-    $prenom = $row["Person_Firstname"];
-    $titre = $row["Member_Title"];
-    $num = $row["Member_Num"];
-    $adressesup = $row["Member_Additional_Adress"];
-    $rue = $row["Member_Street"];
-    $ville = $row["Member_City"];
-    $cp = $row["Member_Postal_Code"];
-    $tel = $row["Member_Phone"];
-    $mobile = $row["Member_Mobile"];
-    $mail = $row["Member_EMail"];
-
-    /* Récupération du basketID */
-    $sql = 'SELECT Basket_ID FROM Basket WHERE (Member_ID = :id )';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$memberID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $basketID = $row["Basket_ID"];
+    /* Récupération des données personnelles du membre */
+    list($memberID, $nom, $prenom, $titre, $status, $district, $club, $num, $adressesup, $rue, $ville, $cp, $tel, $mobile, $mail, $positionclub, $positiondistrict, $train, $traindate) = getInfos($bdd, $idco);
 
     /* Récupération du follower */
-    $sql = 'SELECT Person_Lastname, Person_Firstname '
-            . 'FROM Follower '
-            . ' INNER JOIN Person ON (Person.Person_ID = Follower.Person_ID) '
-            . ' WHERE (Member_ID = :id)';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$memberID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $fnom = $row["Person_Lastname"];
-    $fprenom = $row["Person_Firstname"];
+    list ($fnom, $fprenom) = getFollower($bdd, $memberID);
+
+    /* Récupération du basketID */
+     $basketID = getBasketID($bdd, $memberID);
 
     $accompagnant = "";
-    $n = 1; /* nombre de personnes*/
+    $n = 1; /* nombre de personnes */
     if (!(empty($fnom) && empty($fprenom))) {
         $accompagnant = $fprenom . " " . $fnom;
         $n = $n + 1;
     } else {
         $accompagnant = "Aucun";
     }
-    
+
     /*     * ************************************************* */
     /* Récupération des repas payés et affichage */
     /*     * *************************************************** */
@@ -3879,14 +3258,7 @@ function pdfCommandes($bdd, $idco) {
          </div>';
 
     /* Récupération du nombre de repas réservés */
-    $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
-            . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
-            . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
-            . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way = "CH" AND Activity_Type_Name = "Repas" AND Congress_ID = ' . congressID . ')';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$basketID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $cpt = $row["Count(Activity.Activity_ID)"];
+   $cpt = getNbRepasCommandes($bdd, $basketID);
 
     $totalrepas = 0;
 
@@ -3941,14 +3313,7 @@ function pdfCommandes($bdd, $idco) {
          </div>';
 
     /* Récupération du nombre d'excursions réservées */
-    $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
-            . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
-            . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
-            . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way = "CH"  AND Activity_Type_Name = "Excursion" AND Congress_ID = ' . congressID . ')';
-    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $stmt->execute(array(':id' => "$basketID"));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $cpt2 = $row["Count(Activity.Activity_ID)"];
+     $cpt2 = getNbExcursionsCommandees($bdd, $basketID);
 
     $totalexcursions = 0;
 
@@ -3994,8 +3359,8 @@ function pdfCommandes($bdd, $idco) {
     /* Affichage des totaux */
     /*     * *********************** */
 
-    $totalrepas =$totalrepas*$n;
-    $totalexcursions=$totalexcursions*$n;
+    $totalrepas = $totalrepas * $n;
+    $totalexcursions = $totalexcursions * $n;
     $total = $totalrepas + $totalexcursions;
     $texte = $texte . ' 
 
@@ -4058,7 +3423,7 @@ function pdfCommandes($bdd, $idco) {
             <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Mobile</u> : <?php echo"$mobile"; ?> </FONT></div> 
 
             <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Mail</u> : <?php echo"$mail"; ?></FONT></div> 
-         <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Accompagnant</u> : <?php echo"$accompagnant"; ?></FONT></div> 
+            <div style="" > <FONT size="3.5" style="font-weight:normal;color : #252E43;" > <u>Accompagnant</u> : <?php echo"$accompagnant"; ?></FONT></div> 
         </div>
 
         <div class="row section-head">
