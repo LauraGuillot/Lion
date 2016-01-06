@@ -1,9 +1,16 @@
 <?php
 include "requetes.php";
 
-/* ---------------------------------------------------------------------------------------------------- */
-/*                            PAIEMENT PAR CB                                                         */
-/* ---------------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------------- 
+ *                            PAIEMENT PAR CB             
+ * Paramètres : $bdd - Base de données / $valid - Booléen indiquant si la transaction est validée ou non / $idco - identifiant de connexion du membre
+ * Description : 
+ * Si valid est vrai, on effectue les requête suivantes : 
+ * - On ajoute le mode de paiement CB aux activités réglées
+ * - On met à 1 le booléen de paiement
+ * - On remet à zéro tous les totaux du panier
+ * Si valid est faux ,on affiche un message d'erreur.                                           
+ * ---------------------------------------------------------------------------------------------------- */
 
 function paiementCB($bdd, $valid, $idco) {
     if ($valid) {
@@ -317,9 +324,15 @@ function paiementCB($bdd, $valid, $idco) {
     }
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
-/*                            PAIEMENT PAR CH                                                        */
-/* ---------------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------------- 
+ *                            PAIEMENT PAR CH    
+ * Paramètres : $bdd - Base de données / $idco - identifiant de connexion du membre
+ * Description : 
+ * Pour une commande par chèque, on effectue les requêtes suivantes :
+ * - On ajoute le mode de paiement CH à toutes les activités commandées
+ * - On ajoute la date actuelle à ces activités
+ * - On remet à zéro tous les totaux du panier                                                
+ * ---------------------------------------------------------------------------------------------------- */
 
 function paiementCH($bdd, $idco) {
 
@@ -464,9 +477,14 @@ function paiementCH($bdd, $idco) {
 </html>';
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
-/*                           DECONNEXION                                                        */
-/* ---------------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------------- 
+ *                           DECONNEXION  
+ * Paramètres : $bdd - Base de données / $idco - identifiant de connexion du membre
+ * Description :
+ * A la déconnexion d'un membre, on commence par vider son panier. Ce qui implique de remettre tous les totaux à 0 et incrémenter
+ * les capacités des activités qu'il avait ajoutées à son panier de 1 ou 2 si il a ou non un follower.
+ * Dans un second temps, on supprime sa connexion de la table Connexion.                                                      
+ * ---------------------------------------------------------------------------------------------------- */
 
 function deconnexion($idco, $bdd) {
 
@@ -493,7 +511,12 @@ function deconnexion($idco, $bdd) {
 /*                           AFFICHAGE AGENDA EN MODE NON CONNECTE                                                      */
 /* ---------------------------------------------------------------------------------------------------- */
 
-/* Fontion pour afficher le tableau des repas */
+/* Fontion pour afficher le tableau des repas 
+ * Paramètre : $bdd - Base de données
+ * Description :
+ * L'objectif ici est d'afficher tous les repas du congrès qui nous interesse. On sélectionne pour cela tous les repas de la base de données.
+ * Puis, on affiche différemment les repas qui sont complets et ceux qui possèdent encore des places libres dans un tableau.
+ * */
 
 function afficheRepas1($bdd) {
     try {
@@ -544,7 +567,12 @@ function afficheRepas1($bdd) {
     }
 }
 
-/* Fontion pour afficher le tableau des excursions */
+/* Fontion pour afficher le tableau des excursions 
+ * Paramètre : $bdd - Base de données
+ * Description :
+ * L'objectif ici est d'afficher toutes les excursions du congrès qui nous interesse. On sélectionne pour cela toutes les excursions de la base de données.
+ * Puis, on affiche différemment les excursions qui sont completes et celles qui possèdent encore des places libres dans un tableau.
+ * */
 
 function afficheExcursions1($bdd) {
     try {
@@ -595,7 +623,11 @@ function afficheExcursions1($bdd) {
     }
 }
 
-/* Fontion pour afficher d'une activité libre */
+/* Fontion pour afficher d'une activité libre 
+ * Paramètre : $bdd - Base de données / $nom - Nom de l'activité / $date - Date de l'activité / $prix1 - Tarif privilège / $prix2 - Tarif plein / $capacity - Nombre de places encore libres
+ * Description :
+ * Pour chaque activité libre, on affiche une ligne de tableau avec son intitulé, sa date , ses tarifs (privilège et plein) et sa capacité.
+ */
 
 function afficheActiviteLibre($nom, $date, $prix1, $prix2, $capacity) {
 
@@ -608,7 +640,11 @@ function afficheActiviteLibre($nom, $date, $prix1, $prix2, $capacity) {
                                     </TR>';
 }
 
-/* Fontion pour afficher d'une activité complète */
+/* Fontion pour afficher d'une activité complète 
+ * Paramètre :  $bdd - Base de données / $nom - Nom de l'activité / $date - Date de l'activité / $prix1 - Tarif privilège / $prix2 - Tarif plein 
+ * Description :
+ * Pour chaque activité complète, on affiche une ligne de tableau grisée avec son intitulé, sa date , ses tarifs (privilège et plein) et le mot clé "complet".
+ */
 
 function afficheActiviteComplete($nom, $date, $prix1, $prix2) {
 
@@ -621,7 +657,11 @@ function afficheActiviteComplete($nom, $date, $prix1, $prix2) {
                                     </TR>';
 }
 
-/* Affichage complet de l'agenda */
+/* Affichage complet de l'agenda 
+ * Paramètre :  $bdd - Base de données 
+ * Description :
+ * On affiche tous l'agenda en utilisant les fonctions précédentes pour obtenir un tableau d'excursions et un tableau de repas
+ */
 
 function afficheAgenda($bdd) {
     /* Affichage des activités */
@@ -641,7 +681,13 @@ function afficheAgenda($bdd) {
 /*                           AFFICHAGE AGENDA EN MODE CONNECTE                                                      */
 /* ---------------------------------------------------------------------------------------------------- */
 
-/* Fontion pour afficher le tableau des repas */
+/* Fontion pour afficher le tableau des repas 
+ * Paramètre : $bdd - Base de données / $idco - identifiant de connexion du membre
+ * Description :
+ * L'objectif ici est d'afficher tous les repas du congrès qui nous interesse. On sélectionne pour cela tous les repas de la base de données.
+ * Puis, on affiche différemment les repas qui sont complets et ceux qui possèdent encore des places libres dans un tableau.
+ * Attention, si un membre a un accompagnant et qu'il ne reste plus qu'une seule place dans un repas, il faut afficher l'activité comme étant complète.
+ */
 
 function afficheRepas2($bdd, $idco) {
     try {
@@ -698,7 +744,13 @@ function afficheRepas2($bdd, $idco) {
     }
 }
 
-/* Fontion pour afficher le tableau des excursions */
+/* Fontion pour afficher le tableau des excursions 
+ * Paramètre : $bdd - Base de données / $idco - identifiant de connexion du membre
+ * Description :
+ * L'objectif ici est d'afficher toutes les excursions du congrès qui nous interesse. On sélectionne pour cela toutes les excursions de la base de données.
+ * Puis, on affiche différemment les excursions qui sont completes et celles qui possèdent encore des places libres dans un tableau.
+ * Attention, si un membre a un accompagnant et qu'il ne reste plus qu'une seule place dans un repas, il faut afficher l'activité comme étant complète.
+ */
 
 function afficheExcursions2($bdd, $idco) {
     try {
@@ -754,7 +806,12 @@ function afficheExcursions2($bdd, $idco) {
     }
 }
 
-/* Fontion pour afficher d'une activité libre */
+/* Fontion pour afficher d'une activité libre 
+ * Paramètre : $bdd - Base de données / $nom - Nom de l'activité / $date - Date de l'activité / $prix1 - Tarif privilège / $prix2 - Tarif plein / $idco - identifiant de connexion du membre
+ * Description :
+ * Pour chaque activité libre, on affiche une ligne de tableau avec son intitulé, sa date , ses tarifs (privilège et plein) et un bouton pour ajouter au panier.
+ * Si l'activité a déjà été réservée par le membre, on affiche la mention "Déjà réservée" à la place du bouton +.
+ */
 
 function afficheActiviteLibre2($nom, $date, $prix1, $prix2, $idco, $bdd) {
 
@@ -797,8 +854,12 @@ function afficheActiviteLibre2($nom, $date, $prix1, $prix2, $idco, $bdd) {
     }
 }
 
-/* Fontion pour afficher d'une activité complète */
-
+/* Fontion pour afficher d'une activité libre 
+ * Paramètre : $bdd - Base de données / $nom - Nom de l'activité / $date - Date de l'activité / $prix1 - Tarif privilège / $prix2 - Tarif plein / $idco - identifiant de connexion du membre 
+ * Description :
+ * Pour chaque activité complète, on affiche une ligne de tableau avec son intitulé, sa date , ses tarifs (privilège et plein) et une mention "complet".
+ * Si l'activité a déjà été réservée par le membre, on affiche la mention "Déjà réservée" à la place de la mention "complet".
+ */
 function afficheActiviteComplete2($nom, $date, $prix1, $prix2, $idco, $bdd) {
     /* On teste si l'utilisateur a déjà réseré cette activité ou non */
     /* On récupère l'id du membre */
@@ -834,8 +895,11 @@ function afficheActiviteComplete2($nom, $date, $prix1, $prix2, $idco, $bdd) {
     }
 }
 
-/* * **************Affichage de tout l'agenda****************** */
-
+/* Affichage complet de l'agenda 
+ * Paramètre :  $bdd - Base de données / $idco - identifiant de connexion du membre
+ * Description :
+ * On affiche tous l'agenda en utilisant les fonctions précédentes pour obtenir un tableau d'excursions et un tableau de repas
+ */
 function afficheAgenda2($idco, $bdd) {
 
 
@@ -852,8 +916,11 @@ function afficheAgenda2($idco, $bdd) {
     echo'<html> </div></html>';
 }
 
-/* * ************** Compteur pour le panier ****************** */
-
+/* Affichage d'un compteur pour le panier
+ * Paramètre :  $bdd - Base de données / $idco - identifiant de connexion du membre
+ * Description :
+ * On affiche en haut à droite de la page, un compteur indiquant le nombre d'activités dans le panier du membre
+ */
 function compteurPanier($bdd, $idco) {
     /* Récupération du membre id */
     $memberID = getMemberID($bdd, $idco);
@@ -2302,11 +2369,11 @@ function afficheRecapPDF($bdd, $idco) {
         <div class="row section-head">
             <h2 style="color : #8BB24C;"> <FONT size="5">Repas</FONT></h2>
         </div>
-        <?php echo"$repas" ?>
+    <?php echo"$repas" ?>
         <div class="row section-head">
             <h2 style="color : #8BB24C;"> <FONT size="5">Excursions</FONT></h2>
         </div>
-        <?php echo"$excursion" ?>
+    <?php echo"$excursion" ?>
 
 
         <div class="row section-head">
@@ -2974,7 +3041,7 @@ function bonDeCommande($bdd, $idco) {
             <h2 style="color : #11ABB0;" > <FONT size="5">ACTIVITES RESERVEES</FONT></h2> 
         </div>
 
-        <?php echo"$activite"; ?>
+    <?php echo"$activite"; ?>
 
         <div class="row section-head">
             <h2 style="color : #11ABB0;" > <FONT size="5">TOTAL</FONT></h2> 
@@ -3213,7 +3280,7 @@ function pdfAchats($bdd, $idco) {
             <h2 style="color : #11ABB0;" > <FONT size="5">ACTIVITES RESERVEES</FONT></h2> 
         </div>
 
-        <?php echo"$texte"; ?>
+    <?php echo"$texte"; ?>
 
 
         <page_footer backtop="5mm" backbottom="10mm" backleft="10mm" backright="10mm">
@@ -3441,7 +3508,7 @@ function pdfCommandes($bdd, $idco) {
             <h2 style="color : #11ABB0;" > <FONT size="5">ACTIVITES COMMANDEES</FONT></h2> 
         </div>
 
-        <?php echo"$texte"; ?>
+    <?php echo"$texte"; ?>
 
 
         <page_footer backtop="5mm" backbottom="10mm" backleft="10mm" backright="10mm">
