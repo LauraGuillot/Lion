@@ -646,6 +646,12 @@ function afficheAgenda($bdd) {
 function afficheRepas2($bdd, $idco) {
     try {
 
+        /* Récupération du memberID */
+        $memberID = getMemberID($bdd, $idco);
+
+        /* Récupération du nombre de participants */
+        $n = nbPersonne($bdd, $memberID);
+
         /* Préparation de la requête */
         $sql = 'SELECT Activity_Name, Activity_Date, Activity_Price1, Activity_Price2, Activity_Capacity FROM Activity ' .
                 'INNER JOIN Activity_Type ON (Activity.Activity_Type_ID = Activity_Type.Activity_Type_ID) ' .
@@ -675,11 +681,11 @@ function afficheRepas2($bdd, $idco) {
 
         /* Affichage des activités */
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
-
-            if ($row["Activity_Capacity"] > 0) {
-                afficheActiviteLibre2($row["Activity_Name"], $row["Activity_Date"], $row["Activity_Price1"], $row["Activity_Price2"], $idco, $bdd);
-            } else {
+            $c = $row["Activity_Capacity"];
+            if ($c == 0 || ($c == 1 && $n == 2)) {
                 afficheActiviteComplete2($row["Activity_Name"], $row["Activity_Date"], $row["Activity_Price1"], $row["Activity_Price2"], $idco, $bdd);
+            } else {
+                afficheActiviteLibre2($row["Activity_Name"], $row["Activity_Date"], $row["Activity_Price1"], $row["Activity_Price2"], $idco, $bdd);
             }
         }
 
@@ -696,6 +702,11 @@ function afficheRepas2($bdd, $idco) {
 
 function afficheExcursions2($bdd, $idco) {
     try {
+        /* Récupération du memberID */
+        $memberID = getMemberID($bdd, $idco);
+
+        /* Récupération du nombre de participants */
+        $n = nbPersonne($bdd, $memberID);
 
         /* Préparation de la requête */
         $sql = 'SELECT Activity_Name, Activity_Date, Activity_Price1, Activity_Price2, Activity_Capacity FROM Activity ' .
@@ -726,11 +737,11 @@ function afficheExcursions2($bdd, $idco) {
 
         /* Affichage des activités */
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
-
-            if ($row["Activity_Capacity"] > 0) {
-                afficheActiviteLibre2($row["Activity_Name"], $row["Activity_Date"], $row["Activity_Price1"], $row["Activity_Price2"], $idco, $bdd);
-            } else {
+            $c = $row["Activity_Capacity"];
+            if ($c == 0 || ($c == 1 && $n == 2)) {
                 afficheActiviteComplete2($row["Activity_Name"], $row["Activity_Date"], $row["Activity_Price1"], $row["Activity_Price2"], $idco, $bdd);
+            } else {
+                afficheActiviteLibre2($row["Activity_Name"], $row["Activity_Date"], $row["Activity_Price1"], $row["Activity_Price2"], $idco, $bdd);
             }
         }
 
@@ -2291,11 +2302,11 @@ function afficheRecapPDF($bdd, $idco) {
         <div class="row section-head">
             <h2 style="color : #8BB24C;"> <FONT size="5">Repas</FONT></h2>
         </div>
-    <?php echo"$repas" ?>
+        <?php echo"$repas" ?>
         <div class="row section-head">
             <h2 style="color : #8BB24C;"> <FONT size="5">Excursions</FONT></h2>
         </div>
-    <?php echo"$excursion" ?>
+        <?php echo"$excursion" ?>
 
 
         <div class="row section-head">
@@ -2639,9 +2650,8 @@ function testConnexion($bdd, $mail, $mdp) {
 
                     //Ajout d'une nouvelle connexion                    
                     insertConnexion($bdd, $memberID, $idco);
-                    
                 } else {
-                    
+
                     // Si une connexion est déjà active, on l'update
                     $idco = getIdco($bdd, $memberID);
 
@@ -2850,14 +2860,14 @@ gereConnexion($bdd);
 /* ----------------------------------------------------------------------------------------------- */
 
 function bonDeCommande($bdd, $idco) {
-    
+
     /* Récupération des données personnelles du membre */
     list($memberID, $nom, $prenom, $titre, $status, $district, $club, $num, $adressesup, $rue, $ville, $cp, $tel, $mobile, $mail, $positionclub, $positiondistrict, $train, $traindate) = getInfos($bdd, $idco);
 
     /* Récupération du follower */
     list ($fnom, $fprenom) = getFollower($bdd, $memberID);
-    
- 
+
+
     $accompagnant = "";
     $n = 1; /* nombre de personnes */
     if (!(empty($fnom) && empty($fprenom))) {
@@ -2876,7 +2886,7 @@ function bonDeCommande($bdd, $idco) {
     /* Récupération des activités */
 
     /* On récupère la date du dernier panier */
-     $belongdate = getDatePanier($bdd, $basketID);
+    $belongdate = getDatePanier($bdd, $basketID);
 
     /* On récupère toutes les activités */
     $sql = 'SELECT  Activity.Activity_ID, Activity_Name, Activity_Date, Belong_Price FROM Activity '
@@ -3010,7 +3020,7 @@ function pdfAchats($bdd, $idco) {
     list ($fnom, $fprenom) = getFollower($bdd, $memberID);
 
     /* Récupération du basketID */
-     $basketID = getBasketID($bdd, $memberID);
+    $basketID = getBasketID($bdd, $memberID);
 
     $accompagnant = "";
     $n = 1; /* nombre de personnes */
@@ -3021,9 +3031,9 @@ function pdfAchats($bdd, $idco) {
         $accompagnant = "Aucun";
     }
 
-    /************************************************** */
+    /*     * ************************************************ */
     /* Récupération des repas payés et affichage */
-    /**************************************************** */
+    /*     * ************************************************** */
 
 
     $texte = '<div class="row section-head">
@@ -3086,7 +3096,7 @@ function pdfAchats($bdd, $idco) {
          </div>';
 
     /* Récupération du nombre d'excursions réservées */
-     $cpt2 = getNbExcursionsAchetees($bdd, $basketID);
+    $cpt2 = getNbExcursionsAchetees($bdd, $basketID);
 
     $totalexcursions = 0;
 
@@ -3237,7 +3247,7 @@ function pdfCommandes($bdd, $idco) {
     list ($fnom, $fprenom) = getFollower($bdd, $memberID);
 
     /* Récupération du basketID */
-     $basketID = getBasketID($bdd, $memberID);
+    $basketID = getBasketID($bdd, $memberID);
 
     $accompagnant = "";
     $n = 1; /* nombre de personnes */
@@ -3258,7 +3268,7 @@ function pdfCommandes($bdd, $idco) {
          </div>';
 
     /* Récupération du nombre de repas réservés */
-   $cpt = getNbRepasCommandes($bdd, $basketID);
+    $cpt = getNbRepasCommandes($bdd, $basketID);
 
     $totalrepas = 0;
 
@@ -3313,7 +3323,7 @@ function pdfCommandes($bdd, $idco) {
          </div>';
 
     /* Récupération du nombre d'excursions réservées */
-     $cpt2 = getNbExcursionsCommandees($bdd, $basketID);
+    $cpt2 = getNbExcursionsCommandees($bdd, $basketID);
 
     $totalexcursions = 0;
 
