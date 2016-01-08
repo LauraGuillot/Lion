@@ -2,7 +2,18 @@
 
 include "constantes.php";
 
-//Sélection du memberID
+/*
+ * Ce fichier comporte la majorité des requêtes SQL qui sont utilisées dans le fichiers fonctions.php
+ */
+
+
+
+/* getMemberID
+ * Paramètres : $bdd - base de données / $idco - identifiant de connexion du membre
+ * Résultat : $memberID - identifiant du membre
+ * Description : obtention de l'identifiant du membre à partir de son identifiant de connexion
+ */
+
 function getMemberID($bdd, $idco) {
 
     $sql1 = 'SELECT Member_ID FROM Connexion WHERE (Connexion_ID = :idco )';
@@ -14,7 +25,12 @@ function getMemberID($bdd, $idco) {
     return $memberID;
 }
 
-//Sélection du basketID
+/* getBasketID
+ * Paramètres : $bdd - base de données / $memberID - identifiant du membre
+ * Résultat : $basketID - identifiant du panier du membre
+ * Description : obtention du basketID à partir de l'identifiant du membre
+ */
+
 function getBasketID($bdd, $memberID) {
 
     $sql2 = 'SELECT Basket_ID FROM Basket WHERE (Member_ID = :id )';
@@ -26,7 +42,14 @@ function getBasketID($bdd, $memberID) {
     return $basketID;
 }
 
-//Mise à jour des activités payées par CB
+/* setActivityCB
+ * Paramètres : $bdd - base de données / $basketID - identifiant du panier du membre
+ * Description : 
+ * - Mise à jour du mode de paiement des activités payées : CB
+ * - Mise à jour du booléen de paiement des activités payées
+ * - Remise à 0 des totaux du panier
+ */
+
 function setActivityCB($bdd, $basketID) {
     /* On met à jour les activités payées */
     $sql3 = 'UPDATE Belong SET Belong_Payement_Way = "CB" WHERE (Basket_ID = :id AND Belong_Paid =0 AND Belong_Payement_Way IS NULL)';
@@ -52,7 +75,14 @@ function setActivityCB($bdd, $basketID) {
     $stmt->execute(array('id' => "$basketID"));
 }
 
-//Enregistrement d'une nouvelle commande
+/* setActivityCH
+ * Paramètres : $bdd - base de données / $basketID - identifiant du panier du membre
+ * Description : 
+ * - Mise à jour du mode de paiement des activités commandées : CH
+ * - Mise à jour de la date de commande 
+ * - Remise à 0 des totaux du panier
+ */
+
 function setActivityCH($bdd, $basketID) {
 
     /* On met à jour les activités commandées */
@@ -79,7 +109,12 @@ function setActivityCH($bdd, $basketID) {
     $stmt->execute(array('id' => "$basketID"));
 }
 
-//Incrémentation des capacités des activités de 1 ou 2 si il y a un follower
+/* setCapacity
+ * Paramètres : $bdd - base de données / $memberID - identifiant du membre / $basketID - identifiant du panier du membre
+ * Description : 
+ * Incrémentation des capacités des activités qui sont dans le panier de 1 ou 2 si il y a ou non un follower.
+ */
+
 function setCapacity($bdd, $memberID, $basketID) {
     $sql1 = 'SELECT Count(Follower_ID) FROM Follower WHERE (Member_ID = :id )';
     $stmt = $bdd->prepare($sql1, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
@@ -104,7 +139,13 @@ function setCapacity($bdd, $memberID, $basketID) {
     }
 }
 
-//Vidage d'un panier
+/* videBasket
+ * Paramètres : $bdd - base de données / $idco - identifiant de connexion du membre 
+ * Description : 
+ * - Suppression de toutes les activités du panier
+ * - Remise à 0 des totaux
+ */
+
 function videBasket($bdd, $basketID) {
     $sql = 'DELETE FROM Belong WHERE(Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL)';
     $stmt = $bdd->prepare($sql);
@@ -124,11 +165,17 @@ function videBasket($bdd, $basketID) {
     $stmt->execute(array(':id' => "$basketID"));
 }
 
-//Suppression d'une connexion
+/* suppConnexion
+ * Paramètres : $bdd - base de données / $idco - identifiant de connexion du membre 
+ * Description : 
+ * Suppression d'une connexion d'un membre
+ */
 function suppConnexion($bdd, $idco) {
     $req0 = $bdd->prepare('DELETE FROM Connexion WHERE (Connexion_ID=:id)');
     $req0->execute(array('id' => $idco));
 }
+
+
 
 //Sélection d'un ActivityID à partir de son nom
 function getActivityID($bdd, $nom) {
@@ -457,19 +504,19 @@ function majConnexion($bdd, $idco) {
 }
 
 //Récupération de la date courante 
-function now($bdd){
+function now($bdd) {
     $sql = 'SELECT NOW()';
     $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $stmt->execute(array());
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $now = $row['NOW()'];
-    
+
     return $now;
 }
 
 //Récupération de la date du dernier panier
-function getDatePanier ($bdd, $basketID){
-    
+function getDatePanier($bdd, $basketID) {
+
     $sql = 'SELECT Belong_Date FROM Activity '
             . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
             . ' WHERE (Basket_ID = :id  AND Belong_Payement_Way="CH" AND Congress_ID = ' . congressID . ') ORDER BY (Belong_Date) DESC';
@@ -477,7 +524,29 @@ function getDatePanier ($bdd, $basketID){
     $stmt->execute(array(':id' => "$basketID"));
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $belongdate = $row["Belong_Date"];
-    
+
     return $belongdate;
 }
 
+
+function miseajourinfos($bdd,$idco,$email,$nom,$prenom,$rue,$num,$cadr,$cp,$ville,$tel,$portable) {
+ $memberid = getMemberID($bdd, $idco);
+
+  $sql = 'SELECT Person_ID FROM Member WHERE (Member_ID = :id)';
+    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $stmt->execute(array(':id' => "$memberid"));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $personid = $row["Person_ID"];
+ 
+ 
+ $sql2 = 'UPDATE Member SET Member_Email= :email ,Member_Street = :street,Member_Postal_Code = :cp,Member_Additional_Adress = :cadr,Member_City = :city,Member_Phone = :phone,Member_Mobile = :mobile,Member_Num = :num WHERE (Member_ID = :id)';
+        $stmt = $bdd->prepare($sql2);
+        $stmt->execute(array('email' => "$email",'street' => "$rue",'cp' => "$cp",'cadr' => "$cadr",'city' => "$ville",'phone' => "$tel",'mobile' => "$portable", 'num' => "$num" ,'id' => "$memberid"));
+
+$sql2 = 'UPDATE Person SET Person_Lastname= :nom ,Person_Firstname= :prenom WHERE (Person_ID = :id)';
+$stmt = $bdd->prepare($sql2);
+$stmt->execute(array('nom' => "$nom",'prenom' => "$prenom",'id' => "$personid"));
+
+   
+        
+}

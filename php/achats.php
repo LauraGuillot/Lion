@@ -84,7 +84,7 @@
                         <a class="mobile-btn" href="#" title="Hide navigation">Hide navigation</a>
 
                         <ul id="nav" class="nav" >';
-        print(" <li  ><a href=\"http://localhost/lion/Lion/php/monCompte.php?idco=$idco\"> Informations personnelles</a></li>");
+        print(" <li  ><a href=\"http://localhost/lion/Lion/php/moncompte.php?idco=$idco\"> Informations personnelles</a></li>");
         print(" <li class=\"active\"><a href=\"http://localhost/lion/Lion/php/achats.php?idco=$idco\"> Mes achats</a></li>");
         print(" <li   ><a href=\"http://localhost/lion/Lion/php/commandes.php?idco=$idco\"> Mes commandes</a></li>");
         echo' 

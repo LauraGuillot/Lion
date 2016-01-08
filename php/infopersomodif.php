@@ -39,11 +39,66 @@
         ================================================== -->
         <?php
         include "fonctions.php";
-        afficheHeader();
+        $idco = $_POST['idco'];
+         echo' <header class="mobile">';
+
+        echo'<div class="row"';
+
+        echo' <div class="col full">
+
+                    <div class="logo">';
+        print(" <a href=\"http://localhost/lion/Lion/php/homeC.php?idco=$idco\" style=\"top : 4px\"><img alt=\"\" src=\"images/logo.png\" style=\"height:  50px; width: 55px; top: 4px\"></a>");
+        echo'</div>
+
+                    <nav id="nav-wrap" >
+
+                        <a class="mobile-btn" href="#nav-wrap" title="Show navigation">Show navigation</a>
+                        <a class="mobile-btn" href="#" title="Hide navigation">Hide navigation</a>
+
+                        <ul id="nav" class="nav" style = "margin-left :76px">';
+        print(" <li ><a href=\"http://localhost/lion/Lion/php/homeC.php?idco=$idco\">Home</a></li>");
+        print(" <li ><a href=\"http://localhost/lion/Lion/php/agendaC.php?idco=$idco\">Agenda</a></li>");
+        print(" <li  ><a href=\"http://localhost/lion/Lion/php/infoC.php?idco=$idco\">Info</a></li>");
+        print(" <li ><a href=\"http://localhost/lion/Lion/php/contactC.php?idco=$idco\">Contact</a></li>");
+
+        print(" <li ><a href=\"http://localhost/lion/Lion/php/panier.php?idco=$idco\" > Panier</a>");
+        print(" <li   class=\"active\"><a href=\"http://localhost/lion/Lion/php/moncompte.php?idco=$idco\" > Mon compte</a></li>");
+        print("</li>");
+
+
+        print(" <li ><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\" > Se déconnecter</a></li>");
+
+        echo'  </ul>
+                    </nav>
+                </div>
+            </div>';
+
+        /* Sous onglets */
+        echo'<div class="row">
+
+        <div class="col full">
+
+                    <nav id="nav-wrap" style="position:absolute ;right:300px  ">
+
+                        <a class="mobile-btn" href="#nav-wrap" title="Show navigation">Show navigation</a>
+                        <a class="mobile-btn" href="#" title="Hide navigation">Hide navigation</a>
+
+                        <ul id="nav" class="nav" >';
+        print(" <li  class=\"active\"><a href=\"http://localhost/lion/Lion/php/infoperso.php?idco=$idco\"> Informations personnelles</a></li>");
+        print(" <li><a href=\"http://localhost/lion/Lion/php/achats.php?idco=$idco\"> Mes achats</a></li>");
+        print(" <li   ><a href=\"http://localhost/lion/Lion/php/commandes.php?idco=$idco\"> Mes commandes</a></li>");
+        echo' 
+         </ul>
+        </nav>
+                </div>
+            </div>
+
+       </header>';
         ?>
+        
         <!-- Header End -->
         <?php
-        $idco = $_POST['idco'];
+        
         /* Récupération des données personnelles du membre */
         $sql = 'SELECT Member.Member_ID, Person_Lastname, Person_Firstname, Member_Title, Member_Status, District_Name, Club_Name, '
                 . ' Member_Num, Member_Additional_Adress, Member_Street, Member_City, Member_Postal_Code, Member_Phone, '
@@ -80,14 +135,19 @@
         $traindate = $row["Member_Date_Train"];
 
         echo'
-         <form name="contactForm" id="contactForm" method="post"  action="infosmodifiees.php">
-       <fieldset >
+            <br></br>
+            <br></br>
+           
+        <section>
+        <div class="row">
+        <div class="col g-7" style="top: 80px">
+            <form name="contactForm" id="contactForm" method="post"  action="infosmodifiees.php">
+                    <fieldset >
 
-                            <div>
-                                <label for="contactEmail">Adresse email <span class="required">*</span></label>
-                                <input name="email" type="mail" id="mail" size="35" value=' . $mail . ' style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
-
-                            </div>
+                        <div>
+                            <label for="contactEmail">Adresse email <span class="required">*</span></label>
+                             <input name="email" type="mail" id="mail" size="35" value=' . $mail . ' style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
+                         </div>
                            
                         <div>
                             <label for="contactSubject">Prénom<span class="required">*</span></label>
@@ -99,26 +159,26 @@
                             <input name="nom" type="text" id="nom" size="35" value='.$nom.'>
                         </div>
                         
-                     <div>
-                        <label for="contactSubject">N°<span class="required">*</span></label>
-                        <input name="num" type="text" id="num" size="35" value='.$num.' >
-                    </div>
+                        <div>
+                            <label for="contactSubject">N°<span class="required">*</span></label>
+                             <input name="num" type="text" id="num" size="35" value='.$num.' >
+                        </div>
                     
-                    <div>
-                        <label for="contactSubject">Rue<span class="required">*</span></label>
-                        <input name="rue" type="text" id="rue" size="35" value='.$rue.' >
-                    </div>
+                         <div>
+                             <label for="contactSubject">Rue<span class="required">*</span></label>
+                             <input name="rue" type="text" id="rue" size="35" value='.$rue.' >
+                        </div>
 
-                    <div>
-                        <label for="contactSubject">Complément d\'adresse</label>
-                        <input name="cadr" type="text" id="cadr" size="5" value='.$adressesup.' >
-                    </div>
+                        <div>
+                             <label for="contactSubject">Complément d\'adresse</label>
+                             <input name="cadr" type="text" id="cadr" size="5" value='.$adressesup.' >
+                         </div>
 
 
-                    <div>
-                        <label for="contactSubject">Code Postal<span class="required">*</span></label>
-                        <input name="cp" type="text" id="cp" size="5" value=' . $cp . ' />
-                    </div>
+                        <div>
+                             <label for="contactSubject">Code Postal<span class="required">*</span></label>
+                             <input name="cp" type="text" id="cp" size="5" value=' . $cp . ' />
+                         </div>
 
                     <div>
                         <label for="contactSubject">Ville<span class="required">*</span></label>
@@ -136,14 +196,23 @@
                         <input name="portable" type="tel" id="portable" size="35" value=' . $mobile . ' style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0"/>
                     </div>
                     
-<br></br>
+                    <div>
+                       
+                        <input name="idco" type="hidden" id="idco" size="35" value=' . $idco . ' style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0"/>
+                    </div>
+                    
+                    <br></br>
 
-                            <div>
-                                <input type="submit" name="v1" value="Valider mes modifications">
-                            </div>
+                    <div>
+                           <input type="submit" name="v1" value="Valider mes modifications">
+                    </div>
 
-                        </fieldset>
-                         </form> 
+                </fieldset>
+           </form> 
+        </div></div>
+        <br></br>
+         </section>      
+                                
                     ';
         ?>
 
