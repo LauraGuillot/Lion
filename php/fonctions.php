@@ -1670,7 +1670,7 @@ function afficheRecap($bdd, $idco) {
     /* Récupération du basketID et des totaux */
     $basketID = getBasketID($bdd, $memberID);
 
-    list ($totalrepas, $totalexcursion, $total) = getTotal($bdd, $basketID);
+    list ($totalmeal, $totaltrip, $total) = getTotal($bdd, $basketID);
 
     $total = $n * $total;
     $totaltrip = $n * $totaltrip;
@@ -2206,19 +2206,45 @@ function initMDP($email, $mdp, $mdp2, $bdd) {
 
 function afficheRecapPDF($bdd, $idco) {
     /* Récupération des données personnelles du membre */
-    list($memberID, $nom, $prenom, $titre, $status, $district, $club, $num, $adressesup, $rue, $ville, $cp, $tel, $mobile, $mail, $positionclub, $positiondistrict, $train, $traindate) = getInfos($bdd, $idco);
+    $sql = 'SELECT Member.Member_ID, Person_Lastname, Person_Firstname, Member_Title, Member_Status, District_Name, Club_Name, '
+            . ' Member_Num, Member_Additional_Adress, Member_Street, Member_City, Member_Postal_Code, Member_Phone, '
+            . ' Member_Mobile, Member_EMail, Member_Position_Club, Member_Position_District, Member_By_Train, Member_Date_Train '
+            . ' FROM Member '
+            . ' INNER JOIN Connexion ON (Connexion.Member_ID = Member.Member_ID) '
+            . ' INNER JOIN Person ON (Person.Person_ID = Member.Person_ID) '
+            . ' INNER JOIN Club ON (Club.Club_ID = Member.Club_ID) '
+            . ' INNER JOIN District ON (District.District_ID = Member.District_ID) '
+            . ' WHERE (Connexion_ID = :id)';
 
+    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $stmt->execute(array('id' => "$idco"));
 
-    /* Récupération du follower */
-    list ($fnom, $fprenom) = getFollower($bdd, $memberID);
-
-    /* Traitement des données */
+    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $memberID = $row["Member_ID"];
+    $nom = $row["Person_Lastname"];
+    $prenom = $row["Person_Firstname"];
+    $titre = $row["Member_Title"];
+    $status = $row["Member_Status"];
     if ($status == 0) {
         $status = "Leo";
     } else {
         $status = "Lion";
     }
+    $district = $row["District_Name"];
+    $club = $row["Club_Name"];
+    $num = $row["Member_Num"];
+    $adressesup = $row["Member_Additional_Adress"];
+    $rue = $row["Member_Street"];
+    $ville = $row["Member_City"];
+    $cp = $row["Member_Postal_Code"];
+    $tel = $row["Member_Phone"];
+    $mobile = $row["Member_Mobile"];
+    $mail = $row["Member_EMail"];
+    $positionclub = $row["Member_Position_Club"];
+    $positiondistrict = $row["Member_Position_District"];
 
+    $train = $row["Member_By_Train"];
+    $traindate = $row["Member_Date_Train"];
 
     if ($train == 1) {
         $resulttrain = "Arrivée en train le : $traindate";
@@ -2227,34 +2253,54 @@ function afficheRecapPDF($bdd, $idco) {
     }
 
 
-    $n = 1; /* nombre de personnes */
+    /* Récupération du follower */
+    $sql = 'SELECT Person_Lastname, Person_Firstname '
+            . 'FROM Follower '
+            . ' INNER JOIN Person ON (Person.Person_ID = Follower.Person_ID) '
+            . ' WHERE (Member_ID = :id)';
+    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $stmt->execute(array(':id' => "$memberID"));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $fnom = $row["Person_Lastname"];
+    $fprenom = $row["Person_Firstname"];
+
+    $accompagnant = "";
+$n=1;
     if (!(empty($fnom) && empty($fprenom))) {
         $accompagnant = $fprenom . " " . $fnom;
-        $n = $n + 1;
+        $n =$n+1;
     } else {
         $accompagnant = "Aucun";
     }
 
     $dateauj = date("d-m-Y");
 
-    /*     * ***************************************** */
+    /*     * ****************************************** */
     /* Récupération des activités du panier */
-    /*     * ********************************************* */
+    /*     * ********************************************** */
 
     /* Récupération du basketID et des totaux */
-    /* Récupération du basketID et des totaux */
-    $basketID = getBasketID($bdd, $memberID);
-
-    list ($totalrepas, $totalexcursion, $total) = getTotal($bdd, $basketID);
-
-    $total = $n * $total;
-    $totaltrip = $n * $totaltrip;
-    $totalmeal = $n * $totalmeal;
-
+    $sql = 'SELECT Basket_ID, Basket_Total, Basket_Trip_Total, Basket_Meal_Total FROM Basket WHERE (Member_ID = :id)';
+    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $stmt->execute(array(':id' => "$memberID"));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $basketID = $row["Basket_ID"];
+    $total = $row["Basket_Total"];
+    $total =$total*$n;
+    $totaltrip = $row["Basket_Trip_Total"];
+    $totaltrip=$totaltrip*$n;
+    $totalmeal = $row["Basket_Meal_Total"];
+    $totalmeal = $totalmeal*$n;
 
     /* Récupération du nombre de repas réservés */
-    $cpt = getNbRepasPanier($bdd, $basketID);
-
+    $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
+            . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
+            . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
+            . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL AND Activity_Type_Name = "Repas" AND Congress_ID = ' . congressID . ')';
+    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $stmt->execute(array(':id' => "$basketID"));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $cpt = $row["Count(Activity.Activity_ID)"];
     $repas = '';
 
     if ($cpt != 0) {
@@ -2269,12 +2315,11 @@ function afficheRecapPDF($bdd, $idco) {
 
         $repas = $repas . ' 
 <div>
-    <TABLE id="tableau" border  cols="4" style="border:1px solid black;width : 100%; margin-left : 0;border-collapse: collapse;">             
+    <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 100%; margin-left : 0;border-collapse: collapse;">             
          <TR class="row" >
                         <Td class ="col" width=100 style="border:1px solid black; background-color : #C9D2D7;text-align : center;"><FONT size="5" > <b> Date </b></FONT></Td>
-                        <td class ="col" width=280 style="border:1px solid black; background-color : #C9D2D7; text-align : center;"> <FONT size="5" > <b> Intitulé </b></FONT></td>
-                        <td class ="col" width=100 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Tarif </b> </FONT></td>
-                        <td class ="col" width=160 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Nombre de personnes </b> </FONT></td>
+                        <td class ="col" width=320 style="border:1px solid black; background-color : #C9D2D7; text-align : center;"> <FONT size="5" > <b> Intitulé </b></FONT></td>
+                        <td class ="col" width=140 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Tarif </b> </FONT></td>
         </TR> ';
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
@@ -2285,10 +2330,9 @@ function afficheRecapPDF($bdd, $idco) {
 
             $repas = $repas . '<TR class="row" >
            <Td class ="col"  width=100 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $date . '</FONT> </Td>
-           <td class ="col" width=280 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $activite . '</FONT> </td>
-           <td class ="col" width=100 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $prix . ' €</FONT> </td>
-           <td class ="col" width=160 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $n . ' </FONT> </td>
-        </TR> ';
+           <td class ="col" width=320 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $activite . '</FONT> </td>
+           <td class ="col" width=140 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $prix . ' €</FONT> </td>
+         </TR> ';
         } $repas = $repas . ' </TABLE>
              </div>';
     } else {
@@ -2304,7 +2348,15 @@ function afficheRecapPDF($bdd, $idco) {
 
 
     /* Récupération du nombre d'excursions réservées */
-    $cpt = getNbExcursionsPanier($bdd, $basketID);
+
+    $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
+            . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
+            . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
+            . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL AND Activity_Type_Name = "Excursion" AND Congress_ID = ' . congressID . ')';
+    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $stmt->execute(array(':id' => "$basketID"));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $cpt2 = $row["Count(Activity.Activity_ID)"];
 
 
     if ($cpt2 != 0) {
@@ -2321,9 +2373,8 @@ function afficheRecapPDF($bdd, $idco) {
     <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 100%; margin-left : 0;border-collapse: collapse;">             
          <TR class="row" >
                         <Td class ="col" width=100 style="border:1px solid black; background-color : #C9D2D7;text-align : center;"><FONT size="5" > <b> Date </b></FONT></Td>
-                        <td class ="col" width=280 style="border:1px solid black; background-color : #C9D2D7; text-align : center;"> <FONT size="5" > <b> Intitulé </b></FONT></td>
-                        <td class ="col" width=100 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Tarif </b> </FONT></td>
-                        <td class ="col" width=160 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Nombre de personnes </b> </FONT></td>
+                        <td class ="col" width=320 style="border:1px solid black; background-color : #C9D2D7; text-align : center;"> <FONT size="5" > <b> Intitulé </b></FONT></td>
+                        <td class ="col" width=140 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Tarif </b> </FONT></td>
         </TR> ';
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
@@ -2334,10 +2385,9 @@ function afficheRecapPDF($bdd, $idco) {
 
             $excursion = $excursion . '  <TR class="row" >
            <Td class ="col"  width=100 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $date . '</FONT> </Td>
-           <td class ="col" width=280 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $activite . '</FONT> </td>
-           <td class ="col" width=100 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $prix . ' €</FONT> </td>
-           <td class ="col" width=160 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $n . ' </FONT> </td>
-        </TR>  ';
+           <td class ="col" width=320 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $activite . '</FONT> </td>
+           <td class ="col" width=140 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $prix . ' €</FONT> </td>
+         </TR> ';
         }$excursion = $excursion . ' </TABLE>
              </div>';
     } else {
@@ -2428,11 +2478,11 @@ function afficheRecapPDF($bdd, $idco) {
         <div class="row section-head">
             <h2 style="color : #8BB24C;"> <FONT size="5">Repas</FONT></h2>
         </div>
-        <?php echo"$repas" ?>
+    <?php echo"$repas" ?>
         <div class="row section-head">
             <h2 style="color : #8BB24C;"> <FONT size="5">Excursions</FONT></h2>
         </div>
-        <?php echo"$excursion" ?>
+    <?php echo"$excursion" ?>
 
 
         <div class="row section-head">

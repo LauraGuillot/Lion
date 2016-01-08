@@ -6,8 +6,6 @@ include "constantes.php";
  * Ce fichier comporte la majorité des requêtes SQL qui sont utilisées dans le fichiers fonctions.php
  */
 
-
-
 /* getMemberID
  * Paramètres : $bdd - base de données / $idco - identifiant de connexion du membre
  * Résultat : $memberID - identifiant du membre
@@ -174,8 +172,6 @@ function suppConnexion($bdd, $idco) {
     $req0 = $bdd->prepare('DELETE FROM Connexion WHERE (Connexion_ID=:id)');
     $req0->execute(array('id' => $idco));
 }
-
-
 
 //Sélection d'un ActivityID à partir de son nom
 function getActivityID($bdd, $nom) {
@@ -530,7 +526,8 @@ function getDatePanier($bdd, $basketID) {
 
 
 function miseajourinfos($bdd,$idco,$email,$nom,$prenom,$rue,$num,$cadr,$cp,$ville,$tel,$portable) {
- $memberid = getMemberID($bdd, $idco);
+
+    $memberid = getMemberID($bdd, $idco);
 
   $sql = 'SELECT Person_ID FROM Member WHERE (Member_ID = :id)';
     $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
