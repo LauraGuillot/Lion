@@ -106,22 +106,22 @@ print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\
                     <fieldset>
 
                         <div>
-                            <label for="contactName">Nom <span class="required">*</span></label>
+                            <label for="contactName"><FONT style="color :#BEBEBE">Nom <span class="required">*</span></label>
                             <input name="contactName" type="text" id="contactName" size="35" value="" />
                         </div>
 
                         <div>
-                            <label for="contactEmail">E-mail <span class="required">*</span></label>
+                            <label for="contactEmail"><FONT style="color :#BEBEBE">E-mail <span class="required">*</span></label>
                             <input name="contactEmail" type="text" id="contactEmail" size="35" value="" />
                         </div>
 
                         <div>
-                            <label for="contactSubject">Sujet</label>
+                            <label for="contactSubject"><FONT style="color :#BEBEBE">Sujet</label>
                             <input name="contactSubject" type="text" id="contactSubject" size="35" value="" />
                         </div>
 
                         <div>
-                            <label  for="contactMessage">Message <span class="required">*</span></label>
+                            <label  for="contactMessage"><FONT style="color :#BEBEBE">Message <span class="required">*</span></label>
                             <textarea name="contactMessage"  id="contactMessage" rows="15" cols="50" ></textarea>
                         </div>
 
