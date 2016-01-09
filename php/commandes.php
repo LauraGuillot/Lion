@@ -1,4 +1,8 @@
-
+  <?php
+    $idco = $_GET['idco'];
+        include "fonctions.php";
+        majConnexion($bdd, $idco);
+?>
 <!DOCTYPE html>
 <!--[if lt IE 8 ]><html class="ie ie7" lang="en"> <![endif]-->
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
@@ -118,9 +122,9 @@
             </div>
             <?php
             $idco = $_GET['idco'];
-            include "fonctions.php";
+            
             afficheCommandes($bdd, $idco);
-            majConnexion($bdd, $idco);
+            
             ?>
         </div>
 

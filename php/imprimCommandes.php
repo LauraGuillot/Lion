@@ -1,7 +1,7 @@
 <?php
 $idco = $_POST['idco'];
-include 'requetes.php';
-
+include "requetes.php";
+ majConnexion($bdd, $idco);
 /* ----------------------------------------------------------------------------------------------- 
  *                                Commandes PDF    
  * Paramètres :  $bdd - Base de données / $idco - identifiant de connexion du membre 

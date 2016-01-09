@@ -1,3 +1,9 @@
+<?php
+include "fonctions.php";
+$idco = $_POST['idco'];
+majConnexion($bdd, $idco);
+?>
+
 <!DOCTYPE html>
 <!--[if lt IE 8 ]><html class="ie ie7" lang="en"> <![endif]-->
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
@@ -40,7 +46,7 @@
         <?php
         include "fonctions.php";
         $idco = $_POST['idco'];
-         echo' <header class="mobile">';
+        echo' <header class="mobile">';
 
         echo'<div class="row"';
 
@@ -95,10 +101,9 @@
 
        </header>';
         ?>
-        
+
         <!-- Header End -->
         <?php
-        
         /* Récupération des données personnelles du membre */
         $sql = 'SELECT Member.Member_ID, Person_Lastname, Person_Firstname, Member_Title, Member_Status, District_Name, Club_Name, '
                 . ' Member_Num, Member_Additional_Adress, Member_Street, Member_City, Member_Postal_Code, Member_Phone, '
@@ -151,27 +156,27 @@
                            
                         <div>
                             <label for="contactSubject">Prénom<span class="required">*</span></label>
-                            <input name="prenom" type="text" id="prenom" size="35" value='.$prenom.'>
+                            <input name="prenom" type="text" id="prenom" size="35" value=' . $prenom . '>
                         </div>
 
                         <div>
                             <label for="contactSubject">Nom<span class="required">*</span></label>
-                            <input name="nom" type="text" id="nom" size="35" value='.$nom.'>
+                            <input name="nom" type="text" id="nom" size="35" value=' . $nom . '>
                         </div>
                         
                         <div>
                             <label for="contactSubject">N°<span class="required">*</span></label>
-                             <input name="num" type="text" id="num" size="35" value='.$num.' >
+                             <input name="num" type="text" id="num" size="35" value=' . $num . ' >
                         </div>
                     
                          <div>
                              <label for="contactSubject">Rue<span class="required">*</span></label>
-                             <input name="rue" type="text" id="rue" size="35" value='.$rue.' >
+                             <input name="rue" type="text" id="rue" size="35" value=' . $rue . ' >
                         </div>
 
                         <div>
                              <label for="contactSubject">Complément d\'adresse</label>
-                             <input name="cadr" type="text" id="cadr" size="5" value='.$adressesup.' >
+                             <input name="cadr" type="text" id="cadr" size="5" value=' . $adressesup . ' >
                          </div>
 
 

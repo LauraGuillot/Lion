@@ -17,7 +17,7 @@ $idco = $_POST['idco'];
                     
                         
                         miseajourinfos($bdd,$idco,$email,$nom,$prenom,$rue,$num,$cadr,$cp,$ville,$tel,$portable);
-
+ majConnexion($bdd, $idco);
  echo ' 
                         
 <!DOCTYPE html>
@@ -62,7 +62,6 @@ $idco = $_POST['idco'];
 ';
        
 
- 
    echo "  
          <header class=\"mobile\">
 
@@ -139,7 +138,7 @@ $idco = $_POST['idco'];
            
           
             afficheInfos($bdd, $idco);
-            majConnexion($bdd, $idco);
+            
            
      
 echo " 

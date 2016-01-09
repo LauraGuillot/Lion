@@ -504,6 +504,7 @@ function deconnexion($idco, $bdd) {
     /* Suppression de la connexion */
     suppConnexion($bdd, $idco);
 
+    /* Redirection vers la page d'accueil */
     header("Location: http://Localhost/lion/Lion/php/home.php");
 }
 
@@ -3053,17 +3054,32 @@ function gereConnexion($bdd) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
 
         $idco = $row['Connexion_ID'];
-               
+
         $h2 = $row['HOUR(Last_Connexion)'];
         $m2 = $row['MINUTE(Last_Connexion)'];
         $s2 = $row['SECOND(Last_Connexion)'];
-        
-       $diff = ($h-$h2) + ($m-$m2)/60 + ($s-$s2)/3600;
+
+        $diff = ($h - $h2) + ($m - $m2) / 60 + ($s - $s2) / 3600;
 
         if ($diff > 0.5) {
             echo "AAAA";
             //On supprime la connexion
-            deconnexion($idco, $bdd);
+            
+            /* Récupération du membre id */
+            $memberID = getMemberID($bdd, $idco);
+
+            /* Récupération du basket id */
+            $basketID = getBasketID($bdd, $memberID);
+
+            /* Incrémentation des capacités de toutes les activités supprimées */
+            setCapacity($bdd, $memberID, $basketID);
+
+
+            /* Suppression des activités non payées */
+            videBasket($bdd, $basketID);
+
+            /* Suppression de la connexion */
+            suppConnexion($bdd, $idco);
         }
     }
 }
@@ -3157,7 +3173,7 @@ function bonDeCommande($bdd, $idco) {
              </div>';
 
     list($a, $mo, $j, $h, $m, $s) = dateAuj($bdd);
-    $dateauj = "$j"."-"."$mo"."-"."$a";
+    $dateauj = "$j" . "-" . "$mo" . "-" . "$a";
     $numCommande = $memberID . "-" . $numCommande;
     ob_start();
     ?>
@@ -3400,8 +3416,8 @@ function pdfAchats($bdd, $idco) {
         </div>
    
 ';
-   list($a, $mo, $j, $h, $m, $s) = dateAuj($bdd);
-    $dateauj = "$j"."-"."$mo"."-"."$a";
+    list($a, $mo, $j, $h, $m, $s) = dateAuj($bdd);
+    $dateauj = "$j" . "-" . "$mo" . "-" . "$a";
     ob_start();
     ?>
 
@@ -3631,8 +3647,8 @@ function pdfCommandes($bdd, $idco) {
         </div>
    
 ';
-   list($a, $mo, $j, $h, $m, $s) = dateAuj($bdd);
-    $dateauj = "$j"."-"."$mo"."-"."$a";
+    list($a, $mo, $j, $h, $m, $s) = dateAuj($bdd);
+    $dateauj = "$j" . "-" . "$mo" . "-" . "$a";
     ob_start();
     ?>
 

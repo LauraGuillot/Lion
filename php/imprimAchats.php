@@ -1,6 +1,8 @@
 <?php
 $idco = $_POST['idco'];
 include "requetes.php";
+ majConnexion($bdd, $idco);
+
 
 /* ----------------------------------------------------------------------------------------------- 
  *                                Achats PDF 

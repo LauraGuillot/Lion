@@ -1,4 +1,8 @@
-
+<?php
+$idco = $_GET['idco'];
+include "fonctions.php";
+majConnexion($bdd, $idco);
+?>
 <!DOCTYPE html>
 <!--[if lt IE 8 ]><html class="ie ie7" lang="en"> <![endif]-->
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
@@ -40,8 +44,6 @@
         ================================================== -->
 
         <?php
-        $idco = $_GET['idco'];
-
         echo' <header class="mobile">';
 
         echo'<div class="row"';
@@ -84,14 +86,12 @@
                 <br></br>
                 <h2 style=" color : #11ABB0; text-align : center"> Activités choisies </h2>
                 <p style="text-align : center"> <i> Attention, si vous avez un accompagnant, les tarifs seront doublés.  </i></p>
-<br></br>
+                <br></br>
 
             </div>
-            <?php
-            $idco = $_GET['idco'];
-            include "fonctions.php";
-            affichePanier($bdd, $idco);
-           majConnexion($bdd, $idco); ?>
+<?php
+affichePanier($bdd, $idco);
+?>
 
         </div>
 
@@ -103,7 +103,7 @@
 
         <!-- footer
         ================================================== -->
-        <?php affichefooter(); ?>
+<?php affichefooter(); ?>
         <!-- Footer End-->
 
         <!-- Java Script

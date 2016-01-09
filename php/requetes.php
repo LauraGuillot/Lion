@@ -494,10 +494,22 @@ function getIdco($bdd, $memberID) {
 
 //Mise à jour de la date de connexion
 function majConnexion($bdd, $idco) {
+    
+    $sql = 'SELECT Count(Member_ID) FROM Connexion WHERE (Connexion_ID = :id) ';
+    $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $stmt->execute(array(':id' => "$idco"));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $cpt = $row['Count(Member_ID)'];
+    
+    //Si le membre n'a plus de connexion : on le redirige vers l'accueil
+    if ($cpt == 0){
+        header("Location: http://Localhost/lion/Lion/php/home.php");
+    }else{ //On met à jour sa date de dernier clic
+    
     $req9 = $bdd->prepare("UPDATE Connexion SET Last_Connexion= NOW() WHERE (Connexion_ID =:idco)");
     $req9->execute(array(
         'idco' => "$idco"));
-}
+}}
 
 //Récupération de la date courante 
 function now($bdd) {

@@ -1,3 +1,8 @@
+  <?php
+ $idco = $_POST['idco'];
+        include "fonctions.php";
+        majConnexion($bdd, $idco);
+?>
 
 <!DOCTYPE html>
 <!--[if lt IE 8 ]><html class="ie ie7" lang="en"> <![endif]-->
@@ -40,7 +45,7 @@
         ================================================== -->
 
         <?php
-        $idco = $_POST['idco'];
+       
 
         echo' <header class="mobile">';
 
@@ -85,10 +90,9 @@
 
             </div>
             <?php
-            $idco = $_POST['idco'];
-            include "fonctions.php";
+            
             afficheRecap($bdd, $idco);
-            majConnexion($bdd, $idco);
+           
             ?>
 
         </div>

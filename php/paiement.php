@@ -1,3 +1,8 @@
+  <?php
+ $idco = $_POST['idco'];
+        include "fonctions.php";
+        majConnexion($bdd, $idco);
+?>
 
 <!DOCTYPE html>
 <!--[if lt IE 8 ]><html class="ie ie7" lang="en"> <![endif]-->
@@ -39,7 +44,7 @@
         <!-- Header
         ================================================== -->
         <?php
-        $idco = $_POST['idco'];
+       
 
         echo' <header class="mobile">';
 
@@ -110,10 +115,10 @@
 
     <!-- footer
     ================================================== -->
-    <?php include "fonctions.php";
+    <?php 
 
     affichefooter();
-    majConnexion($bdd, $idco);?>
+   ?>
     <!-- Footer End-->
 
     <!-- Java Script

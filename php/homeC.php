@@ -1,4 +1,7 @@
-
+  <?php
+        include "fonctions.php";
+        majConnexion($bdd, $idco);
+?>
 
 
 <!DOCTYPE html>
@@ -161,9 +164,9 @@ print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\
 
         <!-- footer
         ================================================== -->
-        <?php include "fonctions.php";
+        <?php
 affichefooter();
-majConnexion($bdd, $idco);?>
+?>
         <!-- Footer End-->
 
         <!-- Java Script

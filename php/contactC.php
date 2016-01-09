@@ -1,3 +1,9 @@
+  <?php
+    $idco = $_GET['idco'];
+        include "fonctions.php";
+        majConnexion($bdd, $idco);
+?>
+
 <!DOCTYPE html>
 <!--[if lt IE 8 ]><html class="ie ie7" lang="en"> <![endif]-->
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
@@ -38,7 +44,7 @@
         ================================================== -->
        
         <?php
-        $idco = $_GET['idco'];
+      
 
         echo' <header class="mobile">';
 
@@ -173,9 +179,9 @@ print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\
 
     <!-- footer
     ================================================== -->
-    <?php include "fonctions.php";
+    <?php 
 affichefooter();
-majConnexion($bdd, $idco);?>
+?>
     <!-- Footer End-->
 
     <!-- Java Script

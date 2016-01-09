@@ -1,3 +1,8 @@
+   <?php
+  $idco = $_GET['idco'];
+        include "fonctions.php";
+        majConnexion($bdd, $idco);
+?>
 
 <!DOCTYPE html>
 <!--[if lt IE 8 ]><html class="ie ie7" lang="en"> <![endif]-->
@@ -40,7 +45,7 @@
         ================================================== -->
 
         <?php
-        $idco = $_GET['idco'];
+        
 
         echo' <header class="mobile">';
 
@@ -114,10 +119,9 @@
             </div>
 
             <?php
-            $idco = $_GET['idco'];
-            include "fonctions.php";
+            
             afficheInfos($bdd, $idco);
-            majConnexion($bdd, $idco);
+          
             ?>
      
 

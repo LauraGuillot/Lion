@@ -1,4 +1,8 @@
-
+  <?php
+   $idco = $_GET['idco'];
+        include "fonctions.php";
+        majConnexion($bdd, $idco);
+?>
 
 
 <!DOCTYPE html>
@@ -40,8 +44,8 @@
 
         <!-- Header
           ================================================== -->
-        <?php include "fonctions.php";
-        $idco = $_GET['idco'];
+        <?php 
+       
 
         echo' <header class="mobile">';
 
