@@ -1,4 +1,4 @@
- <?php
+<?php
 include "requetes.php";
 
 /* ---------------------------------------------------------------------------------------------------- 
@@ -1242,7 +1242,10 @@ function afficheCommandes($bdd, $idco) {
 <div>
     <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 80%; margin-left : 0">             
          <TR class="row" >
-                        <Td class ="col"  width=20% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
+                        <Td class ="col"  width=20% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> 
+                        
+
+</FONT></TH>
                         <td class ="col" width=40% style="border:1px solid black; text-align : center;"> <FONT size="4" style="color : #52574B"> Intitulé </FONT></th>
                         <td class ="col" width=10% style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Tarif </FONT></th>
                          <td class ="col" width=241.23 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Nombre de personnes</FONT></th>
@@ -1864,11 +1867,16 @@ function addAct($bdd, $idco, $nom) {
 
     /* On récupère le prix, le type et l'activity_ID de l'activité choisie */
 
-    $date = date("d-m-Y");
-    $date1 = "31-03-2016";
+    list ($a1, $m1, $j1, $heure1, $min1, $sec1) = dateAuj($bdd);
+    $a2 = 2016;
+    $j2 = 31;
+    $m2 = 3;
+
+    /* Comparaison des dates */
+    $privilege = compareDate($j1, $m1, $a1, $j2, $m2, $a2);
 
     /* Si on est avant le 31 mars, le tarif sera le premier */
-    if (strtotime($date) <= strtotime($date1)) {
+    if ($privilege == 1) {
 
         $sql3 = 'SELECT Activity_ID, Activity_Price1, Activity_Type_Name FROM Activity '
                 . 'INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
@@ -1950,6 +1958,22 @@ function addAct($bdd, $idco, $nom) {
     $stmt->execute(array('sum' => "$sum", 'id' => "$activiteID"));
 
     header("location:" . $_SERVER['HTTP_REFERER']);
+}
+
+/*
+ * Paramètres : 
+ * - j1, m1, a1 désigne le jour, le mois et l'année d'une première date
+ * - j2, m2, a2 désigne le jour, le mois et l'année d'une seconde date
+ * Résultat :
+ * - Booléen : inf
+ * Description :
+ * Cette fonction renvoie 1 si la première date est plus ancienne que la seconde et 0 sinon
+ */
+
+function compareDate($j1, $m1, $a1, $j2, $m2, $a2) {
+    $inf = ($a1 < $a2) || ($a1 == $a2 && $m1 < $m2) || ($a1 == $a2 && $m1 == $m2 && $j1 <= $j2);
+
+    return $inf;
 }
 
 /* ---------------------------------------------------------------------------------------------------- 
@@ -2265,15 +2289,15 @@ function afficheRecapPDF($bdd, $idco) {
     $fprenom = $row["Person_Firstname"];
 
     $accompagnant = "";
-$n=1;
+    $n = 1;
     if (!(empty($fnom) && empty($fprenom))) {
         $accompagnant = $fprenom . " " . $fnom;
-        $n =$n+1;
+        $n = $n + 1;
     } else {
         $accompagnant = "Aucun";
     }
-
-    $dateauj = date("d-m-Y");
+    list($annee, $mois, $day, $heure, $min, $sec) = dateAuj($bdd);
+    $dateauj = "$day" . "-" . "$mois" . "-" . "$annee";
 
     /*     * ****************************************** */
     /* Récupération des activités du panier */
@@ -2286,11 +2310,11 @@ $n=1;
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $basketID = $row["Basket_ID"];
     $total = $row["Basket_Total"];
-    $total =$total*$n;
+    $total = $total * $n;
     $totaltrip = $row["Basket_Trip_Total"];
-    $totaltrip=$totaltrip*$n;
+    $totaltrip = $totaltrip * $n;
     $totalmeal = $row["Basket_Meal_Total"];
-    $totalmeal = $totalmeal*$n;
+    $totalmeal = $totalmeal * $n;
 
     /* Récupération du nombre de repas réservés */
     $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
@@ -3018,27 +3042,26 @@ function afficheClub($bdd, $district) {
 
 function gereConnexion($bdd) {
     /* On récupère la date courante */
-    $now = now($bdd);
-
-    $date1 = new DateTime($now);
+    list($a, $mo, $j, $h, $m, $s) = dateAuj($bdd);
 
 
     /* On récupère toutes les connexions */
-    $sql = 'SELECT Connexion_ID, Last_Connexion FROM Connexion ';
+    $sql = 'SELECT Connexion_ID, Last_Connexion, HOUR(Last_Connexion), MINUTE(Last_Connexion), SECOND(Last_Connexion) FROM Connexion ';
     $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $stmt->execute(array());
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
 
         $idco = $row['Connexion_ID'];
-        $date = $row['Last_Connexion'];
+               
+        $h2 = $row['HOUR(Last_Connexion)'];
+        $m2 = $row['MINUTE(Last_Connexion)'];
+        $s2 = $row['SECOND(Last_Connexion)'];
+        
+       $diff = ($h-$h2) + ($m-$m2)/60 + ($s-$s2)/3600;
 
-        $date2 = new DateTime($date);
-
-        $dteDiff = $date1->diff($date2);
-        $diff = $dteDiff->format("%H:%I:%S");
-
-        if ($diff > "00:30:00") {
+        if ($diff > 0.5) {
+            echo "AAAA";
             //On supprime la connexion
             deconnexion($idco, $bdd);
         }
@@ -3133,7 +3156,8 @@ function bonDeCommande($bdd, $idco) {
     $activite = $activite . ' </TABLE>
              </div>';
 
-    $dateauj = date("d-m-Y");
+    list($a, $mo, $j, $h, $m, $s) = dateAuj($bdd);
+    $dateauj = "$j"."-"."$mo"."-"."$a";
     $numCommande = $memberID . "-" . $numCommande;
     ob_start();
     ?>
@@ -3176,7 +3200,7 @@ function bonDeCommande($bdd, $idco) {
             <h2 style="color : #11ABB0;" > <FONT size="5">ACTIVITES RESERVEES</FONT></h2> 
         </div>
 
-        <?php echo"$activite"; ?>
+    <?php echo"$activite"; ?>
 
         <div class="row section-head">
             <h2 style="color : #11ABB0;" > <FONT size="5">TOTAL</FONT></h2> 
@@ -3376,7 +3400,8 @@ function pdfAchats($bdd, $idco) {
         </div>
    
 ';
-    $dateauj = date("d-m-Y");
+   list($a, $mo, $j, $h, $m, $s) = dateAuj($bdd);
+    $dateauj = "$j"."-"."$mo"."-"."$a";
     ob_start();
     ?>
 
@@ -3418,7 +3443,7 @@ function pdfAchats($bdd, $idco) {
             <h2 style="color : #11ABB0;" > <FONT size="5">ACTIVITES RESERVEES</FONT></h2> 
         </div>
 
-        <?php echo"$texte"; ?>
+    <?php echo"$texte"; ?>
 
 
         <page_footer backtop="5mm" backbottom="10mm" backleft="10mm" backright="10mm">
@@ -3606,7 +3631,8 @@ function pdfCommandes($bdd, $idco) {
         </div>
    
 ';
-    $dateauj = date("d-m-Y");
+   list($a, $mo, $j, $h, $m, $s) = dateAuj($bdd);
+    $dateauj = "$j"."-"."$mo"."-"."$a";
     ob_start();
     ?>
 
@@ -3649,7 +3675,7 @@ function pdfCommandes($bdd, $idco) {
             <h2 style="color : #11ABB0;" > <FONT size="5">ACTIVITES COMMANDEES</FONT></h2> 
         </div>
 
-        <?php echo"$texte"; ?>
+    <?php echo"$texte"; ?>
 
 
         <page_footer backtop="5mm" backbottom="10mm" backleft="10mm" backright="10mm">

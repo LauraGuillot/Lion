@@ -168,7 +168,8 @@ function pdfCommandes($bdd, $idco) {
         </div>
    
 ';
-    $dateauj = date("d-m-Y");
+    list($a, $mo, $j, $h, $m, $s) = dateAuj($bdd);
+    $dateauj = "$j"."-"."$mo"."-"."$a";
     ob_start();
     ?>
 

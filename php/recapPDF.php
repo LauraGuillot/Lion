@@ -71,7 +71,8 @@ $n=1;
         $accompagnant = "Aucun";
     }
 
-    $dateauj = date("d-m-Y");
+   list($annee, $mois, $day, $heure, $min, $sec)=  dateAuj($bdd);
+    $dateauj = "$day"."-"."$mois"."-"."$annee";
 
     /*     * ****************************************** */
     /* Récupération des activités du panier */
