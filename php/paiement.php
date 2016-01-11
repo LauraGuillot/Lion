@@ -1,5 +1,6 @@
   <?php
  $idco = $_POST['idco'];
+
         include "fonctions.php";
         majConnexion($bdd, $idco);
 ?>
@@ -67,7 +68,7 @@
         print(" <li ><a href=\"http://localhost/lion/Lion/php/infoC.php?idco=$idco\">Info</a></li>");
         print(" <li ><a href=\"http://localhost/lion/Lion/php/contactC.php?idco=$idco\">Contact</a></li>");
 
-        print(" <li><a href=\"http://localhost/lion/Lion/php/panier.php?idco=$idco><FONT size=\"4pt\"> Panier</a></li>");
+        print(" <li class=\"active\"><a href=\"http://localhost/lion/Lion/php/panier.php?idco=$idco\"><FONT size=\"4pt\"> Panier</a></li>");
         print(" <li><a href=\"http://localhost/lion/Lion/php/moncompte.php?idco=$idco\" > Mon compte</a></li>");
         print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\"> Se déconnecter</a></li>");
         echo'  </ul>
