@@ -173,7 +173,12 @@ function suppConnexion($bdd, $idco) {
     $req0->execute(array('id' => $idco));
 }
 
-//Sélection d'un ActivityID à partir de son nom
+
+/* getActivityID
+ * Paramètres : $bdd - base de données / $nom - nom de l'activité
+ * Résultat : $activiteID - Identifiant de l'activité
+ * Description : obtention de l'identifiant d'une activité à partir de son nom
+ */
 function getActivityID($bdd, $nom) {
     $sql3 = 'SELECT Activity_ID FROM Activity WHERE (Activity_Name = :nom )';
     $stmt = $bdd->prepare($sql3, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
@@ -184,7 +189,11 @@ function getActivityID($bdd, $nom) {
     return $activiteID;
 }
 
-//Test pour voir si une activité est dans un panier ou non
+
+/* estDans Panier
+ * Paramètres : $bdd - base de données / $activiteID - Identifiant d'une activité / $basketId - Identifiant d'un panier
+ * Résultat : $cpt - Compteur valant  0 ou 1 suivant si l'activité en paramètre est dans le panier en paramètre ou non
+ */
 function estDansPanier($bdd, $activiteID, $basketID) {
 
     $sql3 = 'SELECT count(Basket_ID) FROM Belong WHERE (Basket_ID = :Bid AND Activity_ID = :Aid )';
@@ -196,7 +205,12 @@ function estDansPanier($bdd, $activiteID, $basketID) {
     return $cpt;
 }
 
-//Sélection du nombre d'activités dans un panier
+
+/* comptePanier
+ * Paramètres : $bdd - base de données / $basketId - Identifiant d'un panier
+ * Résultat : $cpt - Compteur
+ * Description : fonction renvoyant le nombre d'activités dans un panier
+ */
 function comptePanier($bdd, $basketID) {
     $sql = 'SELECT Count(Activity.Activity_ID) FROM Activity '
             . 'INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
@@ -209,7 +223,11 @@ function comptePanier($bdd, $basketID) {
     return $cpt;
 }
 
-//Sélection du nombre de réservations pour une activité : si un membre est accompagné, on renvoie 2 sinon on renvoie 1
+/* nbPersonne
+ * Paramètres : $bdd - base de données / $memberID - Membre Id
+ * Résultat : $n - Compteur
+ * Description : Cette fonction renvoie un entier valant 1 si le membre n'a pas d'accompagnant et 2 sinon
+ */
 function nbPersonne($bdd, $memberID) {
 
     list ($fnom, $fprenom) = getFollower($bdd, $memberID);
@@ -222,7 +240,11 @@ function nbPersonne($bdd, $memberID) {
     return $n;
 }
 
-//Sélection du nombre de repas réservés par qqn
+/* getNbRepasAchetes
+ * Paramètres : $bdd - base de données / $basketId - Identifiant d'un panier
+ * Résultat : $cpt - Compteur
+ * Description : fonction renvoyant le nombre de repas achetés par un membre
+ */
 function getNbRepasAchetes($bdd, $basketID) {
 
     $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
@@ -237,7 +259,11 @@ function getNbRepasAchetes($bdd, $basketID) {
     return $cpt;
 }
 
-//Sélection du nombre d'excursions réservées par qqn
+/* getNbExcursionsAchetees
+ * Paramètres : $bdd - base de données / $basketId - Identifiant d'un panier
+ * Résultat : $cpt - Compteur
+ * Description : fonction renvoyant le nombre d'excursions achetées par un membre
+ */
 function getNbExcursionsAchetees($bdd, $basketID) {
 
     $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
@@ -252,7 +278,11 @@ function getNbExcursionsAchetees($bdd, $basketID) {
     return $cpt;
 }
 
-//Sélection du nombre de repas réservés par qqn
+/* getNbRepasCommandes
+ * Paramètres : $bdd - base de données / $basketId - Identifiant d'un panier
+ * Résultat : $cpt - Compteur
+ * Description : fonction renvoyant le nombre de repas commandés par un membre
+ */
 function getNbRepasCommandes($bdd, $basketID) {
 
     $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
@@ -267,7 +297,11 @@ function getNbRepasCommandes($bdd, $basketID) {
     return $cpt;
 }
 
-//Sélection du nombre d'excursions réservées par qqn
+/* getNbExcursionsCommandees
+ * Paramètres : $bdd - base de données / $basketId - Identifiant d'un panier
+ * Résultat : $cpt - Compteur
+ * Description : fonction renvoyant le nombre d'excursions commandées par un membre
+ */
 function getNbExcursionsCommandees($bdd, $basketID) {
     $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
             . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
@@ -281,7 +315,29 @@ function getNbExcursionsCommandees($bdd, $basketID) {
     return $cpt;
 }
 
-//Sélection des informations personnelles d'un membre
+/* getInfos
+ * Paramètres : $bdd - base de données / $idco - Identifiant de connexion d'un membre
+ * Résultats :    
+ * - $memberID - identifiant du membre
+ * - $nom - Nom du membre
+ * - $prenom - Prénom du membre
+ * - $titre - Civilité du membre (M., Melle, Mme)
+ * - $status - Status du membre dans le clud ( 1 pour Lion et 2 pour Leo)
+ * - $district - District ID du membre
+ * - $club - Club ID du membre
+ * - $num - Numéro de rue du membre
+ * - $adressesup - Complément d'adresse du membre
+ * - $rue - Rue du membre
+ * - $ville - ville du membre
+ * - $cp - Code postal du membre
+ * - $tel - Téléphone du membre
+ * - $mobile - Mobile du membre
+ * - $mail - Adresse mail du membre
+ * - $positionclub - Position du membre au sein du club
+ * - $positiondistrict - Position du membre au sein du dustrict
+ * - $train - Booléen valant 1 si le membre arrive par train et 0 sinon
+ * - $traindate - Date de l'arrivée par train
+ */
 function getInfos($bdd, $idco) {
     $sql = 'SELECT Member.Member_ID, Person_Lastname, Person_Firstname, Member_Title, Member_Status, District_Name, Club_Name, '
             . ' Member_Num, Member_Additional_Adress, Member_Street, Member_City, Member_Postal_Code, Member_Phone, '
@@ -320,7 +376,12 @@ function getInfos($bdd, $idco) {
     return array($memberID, $nom, $prenom, $titre, $status, $district, $club, $num, $adressesup, $rue, $ville, $cp, $tel, $mobile, $mail, $positionclub, $positiondistrict, $train, $traindate);
 }
 
-//Sélection du follower d'un membre
+/* getFollower
+ * Paramètres : $bdd - base de données / $memberID - Identifiant d'un membre
+ * Résultats :    
+ * - $fnom - Nom de l'accompagnant du membre 
+ * - $fprenom - Prénom de l'accompagnant du membre
+ */
 function getFollower($bdd, $memberID) {
     $sql = 'SELECT Person_Lastname, Person_Firstname '
             . 'FROM Follower '
@@ -336,7 +397,13 @@ function getFollower($bdd, $memberID) {
     return array($fnom, $fprenom);
 }
 
-//Sélection des totaux d'un panier
+/* getTotal
+ * Paramètres : $bdd - base de données / $basketID - Identifiant d'un panier
+ * Résultats :    
+ * - $totalrepas -  Total des repas dans le panier
+ * - $totalexcursion - Total des excursions dans le panier
+ * - $total - Total des activités dans le panier
+ */
 function getTotal($bdd, $basketID) {
     $sql = 'SELECT Basket_Meal_Total, Basket_Trip_Total, Basket_Total FROM Basket WHERE (Basket_ID = :id)';
     $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
@@ -349,7 +416,11 @@ function getTotal($bdd, $basketID) {
     return array($totalrepas, $totalexcursion, $total);
 }
 
-//Sélection du nombre de repas dans le panier
+/* getNbRepasPanier
+ * Paramètres : $bdd - base de données / $basketId - Identifiant d'un panier
+ * Résultat : $cpt - Compteur
+ * Description : fonction renvoyant le nombre de repas dans le panier d'un membre
+ */
 function getNbRepasPanier($bdd, $basketID) {
 
     $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
@@ -364,7 +435,11 @@ function getNbRepasPanier($bdd, $basketID) {
     return $cpt;
 }
 
-//Sélection du nombre d'e repas'excursions dans le panier
+/* getNbExcursionsPanier
+ * Paramètres : $bdd - base de données / $basketId - Identifiant d'un panier
+ * Résultat : $cpt - Compteur
+ * Description : fonction renvoyant le nombre d'e repas'excursions dans le panier d'un membre
+ */
 function getNbExcursionsPanier($bdd, $basketID) {
 
     $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
@@ -379,14 +454,22 @@ function getNbExcursionsPanier($bdd, $basketID) {
     return $cpt;
 }
 
-//Insertion d'une activité dans le panier
+/* insertBelong
+ * Paramètres : $bdd - base de données / $basketId - Identifiant d'un panier / $activiteID - identifiant d'ue activité / $prix - Tarif 
+ * Description : cette fonction insère une ligne dans la table belong avec les deux identifiants en paramètre et le prix. Le booléen Belong_Paid est mis à 0.
+ */
 function insertBelong($bdd, $activiteID, $basketID, $prix) {
     $sql4 = 'INSERT INTO Belong (Activity_ID, Basket_ID, Belong_Price, Belong_Paid) VALUES (:activiteID, :basketID , :prix, 0)';
     $stmt = $bdd->prepare($sql4);
     $stmt->execute(array('activiteID' => "$activiteID", 'basketID' => "$basketID", 'prix' => "$prix"));
 }
 
-//Test si un mail appartient à un membre
+
+/* testMail
+ * Paramètres : $bdd - base de données / $email - Mail 
+ * Résultat : $cpt - Compteur
+ * Description : Cette fonction renvoie 1 si le mail en paramètre appartient à un membre du site et 0 sinon
+ */
 function testMail($bdd, $email) {
 
     $sql = 'SELECT Count(Member_ID) FROM Member WHERE (Member_EMail = :mail)';
@@ -398,14 +481,21 @@ function testMail($bdd, $email) {
     return $cpt;
 }
 
-//Mise à jour d'un mot de passe
+/* setMdp
+ * Paramètres : $bdd - base de données / $id - Identifiant d'un membre / $mdp - Mot de passe
+ * Description : Mise à jour du mot de passe du membre passé en paramètre.
+ */
 function setMdp($bdd, $id, $mdp) {
     $sql = 'UPDATE Member SET Member_Password = :mdp WHERE (Member_ID= ' . $id . ')';
     $stmt = $bdd->prepare($sql);
     $stmt->execute(array('mdp' => "$mdp"));
 }
 
-//Sélection de l'id d'un membre à partir de son mail
+/* getMemberIDMail
+ * Paramètres : $bdd - base de données / $email - Mail 
+ * Résultat : $id - Identifiant d'un membre
+ * Description : Récupération de l'identifiant d'un membre à partir de son adresse mail
+ */
 function getMemberIDMail($bdd, $email) {
 
     $sql = 'SELECT Member_ID FROM Member WHERE (Member_EMail = :mail)';
@@ -417,14 +507,27 @@ function getMemberIDMail($bdd, $email) {
     return $id;
 }
 
-//Suppression d'une activité du panier
+/* deleteAct
+ * Paramètres : $bdd - base de données / $activiteId - Identifiant d'une activité / $basketID - Identifiant d'un panier 
+ * Description : Suppression d'une ligne dans la table belong ( la ligne avec les deux identifiants passés en paramètre)
+ */
 function deleteAct($bdd, $activiteID, $basketID) {
     $sql4 = 'DELETE FROM Belong WHERE (Activity_ID = :aid AND Basket_ID = :bid)';
     $stmt = $bdd->prepare($sql4);
     $stmt->execute(array('aid' => "$activiteID", 'bid' => "$basketID"));
 }
 
-//Récupération de la date actuelle
+/* dateAuj
+ * Paramètres : $bdd - base de données 
+ * Résultat : 
+ * - $annee - Année 
+ * - $mois - Mois
+ * - $day - Jour
+ * - $heure - Heure
+ * - $min - Minutes
+ * - $sec - Secondes
+ * Description : Récupération de la date et l'heure courantes
+ */
 function dateAuj($bdd) {
 
     $req8 = $bdd->prepare("SELECT YEAR(DATE(Now()))", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
@@ -460,7 +563,11 @@ function dateAuj($bdd) {
     return array($annee, $mois, $day, $heure, $min, $sec);
 }
 
-//Test si une connexion est active pour un membre
+/* testConnexionMembre
+ * Paramètres : $bdd - base de données / $memberID - Identifiant d'un membre 
+ * Résultat : $cpt - Compteur
+ * Description : Fonction renvoyant 1 si le membre est connecté et 0 sinon
+ */
 function testConnexionMembre($bdd, $memberID) {
 
     $sql = 'SELECT Count(Connexion_ID) FROM Connexion WHERE (Member_ID = :id) ';
@@ -472,7 +579,10 @@ function testConnexionMembre($bdd, $memberID) {
     return $cpt;
 }
 
-//Insertion d'une connexion
+/*insertConnexion
+ * Paramètres : $bdd - base de données / $memberID - Identifiant d'un membre / $idco - Identifiant de connexion
+ * Description : Ajout d'une connexion pour un membre
+ */
 function insertConnexion($bdd, $memberID, $idco) {
     $req9 = $bdd->prepare('INSERT INTO Connexion (Connexion_ID, Last_Connexion, Member_ID ) VALUE (:chaine,NOW(), :id)');
     $req9->execute(array(
@@ -480,7 +590,11 @@ function insertConnexion($bdd, $memberID, $idco) {
         'id' => "$memberID"));
 }
 
-//Sélection de l'identifiant de connexion d'un membre
+/* getIdco
+ * Paramètres : $bdd - base de données / $memberID - Identifiant d'un membre 
+ * Résultat : $idco - Identifiant de connexion
+ * Description : Fonction renvoyant l'identifiant de connexion d'un membre à partir de son identifiant
+ */
 function getIdco($bdd, $memberID) {
 
     $sql = 'SELECT Connexion_ID FROM Connexion WHERE (Member_ID = :id) ';
@@ -492,7 +606,12 @@ function getIdco($bdd, $memberID) {
     return $idco;
 }
 
-//Mise à jour de la date de connexion
+
+/* majConnexion
+ * Paramètres : $bdd - base de données /$idco - Identifiant de connexion 
+ * Description : Fonction mettant à jour la table connexion en mettant à jour la date de dernière activité d'un membre.
+ * Un membre qui n'a plus de connexion (inactivité > 30min) est redirigé vers la page d'accueil.
+ */
 function majConnexion($bdd, $idco) {
     
     $sql = 'SELECT Count(Member_ID) FROM Connexion WHERE (Connexion_ID = :id) ';
@@ -511,7 +630,11 @@ function majConnexion($bdd, $idco) {
         'idco' => "$idco"));
 }}
 
-//Récupération de la date courante 
+/*now
+ * Paramètres : $bdd - base de données 
+ * Résultat : $now - Date
+ * Description : Récupération de la date courante
+ */ 
 function now($bdd) {
     $sql = 'SELECT NOW()';
     $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
@@ -522,7 +645,11 @@ function now($bdd) {
     return $now;
 }
 
-//Récupération de la date du dernier panier
+/*getDatePanier
+ * Paramètres : $bdd - base de données / $basketId - Identifiant du panier
+ * Résultat : $belongdate - Date 
+ * Description : Récupération de la date du dernier panier
+ */ 
 function getDatePanier($bdd, $basketID) {
 
     $sql = 'SELECT Belong_Date FROM Activity '
@@ -536,7 +663,21 @@ function getDatePanier($bdd, $basketID) {
     return $belongdate;
 }
 
-
+/*miseajourinfos
+ * Paramètres : 
+ * $bdd - base de données 
+ * - $nom - Nom du membre
+ * - $prenom - Prénom du membre
+ * - $num - Numéro de rue du membre
+ * - $adressesup - Complément d'adresse du membre
+ * - $rue - Rue du membre
+ * - $ville - ville du membre
+ * - $cp - Code postal du membre
+ * - $tel - Téléphone du membre
+ * - $mobile - Mobile du membre
+ * - $mail - Adresse mail du membre
+ * Description : Mise à jour des informations du membre dont l'identifiant de connexion est passé en paramètre
+ */ 
 function miseajourinfos($bdd,$idco,$email,$nom,$prenom,$rue,$num,$cadr,$cp,$ville,$tel,$portable) {
 
     $memberid = getMemberID($bdd, $idco);
