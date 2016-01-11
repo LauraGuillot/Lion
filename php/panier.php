@@ -1,5 +1,11 @@
 <?php
-$idco = $_GET['idco'];
+$URL = $_SERVER['PHP_SELF'];
+$file = basename($URL);
+
+if (strcmp($file, "agendaPanier.php") != 0) {
+    $idco = $_GET['idco'];
+}
+
 include "fonctions.php";
 majConnexion($bdd, $idco);
 ?>
@@ -89,9 +95,9 @@ majConnexion($bdd, $idco);
                 <br></br>
 
             </div>
-<?php
-affichePanier($bdd, $idco);
-?>
+            <?php
+            affichePanier($bdd, $idco);
+            ?>
 
         </div>
 
@@ -103,7 +109,7 @@ affichePanier($bdd, $idco);
 
         <!-- footer
         ================================================== -->
-<?php affichefooter(); ?>
+        <?php affichefooter(); ?>
         <!-- Footer End-->
 
         <!-- Java Script

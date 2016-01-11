@@ -24,7 +24,9 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
         
         /*On supprime l'activité*/
         suppAct($bdd, $idco, $nom);
-
+        
+        /*On redirige vers le panier*/
+header("location:http://localhost/Lion/lion/php/panier.php?idco=$idco");
         }
 }
 

@@ -911,12 +911,12 @@ function afficheAgenda2($idco, $bdd) {
         <div class="col full">
             <span><h2 style = "color :#11ABB0; margin : 65px; text-align : center">Agenda des conférences et des activités</h2><span>
         </div>
-        </html>';
+        ';
 
     compteurPanier($bdd, $idco);
     afficheRepas2($bdd, $idco);
     afficheExcursions2($bdd, $idco);
-    echo'<html> </div></html>';
+    echo' </div></html>';
 }
 
 /* Affichage d'un compteur pour le panier
@@ -944,28 +944,29 @@ function compteurPanier($bdd, $idco) {
                     <TR class="row" >
                         <TH class ="col" height=60 width=100 "><FONT style="color : #32787A; font-weight:normal;"> Panier vide </FONT></TH>
                     </TR>
+                    
                 </TABLE>
                 </div>';
     } else {
-        if ($cpt == 1) {
+        
             echo' 
-                <div align="right">
-                <TABLE id="tableau" border cols="1" style="border:1px solid #32787A; margin-left : 0; width : 10%">
-                    <TR class="row" >
-                        <TH class ="col" height=60 width=100 "><FONT style="color : #32787A; font-weight:normal;"> Panier <FONT><br><FONT size="5" style="color : #11ABB0;">' . $cpt . ' </FONT></TH>
+            <div align="right">
+                <TABLE id="tableau" border style="border:1px solid #32787A; margin-left : 0; width : 10%">
+                    <TR class="row" >      
+                          <TH class ="col" height=60 width=100 ><FONT style="color : #32787A; font-weight:normal;"> Panier </FONT><br><FONT size="5" style="color : #11ABB0;">' . $cpt . ' </FONT></TH>
+                   
+                            <Td class ="col" height=60 width=100 >
+                              <form action="agendaPanier.php" method="post" style = "margin-bottom : 0; margin-left : 25px"> 
+                                   
+                                   <input type="image" src="images/panier.png" " name="panier"  style= "height : 50px; width : 50px">
+                         <input type="hidden"  name="idco" value="' . $idco . '">
+                                 </form>
+                             </td> 
+                   
                     </TR>
                 </TABLE>
-                </div>';
-        } else {
-            echo' 
-                <div align="right">
-                <TABLE id="tableau" border cols="1" style="border:1px solid #32787A; margin-left : 0; width : 10%">
-                    <TR class="row" >
-                        <TH class ="col" height=60 width=100 "><FONT style="color : #32787A; font-weight:normal;"> Panier <FONT><br><FONT size="5" style="color : #11ABB0;">' . $cpt . ' </FONT></TH>
-                    </TR>
-                </TABLE>
-                </div>';
-        }
+             </div>';
+    
     }
 }
 
@@ -2303,7 +2304,7 @@ function suppAct($bdd, $idco, $nom) {
     $stmt = $bdd->prepare($sql8);
     $stmt->execute(array('sum' => "$sum", 'id' => "$activiteID"));
 
-    header("location:" . $_SERVER['HTTP_REFERER']);
+    
 }
 
 /* ---------------------------------------------------------------------------------------------------- 

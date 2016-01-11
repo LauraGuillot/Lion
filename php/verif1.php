@@ -20,7 +20,7 @@ $cpt = $row["Count(Member_ID)"];
 
 
 if (empty($mdp) or $mdp != $mdp2 or ! preg_match('#^[\w.-]+@[\w.-]+\.[a-z]{2,6}$#i', $email)) {
-    $erreur = "ERREUR DE SAISIE! SAISIR A NOUVEAU LES INFORMATIONS";
+    $erreur = "ERREUR DE SAISIE ! SAISIR A NOUVEAU LES INFORMATIONS";
     include ("inscription.php");
 }
 
