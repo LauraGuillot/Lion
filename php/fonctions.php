@@ -1243,10 +1243,7 @@ function afficheCommandes($bdd, $idco) {
 <div>
     <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 80%; margin-left : 0">             
          <TR class="row" >
-                        <Td class ="col"  width=20% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> 
-                        
-
-</FONT></TH>
+           <Td class ="col"  width=20% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
                         <td class ="col" width=40% style="border:1px solid black; text-align : center;"> <FONT size="4" style="color : #52574B"> Intitulé </FONT></th>
                         <td class ="col" width=10% style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Tarif </FONT></th>
                          <td class ="col" width=241.23 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Nombre de personnes</FONT></th>
