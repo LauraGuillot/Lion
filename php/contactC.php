@@ -1,5 +1,11 @@
   <?php
-    $idco = $_GET['idco'];
+   $path = $_SERVER['PHP_SELF'];
+  $file = basename($path);
+  if (strcmp($file, 'ContactC.php') == 0){
+  $idco = $_GET['idco'];}
+  else{
+     $idco = $_POST['idco']; 
+  }
         include "fonctions.php";
         majConnexion($bdd, $idco);
 ?>

@@ -8,7 +8,7 @@ $idco = $_POST['idco'];
     $message = $_POST['contactMessage'];
 
     if (empty($nom) or empty($message) or ! preg_match('#^[\w.-]+@[\w.-]+\.[a-z]{2,6}$#i', $mail)) {
-        include("conctactC.php");
+        include("contactC.php");
     } else {
 // Message envoyé
     }

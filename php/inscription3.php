@@ -99,12 +99,12 @@
                         </div>
                         <div>
                             <label for="contactSubject"><FONT style="color :#BEBEBE">Au niveau club<span class="required">*</span></label>
-                            <input name="fClub" type="text" id="fClub" size="35" value="" />
+                            <input name="fClub" type="text" id="fClub" size="35" value="" >
                         </div>
 
                         <div>
                             <label for="contactSubject"><FONT style="color :#BEBEBE">Au niveau district<span class="required">*</span></label>
-                            <input name="fDistrict" type="text" id="fDistrict" size="35" value="" />
+                            <input name="fDistrict" type="text" id="fDistrict" size="35" value="" >
                         </div>
 
                         <div class="row section-head">
@@ -114,12 +114,12 @@
 
                         <div>
                             <label for="contactSubject"><FONT style="color :#BEBEBE">Prénom</label>
-                            <input name="prenomAcc" type="text" id="prenomAcc" size="35" value="" />
+                            <input name="prenomAcc" type="text" id="prenomAcc" size="35" value="" >
                         </div>
 
                         <div>
                             <label for="contactSubject"><FONT style="color :#BEBEBE">Nom</label>
-                            <input name="nomAcc" type="text" id="nomAcc" size="35" value="" />
+                            <input name="nomAcc" type="text" id="nomAcc" size="35" value="" >
                         </div>
                         <div class="row section-head">
 
@@ -137,12 +137,12 @@
                         </div>
                         <div>
                             <label for="contactSubject"><FONT style="color :#BEBEBE">Date</label>
-                            <input name="traindate" type="date" id="trainDate" size="35" value="" style = "padding: 18px 18px; margin : 0 0 15px 0; color : #738182; background : #CFD4D5; border : 0"/>
+                            <input name="traindate" type="date" id="trainDate" size="35" value="" style = "padding: 18px 18px; margin : 0 0 15px 0; color : #738182; background : #CFD4D5; border : 0">
                         </div>
 
                         <div>
                             <label for="contactSubject"><FONT style="color :#BEBEBE">Heure</label>
-                            <input name="trainheure" type="time" id="trainHeure" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0"/>
+                            <input name="trainheure" type="time" id="trainHeure" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0">
                         </div>
 
                         <input type="submit" name="v3" value="Valider">
@@ -215,12 +215,12 @@
                         </div>
                         <div>
                             <label for="contactSubject"><FONT style="color :#BEBEBE">Au niveau club<span class="required">*</span></label>
-                            <input name="fClub" type="text" id="fClub" size="35" value='.$fClub.' />
+                            <input name="fClub" type="text" id="fClub" size="35" value='.$fClub.' >
                         </div>
 
                         <div>
                             <label for="contactSubject"><FONT style="color :#BEBEBE">Au niveau district<span class="required">*</span></label>
-                            <input name="fDistrict" type="text" id="fDistrict" size="35" value='.$fDistrict.' />
+                            <input name="fDistrict" type="text" id="fDistrict" size="35" value='.$fDistrict.' >
                         </div>
 
                         <div class="row section-head">
@@ -230,12 +230,12 @@
 
                         <div>
                             <label for="contactSubject"><FONT style="color :#BEBEBE">Prénom</label>
-                            <input name="prenomAcc" type="text" id="prenomAcc" size="35" value='.$prenomAcc.' />
+                            <input name="prenomAcc" type="text" id="prenomAcc" size="35" value='.$prenomAcc.' >
                         </div>
 
                         <div>
                             <label for="contactSubject"><FONT style="color :#BEBEBE">Nom</label>
-                            <input name="nomAcc" type="text" id="nomAcc" size="35" value='.$nomAcc.' />
+                            <input name="nomAcc" type="text" id="nomAcc" size="35" value='.$nomAcc.' >
                         </div>
                         <div class="row section-head">
 
@@ -253,12 +253,12 @@
                         </div>
                         <div>
                             <label for="contactSubject"><FONT style="color :#BEBEBE">Date</label>
-                            <input name="traindate" type="date" id="trainDate" size="35" value="" style = "padding: 18px 18px; margin : 0 0 15px 0; color : #738182; background : #CFD4D5; border : 0"/>
+                            <input name="traindate" type="date" id="trainDate" size="35" value="" style = "padding: 18px 18px; margin : 0 0 15px 0; color : #738182; background : #CFD4D5; border : 0">
                         </div>
 
                         <div>
                             <label for="contactSubject"><FONT style="color :#BEBEBE">Heure</label>
-                            <input name="trainheure" type="time" id="trainHeure" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0"/>
+                            <input name="trainheure" type="time" id="trainHeure" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0">
                         </div>
 
                         <input type="submit" name="v3" value="Valider">

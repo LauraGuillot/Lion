@@ -1331,12 +1331,8 @@ function afficheInfos($bdd, $idco) {
 
     /* Affichage des données personnelles avec possibilité de modification */
     echo'
-        <div class="row section-head">
-            
-            <h2 style="color : #11ABB0;" > <FONT size="5"> Vos informations personnelles <FONT></h2>
-            
-        </div>
-        
+       
+       
         <div>
              <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > <u>Civilité</u> : ' . $titre . '</h2> 
         </div>

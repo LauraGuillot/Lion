@@ -107,32 +107,32 @@ echo'
 
                     <div>
                         <label for="contactSubject"><FONT style="color :#BEBEBE">N°<span class="required">*</span></label>
-                        <input name="num" type="text" id="num" size="35" value="" />
+                        <input name="num" type="text" id="num" size="35" value="" >
                     </div>
                     <div>
                         <label for="contactSubject"><FONT style="color :#BEBEBE">Rue<span class="required">*</span></label>
-                        <input name="rue" type="text" id="rue" size="35" value="" />
+                        <input name="rue" type="text" id="rue" size="35" value="" >
                     </div>
 
                     <div>
                         <label for="contactSubject"><FONT style="color :#BEBEBE">Complément d\'adresse</label>
-                        <input name="cadr" type="text" id="cadr" size="5" value="" />
+                        <input name="cadr" type="text" id="cadr" size="5" value="" >
                     </div>
 
 
                     <div>
                         <label for="contactSubject"><FONT style="color :#BEBEBE">Code Postal<span class="required">*</span></label>
-                        <input name="cp" type="text" id="cp" size="5" value="" />
+                        <input name="cp" type="text" id="cp" size="5" value="" >
                     </div>
 
                     <div>
                         <label for="contactSubject"><FONT style="color :#BEBEBE">Ville<span class="required">*</span></label>
-                        <input name="ville" type="text" id="ville" size="35" value="" />
+                        <input name="ville" type="text" id="ville" size="35" value="" >
                     </div>
 
                     <div>
                         <label for="contactSubject"><FONT style="color :#BEBEBE">Pays<span class="required">*</span></label>
-                        <input name="pays" type="text" id="pays" size="35" value="" />
+                        <input name="pays" type="text" id="pays" size="35" value="" >
                     </div>
 
                     <div>
@@ -189,7 +189,7 @@ echo'
                     if (strcmp($district, 'AUTRE') == 0) {
                         echo '<div>
                         <label for="contactSubject"><FONT style="color :#BEBEBE">Club<span class="required">*</span></label>
-                        <input name="club" type="text" id="club" size="35" value="" />
+                        <input name="club" type="text" id="club" size="35" value="" >
                     </div>';
                     } else {
                         echo'
@@ -205,41 +205,41 @@ echo'
 
                     <div>
                         <label for="contactSubject"><FONT style="color :#BEBEBE">N°<span class="required">*</span></label>
-                        <input name="num" type="text" id="num" size="35" value='.$num.' />
+                        <input name="num" type="text" id="num" size="35" value='.$num.' >
                     </div>
                     <div>
                         <label for="contactSubject"><FONT style="color :#BEBEBE">Rue<span class="required">*</span></label>
-                        <input name="rue" type="text" id="rue" size="35" value='.$rue.' />
+                        <input name="rue" type="text" id="rue" size="35" value='.$rue.' >
                     </div>
 
                     <div>
                         <label for="contactSubject"><FONT style="color :#BEBEBE">Complément d\'adresse</label>
-                        <input name="cadr" type="text" id="cadr" size="5" value="" />
+                        <input name="cadr" type="text" id="cadr" size="5" value="" >
                     </div>
 
 
                     <div>
                         <label for="contactSubject"><FONT style="color :#BEBEBE">Code Postal<span class="required">*</span></label>
-                        <input name="cp" type="text" id="cp" size="5" value='.$cp.' />
+                        <input name="cp" type="text" id="cp" size="5" value='.$cp.' >
                     </div>
 
                     <div>
                         <label for="contactSubject"><FONT style="color :#BEBEBE">Ville<span class="required">*</span></label>
-                        <input name="ville" type="text" id="ville" size="35" value='.$ville.'/>
+                        <input name="ville" type="text" id="ville" size="35" value='.$ville.'>
                     </div>
 
                     <div>
                         <label for="contactSubject"><FONT style="color :#BEBEBE">Pays<span class="required">*</span></label>
-                        <input name="pays" type="text" id="pays" size="35" value='.$pays.' />
+                        <input name="pays" type="text" id="pays" size="35" value='.$pays.' >
                     </div>
 
                     <div>
                         <label for="contactSubject"><FONT style="color :#BEBEBE"> Téléphone <span class="required">*</span></label>
-                        <input name="tel" type="tel" id="tel" size="35" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0"value='.$tel.'  />
+                        <input name="tel" type="tel" id="tel" size="35" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0"value='.$tel.'  >
                     </div>
                     <div>
                         <label for="contactSubject"><FONT style="color :#BEBEBE">Portable</label>
-                        <input name="portable" type="tel" id="portable" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0"/>
+                        <input name="portable" type="tel" id="portable" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0">
                     </div>
 
 

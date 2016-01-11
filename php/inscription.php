@@ -68,18 +68,18 @@
 
                             <div>
                                 <label for="contactEmail"><FONT style="color :#BEBEBE">Adresse email <span class="required">*</span></label>
-                                <input name="email" type="mail" id="mail" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
+                                <input name="email" type="mail" id="mail" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" >
 
                             </div>
 
                             <div>
                                 <label for="contactSubject"><FONT style="color :#BEBEBE">Mot de passe<span class="required">*</span></label>
-                                <input name="mdp" type="password" id="mdp" size="35" value="" />
+                                <input name="mdp" type="password" id="mdp" size="35" value="" >
                             </div>
 
                             <div>
                                 <label for="contactSubject"><FONT style="color :#BEBEBE">Confirmation du mot de passe<span class="required">*</span></label>
-                                <input name="cmdp" type="password" id="cmdp" size="35" value="" />
+                                <input name="cmdp" type="password" id="cmdp" size="35" value="" >
                             </div>
 
 
@@ -107,12 +107,12 @@
 
                             <div>
                                 <label for="mail"><FONT style="color :#BEBEBE">Adresse e-mail <span class="required">*</span></label>
-                                <input name="mail" type="mail" id="mail" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
+                                <input name="mail" type="mail" id="mail" size="35" value="" style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" >
                             </div>
 
                             <div>
                                 <label for="mdp"><FONT style="color :#BEBEBE">Mot de passe<span class="required">*</span></label>
-                                <input name="mdp" type="password" id="mdp" size="35" value="" />
+                                <input name="mdp" type="password" id="mdp" size="35" value="" >
                             </div>
 
                             <div>

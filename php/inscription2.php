@@ -100,12 +100,12 @@
 
                         <div>
                             <label for="contactSubject"><FONT style="color :#BEBEBE">Prénom<span class="required">*</span></label>
-                            <input name="prenom" type="text" id="prenom" size="35" value=""/>
+                            <input name="prenom" type="text" id="prenom" size="35" value="">
                         </div>
 
                         <div>
                             <label for="contactSubject"><FONT style="color :#BEBEBE">Nom<span class="required">*</span></label>
-                            <input name="nom" type="text" id="nom" size="35" value=""/>
+                            <input name="nom" type="text" id="nom" size="35" value="">
                         </div>
 
 

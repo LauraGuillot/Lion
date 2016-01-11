@@ -199,12 +199,12 @@
                     
                     <div>
                         <label for="contactSubject">Téléphone<span class="required">*</span></label>
-                        <input name="tel" type="tel" id="tel" size="35" value=' . $tel . ' style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
+                        <input name="tel" type="text" id="tel" size="35" value=' . $tel . '/>
                     </div>
                     
                     <div>
                         <label for="contactSubject">Portable</label>
-                        <input name="portable" type="tel" id="portable" size="35" value=' . $mobile . ' style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0"/>
+                        <input name="portable" type="text" id="portable" size="35" value=' . $mobile . '/>
                     </div>
                     
                     <div>
