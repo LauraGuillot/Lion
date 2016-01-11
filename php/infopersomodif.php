@@ -149,7 +149,7 @@
 
                         <div>
                             <label for="contactEmail">Adresse email <span class="required">*</span></label>
-                             <input name="email" type="mail" id="mail" size="35" value=' . $mail . ' style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
+                             <input name="email" type="mail" id="mail" size="35" value=' . $mail . ' style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" >
                          </div>
                            
 
@@ -188,23 +188,23 @@
 
                         <div>
                              <label for="contactSubject">Code Postal<span class="required">*</span></label>
-                             <input name="cp" type="text" id="cp" size="5" value=' . $cp . ' />
+                             <input name="cp" type="text" id="cp" size="5" value=' . $cp . ' >
                          </div>
 
                     <div>
                         <label for="contactSubject">Ville<span class="required">*</span></label>
-                        <input name="ville" type="text" id="ville" size="35" value=' . $ville . ' />
+                        <input name="ville" type="text" id="ville" size="35" value=' . $ville . ' >
                     </div>
 
                     
                     <div>
                         <label for="contactSubject">Téléphone<span class="required">*</span></label>
-                        <input name="tel" type="text" id="tel" size="35" value=' . $tel . '/>
+                        <input name="tel" type="text" id="tel" size="35" value=' . $tel . '>
                     </div>
                     
                     <div>
                         <label for="contactSubject">Portable</label>
-                        <input name="portable" type="text" id="portable" size="35" value=' . $mobile . '/>
+                        <input name="portable" type="text" id="portable" size="35" value=' . $mobile . '>
                     </div>
                     
                     <div>

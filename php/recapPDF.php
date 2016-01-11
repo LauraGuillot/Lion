@@ -1,6 +1,6 @@
 <?php
 $idco = $_POST['idco'];
-include 'constantes.php';
+include 'requetes.php';
 
 function afficheRecapPDF($bdd, $idco) {
     /* Récupération des données personnelles du membre */
