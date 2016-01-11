@@ -1,13 +1,14 @@
-  <?php
-   $path = $_SERVER['PHP_SELF'];
-  $file = basename($path);
-  if (strcmp($file, 'ContactC.php') == 0){
-  $idco = $_GET['idco'];}
-  else{
-     $idco = $_POST['idco']; 
-  }
-        include "fonctions.php";
-        majConnexion($bdd, $idco);
+<?php
+$path = $_SERVER['PHP_SELF'];
+$file = basename($path);
+
+if (strcmp($file, 'verifContactC.php') == 0) {
+   $idco = $_POST['idco'];
+} else {
+    $idco = $_GET['idco']; 
+}
+include "fonctions.php";
+majConnexion($bdd, $idco);
 ?>
 
 <!DOCTYPE html>
@@ -48,10 +49,8 @@
 
         <!-- Header
         ================================================== -->
-       
-        <?php
-      
 
+        <?php
         echo' <header class="mobile">';
 
         echo'<div class="row"';
@@ -75,7 +74,7 @@
 
         print(" <li><a href=\"http://localhost/lion/Lion/php/panier.php?idco=$idco\" >Panier</a></li>");
         print(" <li ><a href=\"http://localhost/lion/Lion/php/moncompte.php?idco=$idco\" >Mon compte</a></li>");
-print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\" >Se déconnecter</a></li>");
+        print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\" >Se déconnecter</a></li>");
         echo'  </ul>
                     </nav>
                 </div>
@@ -101,12 +100,12 @@ print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\
 
             <div class="col g-7">
 <?php
-                $path = $_SERVER['PHP_SELF'];
-                $file = basename($path);
-                if (strcmp($file, 'verifContactC.php') == 0) {
-                    echo'<h7 style="color : #FF0000;">ERREUR ! SAISIR A NOUVEAU LES INFORMATIONS </h7>';
-                }
-                ?>
+$path = $_SERVER['PHP_SELF'];
+$file = basename($path);
+if (strcmp($file, 'verifContactC.php') == 0) {
+    echo'<h7 style="color : #FF0000;">ERREUR ! SAISIR A NOUVEAU LES INFORMATIONS </h7>';
+}
+?>
                 <!-- form -->
                 <form name="contactForm" id="contactForm" method="post" action="verifContactC.php">
                     <fieldset>
@@ -131,12 +130,12 @@ print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\
                             <textarea name="contactMessage"  id="contactMessage" rows="15" cols="50" ></textarea>
                         </div>
 
-                         <div>
-                           
-                         <?php print("   <input name=\"idco\" type=\"hidden\" id=\"idco\" size=\"35\" value=\"$idco\" />");?>
+                        <div>
+
+<?php print("   <input name=\"idco\" type=\"hidden\" id=\"idco\" size=\"35\" value=\"$idco\" />"); ?>
                         </div>
-                        
-                        
+
+
                         <div>
                             <button class="submit">Envoyer</button>
                             <span id="image-loader">
@@ -185,7 +184,7 @@ print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\
 
     <!-- footer
     ================================================== -->
-    <?php 
+<?php
 affichefooter();
 ?>
     <!-- Footer End-->
