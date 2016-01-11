@@ -1,9 +1,3 @@
-<?php
-include "fonctions.php";
-$idco = $_POST['idco'];
-majConnexion($bdd, $idco);
-?>
-
 <!DOCTYPE html>
 <!--[if lt IE 8 ]><html class="ie ie7" lang="en"> <![endif]-->
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
@@ -46,7 +40,7 @@ majConnexion($bdd, $idco);
         <?php
         include "fonctions.php";
         $idco = $_POST['idco'];
-        echo' <header class="mobile">';
+         echo' <header class="mobile">';
 
         echo'<div class="row"';
 
@@ -101,9 +95,10 @@ majConnexion($bdd, $idco);
 
        </header>';
         ?>
-
+        
         <!-- Header End -->
         <?php
+        
         /* Récupération des données personnelles du membre */
         $sql = 'SELECT Member.Member_ID, Person_Lastname, Person_Firstname, Member_Title, Member_Status, District_Name, Club_Name, '
                 . ' Member_Num, Member_Additional_Adress, Member_Street, Member_City, Member_Postal_Code, Member_Phone, '
@@ -140,12 +135,15 @@ majConnexion($bdd, $idco);
         $traindate = $row["Member_Date_Train"];
 
         echo'
-            <br></br>
-            <br></br>
-           
+            
         <section>
+        <div class="row section-head">
+            <div class="col full">
+                <br></br>
+                <h2 style="margin : 65px ; color : #11ABB0; text-align : center"> Vos informations personnelles </h2>
+            </div>
         <div class="row">
-        <div class="col g-7" style="top: 80px">
+       
             <form name="contactForm" id="contactForm" method="post"  action="infosmodifiees.php">
                     <fieldset >
 
@@ -154,29 +152,37 @@ majConnexion($bdd, $idco);
                              <input name="email" type="mail" id="mail" size="35" value=' . $mail . ' style = "padding: 18px 18px; margin : 0 0 24px 0; color : #738182; background : #CFD4D5; border : 0" />
                          </div>
                            
+
+                      <div class="row section-head">
+                        <h2 style="color : #8BB24C;" > <FONT size="5">Identité <FONT></h2>
+                     </div>
+                     
                         <div>
                             <label for="contactSubject">Prénom<span class="required">*</span></label>
-                            <input name="prenom" type="text" id="prenom" size="35" value=' . $prenom . '>
+                            <input name="prenom" type="text" id="prenom" size="35" value='.$prenom.'>
                         </div>
 
                         <div>
                             <label for="contactSubject">Nom<span class="required">*</span></label>
-                            <input name="nom" type="text" id="nom" size="35" value=' . $nom . '>
+                            <input name="nom" type="text" id="nom" size="35" value='.$nom.'>
                         </div>
                         
+                        <div class="row section-head">
+                        <h2 style="color : #8BB24C;" > <FONT size="5">Coordonées<FONT></h2>
+                     </div>
                         <div>
                             <label for="contactSubject">N°<span class="required">*</span></label>
-                             <input name="num" type="text" id="num" size="35" value=' . $num . ' >
+                             <input name="num" type="text" id="num" size="35" value='.$num.' >
                         </div>
                     
                          <div>
                              <label for="contactSubject">Rue<span class="required">*</span></label>
-                             <input name="rue" type="text" id="rue" size="35" value=' . $rue . ' >
+                             <input name="rue" type="text" id="rue" size="35" value='.$rue.' >
                         </div>
 
                         <div>
                              <label for="contactSubject">Complément d\'adresse</label>
-                             <input name="cadr" type="text" id="cadr" size="5" value=' . $adressesup . ' >
+                             <input name="cadr" type="text" id="cadr" size="5" value='.$adressesup.' >
                          </div>
 
 
@@ -214,7 +220,7 @@ majConnexion($bdd, $idco);
 
                 </fieldset>
            </form> 
-        </div></div>
+        </div></div></div>
         <br></br>
          </section>      
                                 

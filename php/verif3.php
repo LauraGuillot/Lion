@@ -100,17 +100,41 @@ include ("fonctions.php");
     $req0->execute(array(
         'nom' => $nom,
         'prenom' => $prenom));
+ /* Récupération du district */
+    
+    $req5 = $bdd->prepare("SELECT District_ID FROM District WHERE (District_Name = '$district')", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $req5->execute(array());
+    $row = $req5->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $districtID = $row["District_ID"];
 
-    /* Récupération du club et du district */
+    if (strcmp($district,'AUTRE')==0){
+      
+    $req51 = $bdd->prepare("SELECT Count(Club_ID) FROM Club WHERE ((Club_Name LIKE :club) AND (District_ID = :district))",array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+    $req51->execute(array(
+        'district'=>$districtID,
+        'club' =>$club));  
+    $row = $req51->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    $cpt = $row["Count(Club_ID)"];
+        
+    if ($cpt == 0){
+        
+    $req52 = $bdd->prepare("INSERT INTO Club (District_ID, Club_Name) VALUES (:district,:club)");
+    $req52->execute(array(
+        'district'=>$districtID,
+        'club' =>$club 
+    ));}
+    
+    
+    }
+    
+    
+    /* Récupération du club */
+   
     $req4 = $bdd->prepare("SELECT Club_ID FROM Club WHERE (Club_Name = '$club')", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
     $req4->execute(array());
     $row = $req4->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $clubID = $row["Club_ID"];
 
-    $req5 = $bdd->prepare("SELECT District_ID FROM District WHERE (District_Name = '$district')", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
-    $req5->execute(array());
-    $row = $req5->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-    $districtID = $row["District_ID"];
 
 //Récupération du person_ID
     $req22 = $bdd->prepare("SELECT Person_ID FROM Person WHERE (Person_Lastname = '$nom' AND Person_Firstname = '$prenom')", array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));

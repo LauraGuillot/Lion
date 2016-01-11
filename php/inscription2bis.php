@@ -87,14 +87,18 @@
                     print("<input type=\"hidden\" name=\"titre\" value=\"$titre\"/>");
                     print("<input type=\"hidden\" name=\"district\" value=\"$district\"/>");
                     
-
-echo'
+                    if (strcmp($district, 'AUTRE') == 0) {
+                        echo '<div>
+                        <label for="contactSubject"><FONT style="color :#BEBEBE">Club<span class="required">*</span></label>
+                        <input name="club" type="text" id="club" size="35" value="" />
+                    </div>';
+                    } else {
+                        echo'
                     <div style="color:#BEBEBE; font : 14px/24px opensans-bold, sans-serif; margin : 12px 0;">
                         <p></br> Club <span class="required" style="color:#8B9798">*</span></p>
                     </div>';
-
-                  
-                    afficheClub($bdd, $district);
+                        afficheClub($bdd, $district);
+                    }
                      
 echo'
                     <div class="row section-head">
@@ -181,16 +185,19 @@ echo'
                     print("<input type=\"hidden\" name=\"prenom\" value=\"$prenom\"/>");
                     print("<input type=\"hidden\" name=\"titre\" value=\"$titre\"/>");
                     print("<input type=\"hidden\" name=\"district\" value=\"$district\"/>");
-                    
-
-echo'
-                    <div style="color:#3d4145; font : 14px/24px opensans-bold, sans-serif; margin : 12px 0;">
-                        <p></br> <FONT style="color :#BEBEBE">Club<span class="required" style="color:#8B9798">*</span></p>
+                  
+                    if (strcmp($district, 'AUTRE') == 0) {
+                        echo '<div>
+                        <label for="contactSubject"><FONT style="color :#BEBEBE">Club<span class="required">*</span></label>
+                        <input name="club" type="text" id="club" size="35" value="" />
                     </div>';
-
-                    
-                    afficheClub($bdd, $district);
-                     
+                    } else {
+                        echo'
+                    <div style="color:#BEBEBE; font : 14px/24px opensans-bold, sans-serif; margin : 12px 0;">
+                        <p></br> Club <span class="required" style="color:#8B9798">*</span></p>
+                    </div>';
+                        afficheClub($bdd, $district);
+                    }
 echo'
                     <div class="row section-head">
                         <h2 > <FONT style="color :#727374">Coordonnées</h2>

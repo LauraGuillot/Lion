@@ -3,21 +3,94 @@
 include "fonctions.php";
 $idco = $_POST['idco'];
 
-                        $email = $_POST['email'];
-                        $nom = $_POST['nom'];
-                        $prenom = $_POST['prenom'];
-                        $rue = $_POST['rue'];
-                        $num = $_POST['num'];
-                        $cadr = $_POST['cadr'];
-                        $cp = $_POST['cp'];
-                        $ville = $_POST['ville'];
+  $sql = 'SELECT Member.Member_ID, Person_Lastname, Person_Firstname, Member_Title, Member_Status, District_Name, Club_Name, '
+                . ' Member_Num, Member_Additional_Adress, Member_Street, Member_City, Member_Postal_Code, Member_Phone, '
+                . ' Member_Mobile, Member_EMail, Member_Position_Club, Member_Position_District, Member_By_Train, Member_Date_Train '
+                . ' FROM Member'
+                . ' INNER JOIN Connexion ON (Connexion.Member_ID = Member.Member_ID)  '
+                . ' INNER JOIN Person ON (Person.Person_ID = Member.Person_ID) '
+                . ' INNER JOIN Club ON (Club.Club_ID = Member.Club_ID) '
+                . ' INNER JOIN District ON (District.District_ID = Member.District_ID) '
+                . ' WHERE (Connexion_ID = :id)';
+
+        $stmt = $bdd->prepare($sql, array(PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL));
+        $stmt->execute(array('id' => "$idco"));
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+        $memberID = $row["Member_ID"];
+        $nom = $row["Person_Lastname"];
+        $prenom = $row["Person_Firstname"];
+        $titre = $row["Member_Title"];
+        $status = $row["Member_Status"];
+        $district = $row["District_Name"];
+        $club = $row["Club_Name"];
+        $num = $row["Member_Num"];
+        $adressesup = $row["Member_Additional_Adress"];
+        $rue = $row["Member_Street"];
+        $ville = $row["Member_City"];
+        $cp = $row["Member_Postal_Code"];
+        $tel = $row["Member_Phone"];
+        $mobile = $row["Member_Mobile"];
+        $mail = $row["Member_EMail"];
+        $positionclub = $row["Member_Position_Club"];
+        $positiondistrict = $row["Member_Position_District"];
+        $train = $row["Member_By_Train"];
+        $traindate = $row["Member_Date_Train"];
+
+                        $email2 = $_POST['email'];
+                        $nom2 = $_POST['nom'];
+                        $prenom2 = $_POST['prenom'];
+                        $rue2 = $_POST['rue'];
+                        $num2 = $_POST['num'];
+                        $cadr2 = $_POST['cadr'];
+                        $cp2 = $_POST['cp'];
+                        $ville2 = $_POST['ville'];
                        
-                        $tel = $_POST['tel'];
-                        $portable = $_POST['portable'];
-                    
+                        $tel2 = $_POST['tel'];
+                        $portable2 = $_POST['portable'];
                         
-                        miseajourinfos($bdd,$idco,$email,$nom,$prenom,$rue,$num,$cadr,$cp,$ville,$tel,$portable);
- majConnexion($bdd, $idco);
+                        if (empty($email2)){
+                            $email2 = $mail;
+                        };
+                        
+                        if (empty($nom2)){
+                            $nom2 = $nom;
+                        };
+                        
+                        if (empty($prenom2)){
+                            $prenom2 = $prenom;
+                        };
+                        
+                        if (empty($rue2)){
+                            $rue2 = $rue;
+                        };
+                        
+                        if (empty($num2)){
+                            $num2 = $num;
+                        };
+                        
+                        if (empty($cadr2)){
+                           $cadr2 = $adressesup; 
+                        };
+                        
+                        if (empty($cp2)){
+                            $cp2 = $cp;
+                        };
+                        
+                        if (empty($ville2)){
+                            $ville2 = $ville;
+                        };
+                        
+                        if (empty($tel2)){
+                            $tel2 = $tel;
+                        };
+                        
+                        if (empty($portable2)){
+                            $portable2 = $mobile;
+                        };
+                       
+                        miseajourinfos($bdd,$idco,$email2,$nom2,$prenom2,$rue2,$num2,$cadr2,$cp2,$ville2,$tel2,$portable2);
+
  echo ' 
                         
 <!DOCTYPE html>
@@ -62,6 +135,7 @@ $idco = $_POST['idco'];
 ';
        
 
+ 
    echo "  
          <header class=\"mobile\">
 
@@ -138,7 +212,7 @@ $idco = $_POST['idco'];
            
           
             afficheInfos($bdd, $idco);
-            
+            majConnexion($bdd, $idco);
            
      
 echo " 
