@@ -956,10 +956,10 @@ function compteurPanier($bdd, $idco) {
                           <TH class ="col" height=60 width=100 ><FONT style="color : #32787A; font-weight:normal;"> Panier </FONT><br><FONT size="5" style="color : #11ABB0;">' . $cpt . ' </FONT></TH>
                    
                             <Td class ="col" height=60 width=100 >
-                              <form action="agendaPanier.php" method="post" style = "margin-bottom : 0; margin-left : 25px"> 
+                              <form action="agendaPanier.php" method="post" style = "margin-bottom : 0; margin-left : 10px"> 
                                    
                                    <input type="image" src="images/panier.png" " name="panier"  style= "height : 50px; width : 50px">
-                         <input type="hidden"  name="idco" value="' . $idco . '">
+                                   <input type="hidden"  name="idco" value="' . $idco . '">
                                  </form>
                              </td> 
                    
@@ -1985,7 +1985,9 @@ function afficheFooter() {
                 <div class="col g-7">
                     <ul class="copyright">
                         <li>&copy; 2016 Lions Clubs</li>
-                        <li>Design by <a href="http://www.styleshout.com//" title="styleshout"> Styleshout</a></li>               
+                        <li>Design by <a href="http://www.styleshout.com//" title="styleshout"> Styleshout</a></li>  
+                        <br>                       
+                        <a> <FONT style ="color: #444">Developped  by </FONT>Thomas MICHELS <FONT style ="color: #444">and </FONT>Laura GUILLOT <FONT style ="color: #444">, </FONT> Ecole Centrale de Nantes <a>
                     </ul>
                 </div>
 
