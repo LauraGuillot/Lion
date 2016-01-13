@@ -2084,7 +2084,7 @@ function afficheHeader() {
     </html>';
     }
 
-    if (strcmp($file, 'contact.php') == 0 || strcmp($file, 'verifContact.php') == 0) {
+    if (strcmp($file, 'contact.php') == 0 || strcmp($file, 'verifContact.php') == 0 || strcmp($file, 'messageok.php') == 0) {
         echo' 
     <html>
          <header class="mobile">

@@ -10,9 +10,6 @@
 //  	Jean-Yves Martin	18/06/2010	creation du fichier
 //----------------------------------------------------------------------
 
-// Fichiers necessaires
-Require_Once("Utl_Utils.php");
-
 //  -----------------------------------------------------------------------
 //  Nom         : sendMail
 //  Description : envoie automatiquement un mail
@@ -135,7 +132,7 @@ function sendMailToServer($params, $headers, $Message)
 			}
 			
 			// Le contenu du message est passé en HTML	
-			fputs($sock, "Content-Type: text/html; charset=iso-8859-1\r\n");
+			fputs($sock, "Content-Type: text/html; charset=utf-8\r\n");
 			fputs($sock, "<html>\r\n");
 			fputs($sock, "<head>\r\n");
 			fputs($sock, "</head>\r\n");

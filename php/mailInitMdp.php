@@ -1,21 +1,18 @@
 <?php
 
 include 'Utl_Mail.php' ;
-$Message = "Bonjour,
-Vous avez oublié votre mot de passe et vous voulez le réinitialiser ?
+
+
+$Message = "Bonjour, \n
+Vous avez oublié votre mot de passe et vous voulez le réinitialiser ?\n
 Rendez-vous sur le lien ci-dessous pour entrer un nouveau mot de passe : http://localhost/lion/Lion/php/perteMdp.php";
 
 $Subject = "Lions Clubs - Réinitialisation de mot de passe";
 
-$Destinataire = "lolo-guillot@hotmail.fr";
-$Emetteur = "lolo-guillot@hotmail.fr";
-$login = "lolo-guillot@hotmail.fr";
-$password = "charly";
+$Destinataire = $mail;
+$Emetteur = $mailAdmin;
 
-$port = 25;
-$serveur = "localhost";
-
- sendMail($serveur, $port, $login, $password, $Emetteur, $Destinataire, $Subject , $Message);
+ //sendMail($serveur, $port, $login, $password, $Emetteur, $Destinataire, $Subject , $Message);
 
 
 
@@ -26,7 +23,7 @@ $serveur = "localhost";
 
 
 //Retour sur la page de connexion
-/*
+
 echo' 
     
         <!DOCTYPE html>
@@ -188,4 +185,4 @@ affichefooter();
 
 </html>';
 ?>
-*/
+
