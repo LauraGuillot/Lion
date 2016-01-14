@@ -14,7 +14,7 @@ if (empty($nom) or empty($message) or ! preg_match('#^[\w.-]+@[\w.-]+\.[a-z]{2,6
 
     include 'Utl_Mail.php';
     include 'fonctions.php';
-    $Message = $message;
+    $Message = "<meta charset=\"utf-8\">  ".$message." <br> "."$nom";
     $Subject = $sujet;
 
     $Destinataire = $mailAdmin;

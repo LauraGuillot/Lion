@@ -3,16 +3,17 @@
 include 'Utl_Mail.php' ;
 
 
-$Message = "Bonjour, \n
-Vous avez oublié votre mot de passe et vous voulez le réinitialiser ?\n
+$Message = " <meta charset=\"utf-8\">
+    Bonjour, <br>
+Vous avez oublié votre mot de passe et vous voulez le réinitialiser ? <br>
 Rendez-vous sur le lien ci-dessous pour entrer un nouveau mot de passe : http://localhost/lion/Lion/php/perteMdp.php";
 
-$Subject = "Lions Clubs - Réinitialisation de mot de passe";
+$Subject = " Lions Clubs - Reinitialisation de mot de passe";
 
 $Destinataire = $mail;
 $Emetteur = $mailAdmin;
 
- //sendMail($serveur, $port, $login, $password, $Emetteur, $Destinataire, $Subject , $Message);
+sendMail($serveur, $port, $login, $password, $Emetteur, $Destinataire, $Subject , $Message);
 
 
 
