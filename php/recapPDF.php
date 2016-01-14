@@ -6,7 +6,7 @@ function afficheRecapPDF($bdd, $idco) {
     /* Récupération des données personnelles du membre */
     $sql = 'SELECT Member.Member_ID, Person_Lastname, Person_Firstname, Member_Title, Member_Status, District_Name, Club_Name, '
             . ' Member_Num, Member_Additional_Adress, Member_Street, Member_City, Member_Postal_Code, Member_Phone, '
-            . ' Member_Mobile, Member_EMail, Member_Position_Club, Member_Position_District, Member_By_Train, Member_Date_Train '
+            . ' Member_Mobile, Member_EMail, Member_Position_Club, Member_Position_District, Member_By_Train, YEAR(Member_Date_Train), MONTH(Member_Date_Train) , DAY(Member_Date_Train)  '
             . ' FROM Member '
             . ' INNER JOIN Connexion ON (Connexion.Member_ID = Member.Member_ID) '
             . ' INNER JOIN Person ON (Person.Person_ID = Member.Person_ID) '
@@ -42,8 +42,19 @@ function afficheRecapPDF($bdd, $idco) {
     $positiondistrict = $row["Member_Position_District"];
 
     $train = $row["Member_By_Train"];
-    $traindate = $row["Member_Date_Train"];
-
+    
+    $trainannee = $row["YEAR(Member_Date_Train)"];
+    $trainmois = $row["MONTH(Member_Date_Train)"];
+    $trainjour = $row["DAY(Member_Date_Train)"];
+   
+    if ($trainmois < 10) {
+        $trainmois = "0" . $trainmois;
+    }
+    if ($trainjour < 10) {
+        $trainjour = "0" . $trainjour;
+    }
+    $traindate = $trainjour . "-" . $trainmois . "-" . $trainannee;
+    
     if ($train == 1) {
         $resulttrain = "Arrivée en train le : $traindate";
     } else {
@@ -63,16 +74,16 @@ function afficheRecapPDF($bdd, $idco) {
     $fprenom = $row["Person_Firstname"];
 
     $accompagnant = "";
-$n=1;
+    $n = 1;
     if (!(empty($fnom) && empty($fprenom))) {
         $accompagnant = $fprenom . " " . $fnom;
-        $n =$n+1;
+        $n = $n + 1;
     } else {
         $accompagnant = "Aucun";
     }
 
-   list($annee, $mois, $day, $heure, $min, $sec)=  dateAuj($bdd);
-    $dateauj = "$day"."-"."$mois"."-"."$annee";
+    list($annee, $mois, $day, $heure, $min, $sec) = dateAuj($bdd);
+    $dateauj = "$day" . "-" . "$mois" . "-" . "$annee";
 
     /*     * ****************************************** */
     /* Récupération des activités du panier */
@@ -85,11 +96,11 @@ $n=1;
     $row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $basketID = $row["Basket_ID"];
     $total = $row["Basket_Total"];
-    $total =$total*$n;
+    $total = $total * $n;
     $totaltrip = $row["Basket_Trip_Total"];
-    $totaltrip=$totaltrip*$n;
+    $totaltrip = $totaltrip * $n;
     $totalmeal = $row["Basket_Meal_Total"];
-    $totalmeal = $totalmeal*$n;
+    $totalmeal = $totalmeal * $n;
 
     /* Récupération du nombre de repas réservés */
     $sql = 'SELECT  Count(Activity.Activity_ID) FROM Activity '
@@ -104,7 +115,7 @@ $n=1;
 
     if ($cpt != 0) {
 
-        $sql = 'SELECT  Activity_Name, Activity_Date, Belong_Price FROM Activity '
+        $sql = 'SELECT  Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Belong_Price FROM Activity '
                 . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
                 . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
                 . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL AND Activity_Type_Name = "Repas" AND Congress_ID = ' . congressID . ') ORDER BY (Activity_Date)';
@@ -125,8 +136,18 @@ $n=1;
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
 
             $activite = $row["Activity_Name"];
-            $date = $row["Activity_Date"];
+            $annee = $row["YEAR(Activity_Date)"];
+            $mois = $row["MONTH(Activity_Date)"];
+            $jour = $row["DAY(Activity_Date)"];
             $prix = $row["Belong_Price"];
+
+            if ($mois < 10) {
+                $mois = "0" . $mois;
+            }
+            if ($jour < 10) {
+                $jour = "0" . $jour;
+            }
+            $date = $jour . "-" . $mois . "-" . $annee;
 
             $repas = $repas . '<TR class="row" >
            <Td class ="col"  width=100 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $date . '</FONT> </Td>
@@ -161,7 +182,7 @@ $n=1;
 
 
     if ($cpt2 != 0) {
-        $sql = 'SELECT  Activity_Name, Activity_Date, Belong_Price FROM Activity '
+        $sql = 'SELECT  Activity_Name,YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Belong_Price FROM Activity '
                 . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
                 . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
                 . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL AND Activity_Type_Name = "Excursion" AND Congress_ID = ' . congressID . ') ORDER BY (Activity_Date)';
@@ -182,8 +203,18 @@ $n=1;
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
 
             $activite = $row["Activity_Name"];
-            $date = $row["Activity_Date"];
+            $annee = $row["YEAR(Activity_Date)"];
+            $mois = $row["MONTH(Activity_Date)"];
+            $jour = $row["DAY(Activity_Date)"];
             $prix = $row["Belong_Price"];
+
+            if ($mois < 10) {
+                $mois = "0" . $mois;
+            }
+            if ($jour < 10) {
+                $jour = "0" . $jour;
+            }
+            $date = $jour . "-" . $mois . "-" . $annee;
 
             $excursion = $excursion . '  <TR class="row" >
            <Td class ="col"  width=100 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $date . '</FONT> </Td>
@@ -281,11 +312,11 @@ $n=1;
         <div class="row section-head">
             <h2 style="color : #8BB24C;"> <FONT size="5">Repas</FONT></h2>
         </div>
-    <?php echo"$repas" ?>
+        <?php echo"$repas" ?>
         <div class="row section-head">
             <h2 style="color : #8BB24C;"> <FONT size="5">Excursions</FONT></h2>
         </div>
-    <?php echo"$excursion" ?>
+        <?php echo"$excursion" ?>
 
 
         <div class="row section-head">

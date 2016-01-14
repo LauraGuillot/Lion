@@ -1,5 +1,4 @@
 <?php
-
 $idco = $_POST["idco"];
 
 include 'requetes.php';
@@ -47,7 +46,7 @@ function bonDeCommande($bdd, $idco) {
     $belongdate = getDatePanier($bdd, $basketID);
 
     /* On récupère toutes les activités */
-    $sql = 'SELECT  Activity.Activity_ID, Activity_Name, Activity_Date, Belong_Price FROM Activity '
+    $sql = 'SELECT  Activity.Activity_ID, Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Belong_Price FROM Activity '
             . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
             . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
             . ' WHERE (Basket_ID = :id  AND Belong_Payement_Way ="CH" AND Congress_ID = ' . congressID . ' AND Belong_Date = :date ) ORDER BY ( Activity_Date)';
@@ -71,10 +70,19 @@ function bonDeCommande($bdd, $idco) {
 
         $numCommande = $numCommande . "." . $row["Activity_ID"];
         $act = $row["Activity_Name"];
-        $date = $row["Activity_Date"];
+        $annee = $row["YEAR(Activity_Date)"];
+        $mois = $row["MONTH(Activity_Date)"];
+        $jour = $row["DAY(Activity_Date)"];
         $prix = $row["Belong_Price"];
         $total = $total + $prix;
 
+            if ($mois < 10) {
+        $mois = "0" . $mois;
+    }
+    if ($jour < 10) {
+        $jour = "0" . $jour;
+    }
+    $date = $jour . "-" . $mois . "-" . $annee;
 
         $activite = $activite . '<TR class="row" >
            <Td class ="col"  width=100 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $date . '</FONT> </Td>
@@ -90,7 +98,7 @@ function bonDeCommande($bdd, $idco) {
              </div>';
 
     list($a, $mo, $j, $h, $m, $s) = dateAuj($bdd);
-    $dateauj = "$j"."-"."$mo"."-"."$a";
+    $dateauj = "$j" . "-" . "$mo" . "-" . "$a";
     $numCommande = $memberID . "-" . $numCommande;
     ob_start();
     ?>
@@ -168,5 +176,4 @@ function bonDeCommande($bdd, $idco) {
 }
 
 bonDeCommande($bdd, $idco);
-
 ?>

@@ -1,7 +1,7 @@
 <?php
 $idco = $_POST['idco'];
 include "requetes.php";
- majConnexion($bdd, $idco);
+majConnexion($bdd, $idco);
 
 
 /* ----------------------------------------------------------------------------------------------- 
@@ -46,7 +46,7 @@ function pdfAchats($bdd, $idco) {
 
     if ($cpt != 0) {
 
-        $sql = 'SELECT  Activity_Name, Activity_Date, Belong_Price FROM Activity '
+        $sql = 'SELECT  Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Belong_Price FROM Activity '
                 . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
                 . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
                 . ' WHERE (Basket_ID = :id AND Belong_Paid = 1 AND Activity_Type_Name = "Repas" AND Congress_ID = ' . congressID . ') ORDER BY (Activity_Date)';
@@ -68,9 +68,20 @@ function pdfAchats($bdd, $idco) {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
 
             $activite = $row["Activity_Name"];
-            $date = $row["Activity_Date"];
+            $annee = $row["YEAR(Activity_Date)"];
+            $mois = $row["MONTH(Activity_Date)"];
+            $jour = $row["DAY(Activity_Date)"];
             $prix = $row["Belong_Price"];
             $totalrepas = "$prix" + "$totalrepas";
+
+            if ($mois < 10) {
+                $mois = "0" . $mois;
+            }
+            if ($jour < 10) {
+                $jour = "0" . $jour;
+            }
+            $date = $jour . "-" . $mois . "-" . $annee;
+            
             $texte = $texte . ' <TR class="row" >
            <Td class ="col"  width=100 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $date . '</FONT> </Td>
            <td class ="col" width=280 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $activite . '</FONT> </td>
@@ -100,7 +111,7 @@ function pdfAchats($bdd, $idco) {
     $totalexcursions = 0;
 
     if ($cpt2 != 0) {
-        $sql = 'SELECT  Activity_Name, Activity_Date, Belong_Price FROM Activity '
+        $sql = 'SELECT  Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Belong_Price FROM Activity '
                 . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
                 . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
                 . ' WHERE (Basket_ID = :id AND Belong_Paid = 1 AND Activity_Type_Name = "Excursion" AND Congress_ID = ' . congressID . ') ORDER BY (Activity_Date)';
@@ -122,10 +133,22 @@ function pdfAchats($bdd, $idco) {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
 
             $activite = $row["Activity_Name"];
-            $date = $row["Activity_Date"];
+            $annee = $row["YEAR(Activity_Date)"];
+            $mois = $row["MONTH(Activity_Date)"];
+            $jour = $row["DAY(Activity_Date)"];
             $prix = $row["Belong_Price"];
+            
+
+            if ($mois < 10) {
+                $mois = "0" . $mois;
+            }
+            if ($jour < 10) {
+                $jour = "0" . $jour;
+            }
+            $date = $jour . "-" . $mois . "-" . $annee;
 
             $totalexcursions = $prix + $totalexcursions;
+            
             $texte = $texte . ' <TR class="row" >
            <Td class ="col"  width=100 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $date . '</FONT> </Td>
            <td class ="col" width=280 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $activite . '</FONT> </td>
@@ -171,7 +194,7 @@ function pdfAchats($bdd, $idco) {
    
 ';
     list($a, $mo, $j, $h, $m, $s) = dateAuj($bdd);
-    $dateauj = "$j"."-"."$mo"."-"."$a";
+    $dateauj = "$j" . "-" . "$mo" . "-" . "$a";
     ob_start();
     ?>
 
@@ -234,5 +257,6 @@ function pdfAchats($bdd, $idco) {
         die($ex);
     }
 }
- pdfAchats($bdd, $idco);
+
+pdfAchats($bdd, $idco);
 ?>

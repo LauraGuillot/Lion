@@ -560,6 +560,15 @@ function dateAuj($bdd) {
     $row = $req85->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
     $sec = $row["SECOND(Now())"];
 
+    
+    //Ajout d'un 0 pour les mois et jours inférieurs à 10
+    if ($mois < 10) {
+        $mois = "0" . $mois;
+    }
+    if ($day < 10) {
+        $day = "0" . $day;
+    }
+    
     return array($annee, $mois, $day, $heure, $min, $sec);
 }
 
