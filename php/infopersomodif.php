@@ -168,21 +168,22 @@
                         </div>
                         
                         <div class="row section-head">
-                        <h2 style="color : #8BB24C;" > <FONT size="5">Coordonées<FONT></h2>
-                     </div>
+                        <h2 style="color : #8BB24C;" > <FONT size="5">Coordonnées<FONT></h2>
+                        </div>
+                        
                         <div>
                             <label for="contactSubject">N°<span class="required">*</span></label>
                              <input name="num" type="text" id="num" size="35" value='.$num.' >
                         </div>
-                    
-                         <div>
-                             <label for="contactSubject">Rue<span class="required">*</span></label>
+                          
+                        <div>
+                            <label for="contactSubject">Rue<span class="required">*</span></label>
                              <input name="rue" type="text" id="rue" size="35" value='.$rue.' >
                         </div>
 
                         <div>
                              <label for="contactSubject">Complément d\'adresse</label>
-                             <input name="cadr" type="text" id="cadr" size="5" value='.$adressesup.' >
+                             <input name="cadr" type="text" id="cadr" size="35" value='.$adressesup.' >
                          </div>
 
 

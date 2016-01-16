@@ -76,13 +76,13 @@ function bonDeCommande($bdd, $idco) {
         $prix = $row["Belong_Price"];
         $total = $total + $prix;
 
-            if ($mois < 10) {
-        $mois = "0" . $mois;
-    }
-    if ($jour < 10) {
-        $jour = "0" . $jour;
-    }
-    $date = $jour . "-" . $mois . "-" . $annee;
+        if ($mois < 10) {
+            $mois = "0" . $mois;
+        }
+        if ($jour < 10) {
+            $jour = "0" . $jour;
+        }
+        $date = $jour . "-" . $mois . "-" . $annee;
 
         $activite = $activite . '<TR class="row" >
            <Td class ="col"  width=100 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $date . '</FONT> </Td>

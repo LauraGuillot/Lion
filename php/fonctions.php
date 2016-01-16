@@ -1399,6 +1399,8 @@ function afficheInfos($bdd, $idco) {
     /* Récupération du follower */
     list ($fnom, $fprenom) = getFollower($bdd, $memberID);
 
+    if (!empty($adressesup)){
+    $adressesup = "(".$adressesup.")";}
     /* Affichage des données personnelles avec possibilité de modification */
     echo'
        
@@ -1418,7 +1420,7 @@ function afficheInfos($bdd, $idco) {
          </div>
          
         <div>
-            <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" >  <u>Adresse</u> : ' . $num . ' ' . $rue . ' (' . $adressesup . ') ' . $cp . ' ' . $ville . '</h2> 
+            <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" >  <u>Adresse</u> : ' . $num .' '.  $adressesup.' '  . $rue . ' '.$cp . ' ' . $ville . '</h2> 
         </div>
         <div>
             <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" >  <u>Téléphone</u> : ' . $tel . '</h2> 
