@@ -524,7 +524,7 @@ function afficheRepas1($bdd) {
     try {
 
         /* Préparation de la requête */
-        $sql = 'SELECT Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Activity_Price1, Activity_Price2, Activity_Capacity FROM Activity ' .
+        $sql = 'SELECT Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date),   Activity_Hour,  Activity_Price1, Activity_Price2, Activity_Capacity FROM Activity ' .
                 'INNER JOIN Activity_Type ON (Activity.Activity_Type_ID = Activity_Type.Activity_Type_ID) ' .
                 'WHERE (Congress_ID =' . congressID . ' AND (Activity_Type_Name= :nom)) ORDER BY (Activity_Date);';
 
@@ -554,9 +554,9 @@ function afficheRepas1($bdd) {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
 
             if ($row["Activity_Capacity"] > 0) {
-                afficheActiviteLibre($row["Activity_Name"], $row["YEAR(Activity_Date)"], $row["MONTH(Activity_Date)"], $row["DAY(Activity_Date)"], $row["Activity_Price1"], $row["Activity_Price2"], $row["Activity_Capacity"]);
+                afficheActiviteLibre($row["Activity_Name"], $row["YEAR(Activity_Date)"], $row["MONTH(Activity_Date)"], $row["DAY(Activity_Date)"], $row["Activity_Hour"], $row["Activity_Price1"], $row["Activity_Price2"], $row["Activity_Capacity"]);
             } else {
-                afficheActiviteComplete($row["Activity_Name"], $row["YEAR(Activity_Date)"], $row["MONTH(Activity_Date)"], $row["DAY(Activity_Date)"], $row["Activity_Price1"], $row["Activity_Price2"]);
+                afficheActiviteComplete($row["Activity_Name"], $row["YEAR(Activity_Date)"], $row["MONTH(Activity_Date)"], $row["DAY(Activity_Date)"], $row["Activity_Hour"], $row["Activity_Price1"], $row["Activity_Price2"]);
             }
         }
 
@@ -580,7 +580,7 @@ function afficheExcursions1($bdd) {
     try {
 
         /* Préparation de la requête */
-        $sql = 'SELECT Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Activity_Price1, Activity_Price2, Activity_Capacity FROM Activity ' .
+        $sql = 'SELECT Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date),   Activity_Hour, Activity_Price1, Activity_Price2, Activity_Capacity FROM Activity ' .
                 'INNER JOIN Activity_Type ON (Activity.Activity_Type_ID = Activity_Type.Activity_Type_ID) ' .
                 'WHERE (Congress_ID =' . congressID . ' AND (Activity_Type_Name= :nom)) ORDER BY (Activity_Date);';
 
@@ -610,9 +610,9 @@ function afficheExcursions1($bdd) {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
 
             if ($row["Activity_Capacity"] > 0) {
-                afficheActiviteLibre($row["Activity_Name"], $row["YEAR(Activity_Date)"], $row["MONTH(Activity_Date)"], $row["DAY(Activity_Date)"], $row["Activity_Price1"], $row["Activity_Price2"], $row["Activity_Capacity"]);
+                afficheActiviteLibre($row["Activity_Name"], $row["YEAR(Activity_Date)"], $row["MONTH(Activity_Date)"], $row["DAY(Activity_Date)"], $row["Activity_Hour"], $row["Activity_Price1"], $row["Activity_Price2"], $row["Activity_Capacity"]);
             } else {
-                afficheActiviteComplete($row["Activity_Name"], $row["YEAR(Activity_Date)"], $row["MONTH(Activity_Date)"], $row["DAY(Activity_Date)"], $row["Activity_Price1"], $row["Activity_Price2"]);
+                afficheActiviteComplete($row["Activity_Name"], $row["YEAR(Activity_Date)"], $row["MONTH(Activity_Date)"], $row["DAY(Activity_Date)"], $row["Activity_Hour"], $row["Activity_Price1"], $row["Activity_Price2"]);
             }
         }
 
@@ -631,14 +631,14 @@ function afficheExcursions1($bdd) {
  * Pour chaque activité libre, on affiche une ligne de tableau avec son intitulé, sa date , ses tarifs (privilège et plein) et sa capacité.
  */
 
-function afficheActiviteLibre($nom, $annee, $mois, $jour, $prix1, $prix2, $capacity) {
+function afficheActiviteLibre($nom, $annee, $mois, $jour, $heure, $prix1, $prix2, $capacity) {
     if ($mois < 10) {
         $mois = "0" . $mois;
     }
     if ($jour < 10) {
         $jour = "0" . $jour;
     }
-    $date = $jour . "-" . $mois . "-" . $annee;
+    $date = $jour . "-" . $mois . "-" . $annee . " à " . $heure;
     echo'<TR >
                                         <Td class ="col" height =33 rowspan="2" width=20% style="border:1px solid black; text-align : center;"> <FONT style="color : #F0FFFF"><b>' . $date . '</b></FONT></Td>
                                         <Td class ="col" height =33 width=30% style="border:1px solid black; text-align : center;"> <FONT style="color : #F0FFFF">' . $nom . ' </FONT></Td>
@@ -654,14 +654,14 @@ function afficheActiviteLibre($nom, $annee, $mois, $jour, $prix1, $prix2, $capac
  * Pour chaque activité complète, on affiche une ligne de tableau grisée avec son intitulé, sa date , ses tarifs (privilège et plein) et le mot clé "complet".
  */
 
-function afficheActiviteComplete($nom, $annee, $mois, $jour, $prix1, $prix2) {
+function afficheActiviteComplete($nom, $annee, $mois, $jour, $heure, $prix1, $prix2) {
     if ($mois < 10) {
         $mois = "0" . $mois;
     }
     if ($jour < 10) {
         $jour = "0" . $jour;
     }
-    $date = $jour . "-" . $mois . "-" . $annee;
+    $date = $jour . "-" . $mois . "-" . $annee . " à " . $heure;
     echo' <TR style="color: #525252;">
                                         <Td class ="col"  height =33 width=20% style="border:1px solid black; text-align : center;"><b> ' . $date . '</b></Td>
                                         <Td class ="col" height =33 width=30% style="border:1px solid black; text-align : center;"> ' . $nom . '</Td>
@@ -713,7 +713,7 @@ function afficheRepas2($bdd, $idco) {
         $n = nbPersonne($bdd, $memberID);
 
         /* Préparation de la requête */
-        $sql = 'SELECT Activity_Name,  YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Activity_Price1, Activity_Price2, Activity_Capacity FROM Activity ' .
+        $sql = 'SELECT Activity_Name,  YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Activity_Hour, Activity_Price1, Activity_Price2, Activity_Capacity FROM Activity ' .
                 'INNER JOIN Activity_Type ON (Activity.Activity_Type_ID = Activity_Type.Activity_Type_ID) ' .
                 'WHERE (Congress_ID =' . congressID . ' AND (Activity_Type_Name= :nom)) ORDER BY (Activity_Date);';
 
@@ -743,9 +743,9 @@ function afficheRepas2($bdd, $idco) {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
             $c = $row["Activity_Capacity"];
             if ($c == 0 || ($c == 1 && $n == 2)) {
-                afficheActiviteComplete2($row["Activity_Name"], $row["YEAR(Activity_Date)"], $row["MONTH(Activity_Date)"], $row["DAY(Activity_Date)"], $row["Activity_Price1"], $row["Activity_Price2"], $idco, $bdd);
+                afficheActiviteComplete2($row["Activity_Name"], $row["YEAR(Activity_Date)"], $row["MONTH(Activity_Date)"], $row["DAY(Activity_Date)"], $row["Activity_Hour"], $row["Activity_Price1"], $row["Activity_Price2"], $idco, $bdd);
             } else {
-                afficheActiviteLibre2($row["Activity_Name"], $row["YEAR(Activity_Date)"], $row["MONTH(Activity_Date)"], $row["DAY(Activity_Date)"], $row["Activity_Price1"], $row["Activity_Price2"], $idco, $bdd);
+                afficheActiviteLibre2($row["Activity_Name"], $row["YEAR(Activity_Date)"], $row["MONTH(Activity_Date)"], $row["DAY(Activity_Date)"], $row["Activity_Hour"], $row["Activity_Price1"], $row["Activity_Price2"], $idco, $bdd);
             }
         }
 
@@ -775,7 +775,7 @@ function afficheExcursions2($bdd, $idco) {
         $n = nbPersonne($bdd, $memberID);
 
         /* Préparation de la requête */
-        $sql = 'SELECT Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Activity_Price1, Activity_Price2, Activity_Capacity FROM Activity ' .
+        $sql = 'SELECT Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Activity_Hour, Activity_Price1, Activity_Price2, Activity_Capacity FROM Activity ' .
                 'INNER JOIN Activity_Type ON (Activity.Activity_Type_ID = Activity_Type.Activity_Type_ID) ' .
                 'WHERE (Congress_ID = ' . congressID . ' AND (Activity_Type_Name= :nom)) ORDER BY (Activity_Date);';
 
@@ -805,9 +805,9 @@ function afficheExcursions2($bdd, $idco) {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
             $c = $row["Activity_Capacity"];
             if ($c == 0 || ($c == 1 && $n == 2)) {
-                afficheActiviteComplete2($row["Activity_Name"], $row["YEAR(Activity_Date)"], $row["MONTH(Activity_Date)"], $row["DAY(Activity_Date)"], $row["Activity_Price1"], $row["Activity_Price2"], $idco, $bdd);
+                afficheActiviteComplete2($row["Activity_Name"], $row["YEAR(Activity_Date)"], $row["MONTH(Activity_Date)"], $row["DAY(Activity_Date)"], $row["Activity_Hour"], $row["Activity_Price1"], $row["Activity_Price2"], $idco, $bdd);
             } else {
-                afficheActiviteLibre2($row["Activity_Name"], $row["YEAR(Activity_Date)"], $row["MONTH(Activity_Date)"], $row["DAY(Activity_Date)"], $row["Activity_Price1"], $row["Activity_Price2"], $idco, $bdd);
+                afficheActiviteLibre2($row["Activity_Name"], $row["YEAR(Activity_Date)"], $row["MONTH(Activity_Date)"], $row["DAY(Activity_Date)"], $row["Activity_Hour"], $row["Activity_Price1"], $row["Activity_Price2"], $idco, $bdd);
             }
         }
 
@@ -827,14 +827,14 @@ function afficheExcursions2($bdd, $idco) {
  * Si l'activité a déjà été réservée par le membre, on affiche la mention "Déjà réservée" à la place du bouton +.
  */
 
-function afficheActiviteLibre2($nom, $annee, $mois, $jour, $prix1, $prix2, $idco, $bdd) {
+function afficheActiviteLibre2($nom, $annee, $mois, $jour, $heure, $prix1, $prix2, $idco, $bdd) {
     if ($mois < 10) {
         $mois = "0" . $mois;
     }
     if ($jour < 10) {
         $jour = "0" . $jour;
     }
-    $date = $jour . "-" . $mois . "-" . $annee;
+    $date = $jour . "-" . $mois . "-" . $annee . " à " . $heure;
 
     /* On teste si l'utilisateur a déjà réseré cette activité ou non */
     /* On récupère l'id du membre */
@@ -882,14 +882,14 @@ function afficheActiviteLibre2($nom, $annee, $mois, $jour, $prix1, $prix2, $idco
  * Si l'activité a déjà été réservée par le membre, on affiche la mention "Déjà réservée" à la place de la mention "complet".
  */
 
-function afficheActiviteComplete2($nom, $annee, $mois, $jour, $prix1, $prix2, $idco, $bdd) {
+function afficheActiviteComplete2($nom, $annee, $mois, $jour, $heure, $prix1, $prix2, $idco, $bdd) {
     if ($mois < 10) {
         $mois = "0" . $mois;
     }
     if ($jour < 10) {
         $jour = "0" . $jour;
     }
-    $date = $jour . "-" . $mois . "-" . $annee;
+    $date = $jour . "-" . $mois . "-" . $annee . " à " . $heure;
     /* On teste si l'utilisateur a déjà réseré cette activité ou non */
     /* On récupère l'id du membre */
     $memberID = getMemberID($bdd, $idco);
@@ -1030,7 +1030,7 @@ function afficheAchats($bdd, $idco) {
 
     if ($cpt != 0) {
 
-        $sql = 'SELECT  Activity_Name, 	YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Belong_Price FROM Activity '
+        $sql = 'SELECT  Activity_Name, 	YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date),   Activity_Hour, Belong_Price FROM Activity '
                 . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
                 . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
                 . ' WHERE (Basket_ID = :id AND Belong_Paid = 1 AND Activity_Type_Name = "Repas" AND Congress_ID = ' . congressID . ') ORDER BY (Activity_Date)';
@@ -1041,12 +1041,12 @@ function afficheAchats($bdd, $idco) {
 
         echo'
 <div>
-    <TABLE id="tableau" border  cols="4" style="border:1px solid black;width : 80%; margin-left : 0">             
+    <TABLE id="tableau" border  cols="4" style="border:1px solid black;width : 90%; margin-left : 0">             
          <TR class="row" >
-                        <Td class ="col"  width=20% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
+                        <Td class ="col"  width=22% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
                         <td class ="col" width=40% style="border:1px solid black; text-align : center;"> <FONT size="4" style="color : #52574B"> Intitulé </FONT></th>
                         <td class ="col" width=10% style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Tarif </FONT></th>
-                         <td class ="col" width=241.23 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Nombre de personnes</FONT></th>
+                         <td class ="col" width=253.41 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Nombre de personnes</FONT></th>
         </TR>';
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
@@ -1055,6 +1055,7 @@ function afficheAchats($bdd, $idco) {
             $annee = $row["YEAR(Activity_Date)"];
             $mois = $row["MONTH(Activity_Date)"];
             $jour = $row["DAY(Activity_Date)"];
+            $heure = $row["Activity_Hour"];
             $prix = $row["Belong_Price"];
 
             $totalrepas = "$prix" + "$totalrepas";
@@ -1065,13 +1066,13 @@ function afficheAchats($bdd, $idco) {
             if ($jour < 10) {
                 $jour = "0" . $jour;
             }
-            $date = $jour . "-" . $mois . "-" . $annee;
+            $date = $jour . "-" . $mois . "-" . $annee . " à " . $heure;
 
             echo' <TR class="row" >
-           <Td class ="col"  width=20% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $date . '</FONT> </TH>
+           <Td class ="col"  width=22% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $date . '</FONT> </TH>
            <td class ="col" width=40% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $activite . '</FONT> </th>
            <td class ="col" width=10% style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $prix . ' € </FONT> </th>
-         <td class ="col" width=241.23 style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $n . '  </FONT> </th>
+         <td class ="col" width=253.41 style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $n . '  </FONT> </th>
 </TR>';
         } echo'</TABLE>
              </div>';
@@ -1098,7 +1099,7 @@ function afficheAchats($bdd, $idco) {
     $totalexcursions = 0;
 
     if ($cpt2 != 0) {
-        $sql = 'SELECT  Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Belong_Price FROM Activity '
+        $sql = 'SELECT  Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date),   Activity_Hour, Belong_Price FROM Activity '
                 . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
                 . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
                 . ' WHERE (Basket_ID = :id AND Belong_Paid = 1 AND Activity_Type_Name = "Excursion" AND Congress_ID = ' . congressID . ') ORDER BY (Activity_Date)';
@@ -1109,12 +1110,12 @@ function afficheAchats($bdd, $idco) {
 
         echo'
 <div>
-    <TABLE id="tableau" border  cols="4" style="border:1px solid black;width : 80%; margin-left : 0">             
+    <TABLE id="tableau" border  cols="4" style="border:1px solid black;width : 90%; margin-left : 0">             
          <TR class="row" >
-                         <Td class ="col"  width=20% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
+                        <Td class ="col"  width=22% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
                         <td class ="col" width=40% style="border:1px solid black; text-align : center;"> <FONT size="4" style="color : #52574B"> Intitulé </FONT></th>
                         <td class ="col" width=10% style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Tarif </FONT></th>
-                         <td class ="col" width=241.23 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Nombre de personnes</FONT></th>
+                         <td class ="col" width=253.41 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Nombre de personnes</FONT></th>
         </TR>';
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
@@ -1123,6 +1124,7 @@ function afficheAchats($bdd, $idco) {
             $annee = $row["YEAR(Activity_Date)"];
             $mois = $row["MONTH(Activity_Date)"];
             $jour = $row["DAY(Activity_Date)"];
+            $heure = $row["Activity_Hour"];
             $prix = $row["Belong_Price"];
 
             $totalexcursions = $prix + $totalexcursions;
@@ -1133,13 +1135,13 @@ function afficheAchats($bdd, $idco) {
             if ($jour < 10) {
                 $jour = "0" . $jour;
             }
-            $date = $jour . "-" . $mois . "-" . $annee;
+            $date = $jour . "-" . $mois . "-" . $annee . " à " . $heure;
 
             echo' <TR class="row" >
-           <Td class ="col"  width=20% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $date . '</FONT> </TH>
+           <Td class ="col"  width=22% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $date . '</FONT> </TH>
            <td class ="col" width=40% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $activite . '</FONT> </th>
            <td class ="col" width=10% style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $prix . ' € </FONT> </th>
-         <td class ="col" width=241.23 style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $n . '  </FONT> </th>
+         <td class ="col" width=253.41 style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $n . '  </FONT> </th>
 </TR>';
         } echo'</TABLE>
              </div>';
@@ -1223,7 +1225,7 @@ function afficheCommandes($bdd, $idco) {
 
     if ($cpt != 0) {
 
-        $sql = 'SELECT  Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Belong_Price FROM Activity '
+        $sql = 'SELECT  Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Activity_Hour, Belong_Price FROM Activity '
                 . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
                 . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
                 . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way="CH" AND Activity_Type_Name = "Repas" AND Congress_ID =' . congressID . ' ) ORDER BY (Activity_Date)';
@@ -1234,12 +1236,12 @@ function afficheCommandes($bdd, $idco) {
 
         echo'
 <div>
-    <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 80%; margin-left : 0">             
+    <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 90%; margin-left : 0">             
          <TR class="row" >
-                        <Td class ="col"  width=20% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
+                        <Td class ="col"  width=22% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
                         <td class ="col" width=40% style="border:1px solid black; text-align : center;"> <FONT size="4" style="color : #52574B"> Intitulé </FONT></th>
                         <td class ="col" width=10% style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Tarif </FONT></th>
-                         <td class ="col" width=241.23 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Nombre de personnes</FONT></th>
+                         <td class ="col" width=253.41 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Nombre de personnes</FONT></th>
         </TR>';
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
@@ -1248,6 +1250,7 @@ function afficheCommandes($bdd, $idco) {
             $annee = $row["YEAR(Activity_Date)"];
             $mois = $row["MONTH(Activity_Date)"];
             $jour = $row["DAY(Activity_Date)"];
+            $heure = $row["Activity_Hour"];
             $prix = $row["Belong_Price"];
             $totalrepas = "$prix" + "$totalrepas";
 
@@ -1258,13 +1261,13 @@ function afficheCommandes($bdd, $idco) {
             if ($jour < 10) {
                 $jour = "0" . $jour;
             }
-            $date = $jour . "-" . $mois . "-" . $annee;
+            $date = $jour . "-" . $mois . "-" . $annee . " à " . $heure;
 
             echo' <TR class="row" >
-           <Td class ="col"  width=20% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $date . '</FONT> </TH>
+           <Td class ="col"  width=22% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $date . '</FONT> </TH>
            <td class ="col" width=40% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $activite . '</FONT> </th>
            <td class ="col" width=10% style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $prix . ' € </FONT> </th>
-         <td class ="col" width=241.23 style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $n . '  </FONT> </th>
+         <td class ="col" width=253.41 style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $n . '  </FONT> </th>
          </TR>';
         } echo'</TABLE>
              </div>';
@@ -1292,7 +1295,7 @@ function afficheCommandes($bdd, $idco) {
     $totalexcursions = 0;
 
     if ($cpt2 != 0) {
-        $sql = 'SELECT  Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Belong_Price FROM Activity '
+        $sql = 'SELECT  Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Activity_Hour, Belong_Price FROM Activity '
                 . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
                 . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
                 . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way="CH" AND Activity_Type_Name = "Excursion" AND Congress_ID =' . congressID . ' ) ORDER BY (Activity_Date)';
@@ -1303,12 +1306,12 @@ function afficheCommandes($bdd, $idco) {
 
         echo'
 <div>
-    <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 80%; margin-left : 0">             
+    <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 90%; margin-left : 0">             
          <TR class="row" >
-           <Td class ="col"  width=20% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
+                        <Td class ="col"  width=22% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
                         <td class ="col" width=40% style="border:1px solid black; text-align : center;"> <FONT size="4" style="color : #52574B"> Intitulé </FONT></th>
                         <td class ="col" width=10% style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Tarif </FONT></th>
-                         <td class ="col" width=241.23 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Nombre de personnes</FONT></th>
+                         <td class ="col" width=253.41 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Nombre de personnes</FONT></th>
         </TR>';
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
@@ -1317,6 +1320,7 @@ function afficheCommandes($bdd, $idco) {
             $annee = $row["YEAR(Activity_Date)"];
             $mois = $row["MONTH(Activity_Date)"];
             $jour = $row["DAY(Activity_Date)"];
+            $heure = $row["Activity_Hour"];
             $prix = $row["Belong_Price"];
 
             $totalexcursions = $prix + $totalexcursions;
@@ -1327,13 +1331,13 @@ function afficheCommandes($bdd, $idco) {
             if ($jour < 10) {
                 $jour = "0" . $jour;
             }
-            $date = $jour . "-" . $mois . "-" . $annee;
+            $date = $jour . "-" . $mois . "-" . $annee . " à " . $heure;
 
             echo' <TR class="row" >
-            <Td class ="col"  width=20% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $date . '</FONT> </TH>
+            <Td class ="col"  width=22% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $date . '</FONT> </TH>
            <td class ="col" width=40% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $activite . '</FONT> </th>
            <td class ="col" width=10% style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $prix . ' € </FONT> </th>
-         <td class ="col" width=241.23 style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $n . '  </FONT> </th>
+         <td class ="col" width=253.41 style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $n . '  </FONT> </th>
          </TR>';
         } echo'</TABLE>
              </div>';
@@ -1399,8 +1403,9 @@ function afficheInfos($bdd, $idco) {
     /* Récupération du follower */
     list ($fnom, $fprenom) = getFollower($bdd, $memberID);
 
-    if (!empty($adressesup)){
-    $adressesup = "(".$adressesup.")";}
+    if (!empty($adressesup)) {
+        $adressesup = "(" . $adressesup . ")";
+    }
     /* Affichage des données personnelles avec possibilité de modification */
     echo'
        
@@ -1420,7 +1425,7 @@ function afficheInfos($bdd, $idco) {
          </div>
          
         <div>
-            <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" >  <u>Adresse</u> : ' . $num .' '.  $adressesup.' '  . $rue . ' '.$cp . ' ' . $ville . '</h2> 
+            <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" >  <u>Adresse</u> : ' . $num . ' ' . $adressesup . ' ' . $rue . ' ' . $cp . ' ' . $ville . '</h2> 
         </div>
         <div>
             <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" >  <u>Téléphone</u> : ' . $tel . '</h2> 
@@ -1487,7 +1492,7 @@ function affichePanier($bdd, $idco) {
         $n = nbPersonne($bdd, $memberID);
 
         /* Récupération des activités non payées */
-        $sql = 'SELECT Activity_Type_Name, Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Belong_Price FROM Activity '
+        $sql = 'SELECT Activity_Type_Name, Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Activity_Hour, Belong_Price FROM Activity '
                 . 'INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
                 . 'INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
                 . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL AND Congress_ID =' . congressID . ') ORDER BY (Activity_Date)';
@@ -1504,8 +1509,8 @@ function affichePanier($bdd, $idco) {
                  
 
                     <TR class="row" >
-                        <TH class ="col"   width=15% style="border:1px solid black;">Type </TH>
-                        <TH class ="col"  width=15% style="border:1px solid black;"> Date </TH>
+                        <TH class ="col"   width=10% style="border:1px solid black;">Type </TH>
+                        <TH class ="col"  width=20% style="border:1px solid black;"> Date </TH>
                         <th class ="col" width=20% style="border:1px solid black"> Intitulé </th>
                         <th class ="col" width= 8% style="border:1px solid black">Tarif </th>
                         <th class ="col" width= 22% style="border:1px solid black"> Nombre de personnes </th>
@@ -1515,7 +1520,7 @@ function affichePanier($bdd, $idco) {
         /* Affichage des activités */
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
 
-            afficheActivite($row["Activity_Type_Name"], $row["Activity_Name"], $row["YEAR(Activity_Date)"], $row["MONTH(Activity_Date)"], $row["DAY(Activity_Date)"], $row["Belong_Price"], $idco, $n, $bdd);
+            afficheActivite($row["Activity_Type_Name"], $row["Activity_Name"], $row["YEAR(Activity_Date)"], $row["MONTH(Activity_Date)"], $row["DAY(Activity_Date)"], $row["Activity_Hour"], $row["Belong_Price"], $idco, $n, $bdd);
         }
 
         /* Fermeture du tableau */
@@ -1566,7 +1571,7 @@ function affichePanier($bdd, $idco) {
  * On affiche dans une ligne de tableau l'intitulé de l'activité, sa date, son prix, le nombre de places réservées et un bouton pour la supprimer du panier
  */
 
-function afficheActivite($type, $nom, $annee, $mois, $jour, $prix, $idco, $n, $bdd) {
+function afficheActivite($type, $nom, $annee, $mois, $jour, $heure, $prix, $idco, $n, $bdd) {
 
     if ($mois < 10) {
         $mois = "0" . $mois;
@@ -1574,11 +1579,11 @@ function afficheActivite($type, $nom, $annee, $mois, $jour, $prix, $idco, $n, $b
     if ($jour < 10) {
         $jour = "0" . $jour;
     }
-    $date = $jour . "-" . $mois . "-" . $annee;
+    $date = $jour . "-" . $mois . "-" . $annee . " à " . $heure;
 
     echo'<TR >
-                                        <Td class ="col" height=44.688  width=15% style="border:1px solid black; text-align : center;"> <FONT style="color : #F0FFFF">' . $type . '</FONT></Td>
-                                        <Td class ="col" height=44.688 width=15% style="border:1px solid black; text-align : center;"> <FONT style="color : #F0FFFF">' . $date . ' </FONT></Td>
+                                        <Td class ="col" height=44.688  width=10% style="border:1px solid black; text-align : center;"> <FONT style="color : #F0FFFF">' . $type . '</FONT></Td>
+                                        <Td class ="col" height=44.688 width=20% style="border:1px solid black; text-align : center;"> <FONT style="color : #F0FFFF">' . $date . ' </FONT></Td>
                                         <Td class ="col" height=44.688 width=20% style="border:1px solid black; text-align : center"> <FONT style="color : #F0FFFF"> ' . $nom . '  </FONT> </Td>
                                         <Td class ="col" height=44.688 width=8% style="border:1px solid black;text-align : center"><FONT style="color : #F0FFFF"> ' . $prix . ' €</FONT></Td>
                                         <Td class ="col" height=44.688 width=22% style="border:1px solid black;text-align : center"><FONT style="color : #F0FFFF"> ' . $n . '</FONT></Td>
@@ -1766,7 +1771,7 @@ function afficheRecap($bdd, $idco) {
 
     if ($cpt != 0) {
 
-        $sql = 'SELECT  Activity_Name, 	YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Belong_Price FROM Activity '
+        $sql = 'SELECT  Activity_Name, 	YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date),  Activity_Hour, Belong_Price FROM Activity '
                 . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
                 . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
                 . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL AND Activity_Type_Name = "Repas" AND Congress_ID = ' . congressID . ') ORDER BY (Activity_Date)';
@@ -1777,12 +1782,12 @@ function afficheRecap($bdd, $idco) {
 
         echo'
 <div>
-    <TABLE id="tableau" border  cols="4" style="border:1px solid black;width : 80%; margin-left : 0">             
+    <TABLE id="tableau" border  cols="4" style="border:1px solid black;width : 90%; margin-left : 0">             
          <TR class="row" >
-                        <Td class ="col"  width=20% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
+                        <Td class ="col"  width=22% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
                         <td class ="col" width= 40% style="border:1px solid black; text-align : center;"> <FONT size="4" style="color : #52574B"> Intitulé </FONT></th>
                         <td class ="col" width= 10% style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Tarif </FONT></th>
-                        <td class ="col" width=241.23 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Nombre de personnes </FONT></th>
+                        <td class ="col" width=253.41 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Nombre de personnes </FONT></th>
         </TR>';
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
@@ -1791,6 +1796,7 @@ function afficheRecap($bdd, $idco) {
             $annee = $row["YEAR(Activity_Date)"];
             $mois = $row["MONTH(Activity_Date)"];
             $jour = $row["DAY(Activity_Date)"];
+            $heure = $row["Activity_Hour"];
             $prix = $row["Belong_Price"];
 
             if ($mois < 10) {
@@ -1799,13 +1805,13 @@ function afficheRecap($bdd, $idco) {
             if ($jour < 10) {
                 $jour = "0" . $jour;
             }
-            $date = $jour . "-" . $mois . "-" . $annee;
+            $date = $jour . "-" . $mois . "-" . $annee." à ".$heure;
 
             echo' <TR class="row" >
-           <Td class ="col"  width=20% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $date . '</FONT> </TH>
+           <Td class ="col"  width=22% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $date . '</FONT> </TH>
            <td class ="col" width=40% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $activite . '</FONT> </th>
            <td class ="col" width=10% style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $prix . ' € </FONT> </th>
-          <td class ="col" width=241.23 style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $n . '  </FONT> </th>
+          <td class ="col" width=253.41 style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $n . '  </FONT> </th>
          </TR>';
         } echo'</TABLE>
              </div>';
@@ -1833,7 +1839,7 @@ function afficheRecap($bdd, $idco) {
 
 
     if ($cpt2 != 0) {
-        $sql = 'SELECT  Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Belong_Price FROM Activity '
+        $sql = 'SELECT  Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Activity_Hour, Belong_Price FROM Activity '
                 . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
                 . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
                 . ' WHERE (Basket_ID = :id AND Belong_Paid = 0 AND Belong_Payement_Way IS NULL AND Activity_Type_Name = "Excursion" AND Congress_ID = ' . congressID . ') ORDER BY (Activity_Date)';
@@ -1844,12 +1850,12 @@ function afficheRecap($bdd, $idco) {
 
         echo'
 <div>
-    <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 80%; margin-left : 0">             
+    <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 90%; margin-left : 0">             
          <TR class="row" >
-                          <Td class ="col"  width=20% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
+                          <Td class ="col"  width=22% style="border:1px solid black;text-align : center;"><FONT size="4" style="color : #52574B"> Date </FONT></TH>
                         <td class ="col" width= 40% style="border:1px solid black; text-align : center;"> <FONT size="4" style="color : #52574B"> Intitulé </FONT></th>
                         <td class ="col" width= 10% style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Tarif </FONT></th>
-                        <td class ="col" width=241.23 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Nombre de personnes </FONT></th>
+                        <td class ="col" width=253.41 style="border:1px solid black ; text-align : center;"><FONT size="4" style="color : #52574B"> Nombre de personnes </FONT></th>
         </TR>';
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
@@ -1858,7 +1864,7 @@ function afficheRecap($bdd, $idco) {
             $annee = $row["YEAR(Activity_Date)"];
             $mois = $row["MONTH(Activity_Date)"];
             $jour = $row["DAY(Activity_Date)"];
-
+            $heure = $row["Activity_Hour"];
             $prix = $row["Belong_Price"];
 
 
@@ -1868,13 +1874,13 @@ function afficheRecap($bdd, $idco) {
             if ($jour < 10) {
                 $jour = "0" . $jour;
             }
-            $date = $jour . "-" . $mois . "-" . $annee;
+            $date = $jour . "-" . $mois . "-" . $annee." à ".$heure;
 
             echo' <TR class="row" >
-          <Td class ="col"  width=20% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $date . '</FONT> </TH>
+          <Td class ="col"  width=22% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $date . '</FONT> </TH>
            <td class ="col" width=40% style="border:1px solid black; text-align : center;"> <FONT size="3.5">' . $activite . '</FONT> </th>
            <td class ="col" width=10% style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $prix . ' € </FONT> </th>
-          <td class ="col" width=241.23 style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $n . '  </FONT> </th>
+          <td class ="col" width=253.41 style="border:1px solid black; text-align : center;"><FONT size="3.5">' . $n . '  </FONT> </th>
          </TR>';
         } echo'</TABLE>
              </div>';

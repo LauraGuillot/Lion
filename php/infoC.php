@@ -1,7 +1,7 @@
-  <?php
-  $idco = $_GET['idco'];
-        include "fonctions.php";
-        majConnexion($bdd, $idco);
+<?php
+$idco = $_GET['idco'];
+include "fonctions.php";
+majConnexion($bdd, $idco);
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 8 ]><html class="ie ie7" lang="en"> <![endif]-->
@@ -42,7 +42,7 @@
 
         <!-- Header
         ================================================== -->
-       <?php
+        <?php
         $idco = $_GET['idco'];
 
         echo' <header class="mobile">';
@@ -68,7 +68,7 @@
 
         print(" <li><a href=\"http://localhost/lion/Lion/php/panier.php?idco=$idco\" > Panier</a></li>");
         print(" <li><a href=\"http://localhost/lion/Lion/php/moncompte.php?idco=$idco\" > Mon compte</a></li>");
-print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\"> Se déconnecter</a></li>");
+        print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\"> Se déconnecter</a></li>");
         echo'  </ul>
                     </nav>
                 </div>
@@ -85,7 +85,21 @@ print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\
             <div class="col full">
                 <span><h2 style = "color :#11ABB0; margin : 65px; text-align : center">Informations pratiques</h2><span>
                         </div>
+                        <div class="col one-third">       
+                            <h2> <FONT style="color :#CAD1D5"> Modalités de participation</FONT></h2>      
 
+                        </div>
+
+                        <div class="col two-thirds">
+
+                            <div class="intro" style="text-align:justify;">
+                                <p> Pour réserver vos activités, connectez-vous et rendez-vous dans l'onglet Agenda. <br>
+                                    Une fois vos réservations réglées, il vous suffit de vous rendre sur le lieu du congrès à l'horaire de l'activité où
+                                    votre participation est prévue.
+                                </p><br>
+                            </div>		
+                        </div>
+                       
                         <div class="col one-third">
                             <h2> <FONT style="color :#CAD1D5">Dates du colloque</h2>        
                         </div>
@@ -127,9 +141,9 @@ print(" <li><a href=\"http://localhost/lion/Lion/php/deconnexion.php?idco=$idco\
 
                         <!-- footer
                         ================================================== -->
-                         <?php 
-                         affichefooter(); 
-                         ?>
+                        <?php
+                        affichefooter();
+                        ?>
                         <!-- Footer End-->
 
                         <!-- Java Script

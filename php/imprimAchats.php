@@ -46,7 +46,7 @@ function pdfAchats($bdd, $idco) {
 
     if ($cpt != 0) {
 
-        $sql = 'SELECT  Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Belong_Price FROM Activity '
+        $sql = 'SELECT  Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Activity_Hour , Belong_Price FROM Activity '
                 . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
                 . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
                 . ' WHERE (Basket_ID = :id AND Belong_Paid = 1 AND Activity_Type_Name = "Repas" AND Congress_ID = ' . congressID . ') ORDER BY (Activity_Date)';
@@ -59,8 +59,8 @@ function pdfAchats($bdd, $idco) {
     <div>
     <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 100%; margin-left : 0;border-collapse: collapse;">             
          <TR class="row" >
-                        <Td class ="col" width=100 style="border:1px solid black; background-color : #C9D2D7;text-align : center;"><FONT size="5" > <b> Date </b></FONT></Td>
-                        <td class ="col" width=280 style="border:1px solid black; background-color : #C9D2D7; text-align : center;"> <FONT size="5" > <b> Intitulé </b></FONT></td>
+                        <Td class ="col" width=120 style="border:1px solid black; background-color : #C9D2D7;text-align : center;"><FONT size="5" > <b> Date </b></FONT></Td>
+                        <td class ="col" width=260 style="border:1px solid black; background-color : #C9D2D7; text-align : center;"> <FONT size="5" > <b> Intitulé </b></FONT></td>
                         <td class ="col" width=100 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Tarif </b> </FONT></td>
                          <td class ="col" width=160 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Nombre de personnes </b> </FONT></td>
         </TR> ';
@@ -71,6 +71,7 @@ function pdfAchats($bdd, $idco) {
             $annee = $row["YEAR(Activity_Date)"];
             $mois = $row["MONTH(Activity_Date)"];
             $jour = $row["DAY(Activity_Date)"];
+            $heure = $row["Activity_Hour"];
             $prix = $row["Belong_Price"];
             $totalrepas = "$prix" + "$totalrepas";
 
@@ -80,11 +81,11 @@ function pdfAchats($bdd, $idco) {
             if ($jour < 10) {
                 $jour = "0" . $jour;
             }
-            $date = $jour . "-" . $mois . "-" . $annee;
+             $date = $jour . "-" . $mois . "-" . $annee." à ".$heure;
             
             $texte = $texte . ' <TR class="row" >
-           <Td class ="col"  width=100 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $date . '</FONT> </Td>
-           <td class ="col" width=280 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $activite . '</FONT> </td>
+           <Td class ="col"  width=120 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $date . '</FONT> </Td>
+           <td class ="col" width=260 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $activite . '</FONT> </td>
            <td class ="col" width=100 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $prix . ' €</FONT> </td>
          <td class ="col" width=160 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $n . ' </FONT> </td>
          </TR>';
@@ -111,7 +112,7 @@ function pdfAchats($bdd, $idco) {
     $totalexcursions = 0;
 
     if ($cpt2 != 0) {
-        $sql = 'SELECT  Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Belong_Price FROM Activity '
+        $sql = 'SELECT  Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Activity_Hour , Belong_Price FROM Activity '
                 . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
                 . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
                 . ' WHERE (Basket_ID = :id AND Belong_Paid = 1 AND Activity_Type_Name = "Excursion" AND Congress_ID = ' . congressID . ') ORDER BY (Activity_Date)';
@@ -124,8 +125,8 @@ function pdfAchats($bdd, $idco) {
 <div>
     <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 100%; margin-left : 0;border-collapse: collapse;">             
          <TR class="row" >
-                        <Td class ="col" width=100 style="border:1px solid black; background-color : #C9D2D7;text-align : center;"><FONT size="5" > <b> Date </b></FONT></Td>
-                        <td class ="col" width=280 style="border:1px solid black; background-color : #C9D2D7; text-align : center;"> <FONT size="5" > <b> Intitulé </b></FONT></td>
+                        <Td class ="col" width=120 style="border:1px solid black; background-color : #C9D2D7;text-align : center;"><FONT size="5" > <b> Date </b></FONT></Td>
+                        <td class ="col" width=260 style="border:1px solid black; background-color : #C9D2D7; text-align : center;"> <FONT size="5" > <b> Intitulé </b></FONT></td>
                         <td class ="col" width=100 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Tarif </b> </FONT></td>
                          <td class ="col" width=160 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Nombre de personnes </b> </FONT></td>
         </TR> ';
@@ -136,6 +137,7 @@ function pdfAchats($bdd, $idco) {
             $annee = $row["YEAR(Activity_Date)"];
             $mois = $row["MONTH(Activity_Date)"];
             $jour = $row["DAY(Activity_Date)"];
+            $heure = $row["Activity_Hour"];
             $prix = $row["Belong_Price"];
             
 
@@ -145,13 +147,13 @@ function pdfAchats($bdd, $idco) {
             if ($jour < 10) {
                 $jour = "0" . $jour;
             }
-            $date = $jour . "-" . $mois . "-" . $annee;
+             $date = $jour . "-" . $mois . "-" . $annee." à ".$heure;
 
             $totalexcursions = $prix + $totalexcursions;
             
             $texte = $texte . ' <TR class="row" >
-           <Td class ="col"  width=100 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $date . '</FONT> </Td>
-           <td class ="col" width=280 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $activite . '</FONT> </td>
+           <Td class ="col"  width=120 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $date . '</FONT> </Td>
+           <td class ="col" width=260 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $activite . '</FONT> </td>
            <td class ="col" width=100 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $prix . ' €</FONT> </td>
          <td class ="col" width=160 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $n . ' </FONT> </td>
          </TR>';

@@ -50,7 +50,20 @@
             <div class="col full">
                 <span><h2 style = "color :#11ABB0; margin : 65px; text-align : center">Informations pratiques</h2><span>
                         </div>
+                        <div class="col one-third">       
+                            <h2> <FONT style="color :#CAD1D5"> Modalités de participation</FONT></h2>      
 
+                        </div>
+
+                        <div class="col two-thirds">
+
+                            <div class="intro" style="text-align:justify;">
+                                <p> Pour réserver vos activités, connectez-vous et rendez-vous dans l'onglet Agenda. <br>
+                                    Une fois vos réservations réglées, il vous suffit de vous rendre sur le lieu du congrès à l'horaire de l'activité où
+                                    votre participation est prévue.
+                                </p><br>
+                            </div>		
+                        </div>
                         <div class="col one-third">
                             <h2> <FONT style="color :#CAD1D5">Dates du colloque </FONT></h2>        
                         </div>
@@ -80,6 +93,8 @@
                                 </p>
                             </div>		
                         </div>
+
+
                         </div> <!-- Info Section End-->
 
 

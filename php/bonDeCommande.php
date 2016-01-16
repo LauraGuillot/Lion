@@ -46,7 +46,7 @@ function bonDeCommande($bdd, $idco) {
     $belongdate = getDatePanier($bdd, $basketID);
 
     /* On récupère toutes les activités */
-    $sql = 'SELECT  Activity.Activity_ID, Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Belong_Price FROM Activity '
+    $sql = 'SELECT  Activity.Activity_ID, Activity_Name, YEAR(Activity_Date), MONTH(Activity_Date), DAY(Activity_Date), Activity_Hour, Belong_Price FROM Activity '
             . ' INNER JOIN Activity_Type ON (Activity_Type.Activity_Type_ID = Activity.Activity_Type_ID) '
             . ' INNER JOIN Belong ON (Belong.Activity_ID = Activity.Activity_ID) '
             . ' WHERE (Basket_ID = :id  AND Belong_Payement_Way ="CH" AND Congress_ID = ' . congressID . ' AND Belong_Date = :date ) ORDER BY ( Activity_Date)';
@@ -60,8 +60,8 @@ function bonDeCommande($bdd, $idco) {
 <div>
     <TABLE id="tableau" border  cols="3" style="border:1px solid black;width : 100%; margin-left : 0;border-collapse: collapse;">             
          <TR class="row" >
-                        <Td class ="col" width=100 style="border:1px solid black; background-color : #C9D2D7;text-align : center;"><FONT size="5" > <b> Date </b></FONT></Td>
-                        <td class ="col" width=280 style="border:1px solid black; background-color : #C9D2D7; text-align : center;"> <FONT size="5" > <b> Intitulé </b></FONT></td>
+                        <Td class ="col" width=120 style="border:1px solid black; background-color : #C9D2D7;text-align : center;"><FONT size="5" > <b> Date </b></FONT></Td>
+                        <td class ="col" width=260 style="border:1px solid black; background-color : #C9D2D7; text-align : center;"> <FONT size="5" > <b> Intitulé </b></FONT></td>
                         <td class ="col" width=100 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Tarif </b> </FONT></td>
                         <td class ="col" width=160 style="border:1px solid black ; background-color : #C9D2D7; text-align : center;"><FONT size="5" > <b> Nombre de personnes </b> </FONT></td>
         </TR> ';
@@ -73,6 +73,7 @@ function bonDeCommande($bdd, $idco) {
         $annee = $row["YEAR(Activity_Date)"];
         $mois = $row["MONTH(Activity_Date)"];
         $jour = $row["DAY(Activity_Date)"];
+        $heure = $row["Activity_Hour"];
         $prix = $row["Belong_Price"];
         $total = $total + $prix;
 
@@ -82,11 +83,11 @@ function bonDeCommande($bdd, $idco) {
         if ($jour < 10) {
             $jour = "0" . $jour;
         }
-        $date = $jour . "-" . $mois . "-" . $annee;
+        $date = $jour . "-" . $mois . "-" . $annee." à ".$heure;
 
         $activite = $activite . '<TR class="row" >
-           <Td class ="col"  width=100 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $date . '</FONT> </Td>
-           <td class ="col" width=280 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $act . '</FONT> </td>
+           <Td class ="col"  width=120 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $date . '</FONT> </Td>
+           <td class ="col" width=260 style="border:1px solid black; text-align : center;"> <FONT size="3.5" style="color : #252E43">' . $act . '</FONT> </td>
            <td class ="col" width=100 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $prix . ' €</FONT> </td>
          <td class ="col" width=160 style="border:1px solid black; text-align : center;"><FONT size="3.5" style="color : #252E43">' . $n . ' </FONT> </td>
          </TR> ';
