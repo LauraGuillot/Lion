@@ -1464,6 +1464,17 @@ function afficheInfos($bdd, $idco) {
             <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > <u>Position au sein du club</u> : ' . $positionclub . '</h2> 
         </div>
         
+        <div class="row section-head">
+            <h2 style="color : #8BB24C;"> <FONT size="5">Votre accompagnant <FONT></h2>
+         </div>
+
+        <div>
+            <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > <u>Nom</u> : ' . $fnom . '</h2> 
+        </div>
+
+        <div>
+            <tr style="" > <FONT size="3.5" style="font-weight:normal;color : #C6CCBB;" > <u>Prénom</u> : ' . $fprenom . '</h2> 
+        </div>
 ';
 }
 
