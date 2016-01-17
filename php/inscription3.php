@@ -110,6 +110,7 @@
                         <div class="row section-head">
 
                             <h2 ><FONT style="color :#727374">Accompagnant (non-Lion)</h2>
+                            <p > <i> Attention, si vous saisissez un accompagnant, vos réservations seront automatiquement doublées.  </i></p>
                         </div>
 
                         <div>
