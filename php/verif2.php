@@ -6,8 +6,8 @@ $nom = $_POST['nom'];
 $prenom = $_POST['prenom'];
 $titre = $_POST['titre'];
 $district = $_POST['district'];
-echo "$district";
-if (empty($civilite) or empty($nom) or empty($prenom) or empty($district)) {
+
+if (empty($civilite) or empty($nom) or empty($prenom) or empty($district) or (strcmp(" Choisissez votre district ", $district)==0)) {
    
     include ("inscription2.php");
 } else {
