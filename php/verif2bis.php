@@ -19,7 +19,7 @@ $email = $_POST['email'];
 $mdp = $_POST['mdp'];
 $mdp2 = $_POST['mdp2'];
 
-if (empty($club) or empty($rue) or empty($num) or empty($cp) or empty($ville) or empty($pays) or empty($tel)) {
+if (empty($club) or empty($rue) or empty($num) or empty($cp) or empty($ville) or empty($pays) or empty($tel) or (strcmp('Choisissez votre club', $club)==0)) {
     include ("inscription2bis.php");
 } else {
 
