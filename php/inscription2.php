@@ -190,12 +190,12 @@
 
                         <div>
                             <label for="contactSubject"><FONT style="color :#BEBEBE">Prénom<span class="required">*</span></label>
-                            <input name="prenom" type="text" id="prenom" size="35" value='.$prenom.' />
+                            <input name="prenom" type="text" id="prenom" size="35" value="'.$prenom.'" />
                         </div>
 
                         <div>
                             <label for="contactSubject"><FONT style="color :#BEBEBE">Nom<span class="required">*</span></label>
-                            <input name="nom" type="text" id="nom" size="35" value='.$nom.' />
+                            <input name="nom" type="text" id="nom" size="35" value="'.$nom.'" />
                         </div>
 
 
